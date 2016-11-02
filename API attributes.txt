@@ -1,0 +1,44 @@
+python APIs for google maps
+
+Reqs. 
+Python 2.7 or later
+Google Maps API key (Let our key be ETLS)
+
+
+
+Pip installation
+$ pip install -U googlemaps
+
+''' Importing the library to our code '''
+import googlemaps
+
+''' Creating the maps object '''
+gmaps = googlemaps.Client(key='ETLS')
+
+
+# Geocoding an address
+geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+
+
+# Look up an address with reverse geocoding
+reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+
+
+# Request directions via public transit
+now = datetime.now()
+directions_result = gmaps.directions("Sydney Town Hall",
+                                     "Parramatta, NSW",
+                                     mode="driving",
+                                     departure_time=now)
+
+API key
+AIzaSyCAK1lcL6rxCzooZacVo7lqN7IsqkdygAA
+
+
+
+So the attributes so far are either longitude and latitude
+or full name of the source and destination.
+There are many modes other than driving but we are only concerned with driving.
+
+
+

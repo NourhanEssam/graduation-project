@@ -52,4 +52,30 @@ directions_result = gmaps.directions((30.064529, 31.275758),
 
 print directions_result
 
-{u'overview_polyline': {u'points': u'g~nvDop{}D{Af@Pp@j@~BwE`BkDfA[Rm@WWQa@[Y\\AB'}, u'warnings': [], u'bounds': {u'northeast': {u'lat': 30.06741289999999, u'lng': 31.2757637}, u'southwest': {u'lat': 30.0645195, u'lng': 31.2737244}}, u'waypoint_order': [], u'summary': u'Masoud', u'copyrights': u'Map data \xa92016 Google, ORION-ME', u'legs': [{u'distance': {u'text': u'0.5 km', u'value': 485}, u'traffic_speed_entry': [], u'end_address': u'Rahmi, Ganayen Al Waileyah, Al Waili, Cairo Governorate, Egypt', u'via_waypoint': [], u'start_address': u'7 Selim Abdou, Al Waili, Cairo Governorate, Egypt', u'start_location': {u'lat': 30.0645195, u'lng': 31.2757637}, u'steps': [{u'html_instructions': u'Head <b>north</b> on <b>Selim Abdou</b> toward <b>El-Abaseya</b>', u'distance': {u'text': u'55 m', u'value': 55}, u'travel_mode': u'DRIVING', u'start_location': {u'lat': 30.0645195, u'lng': 31.2757637}, u'polyline': {u'points': u'g~nvDop{}D{Af@'}, u'duration': {u'text': u'1 min', u'value': 18}, u'end_location': {u'lat': 30.064977, u'lng': 31.2755568}}, {u'html_instructions': u'Turn <b>left</b> onto <b>El-Abaseya</b>', u'distance': {u'text': u'92 m', u'value': 92}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-left', u'start_location': {u'lat': 30.064977, u'lng': 31.2755568}, u'polyline': {u'points': u'caovDgo{}DPp@^|AJ`@'}, u'duration': {u'text': u'1 min', u'value': 34}, u'end_location': {u'lat': 30.0646714, u'lng': 31.2746723}}, {u'html_instructions': u'Turn <b>right</b> onto <b>Masoud</b>', u'distance': {u'text': u'0.2 km', u'value': 249}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-right', u'start_location': {u'lat': 30.0646714, u'lng': 31.2746723}, u'polyline': {u'points': u'e_ovDui{}DeA`@qC~@kDfA[R'}, u'duration': {u'text': u'2 mins', u'value': 109}, u'end_location': {u'lat': 30.0667537, u'lng': 31.2737244}}, {u'html_instructions': u'Turn <b>right</b> onto <b>Ahmed Naguib</b>', u'distance': {u'text': u'66 m', u'value': 66}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-right', u'start_location': {u'lat': 30.0667537, u'lng': 31.2737244}, u'polyline': {u'points': u'elovDwc{}Dm@WWQa@['}, u'duration': {u'text': u'1 min', u'value': 23}, u'end_location': {u'lat': 30.0672656, u'lng': 31.2740698}}, {u'html_instructions': u'Turn <b>left</b> onto <b>Rahmi</b>', u'distance': {u'text': u'23 m', u'value': 23}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-left', u'start_location': {u'lat': 30.0672656, u'lng': 31.2740698}, u'polyline': {u'points': u'moovD}e{}DY\\AB'}, u'duration': {u'text': u'1 min', u'value': 11}, u'end_location': {u'lat': 30.06741289999999, u'lng': 31.2738986}}], u'duration': {u'text': u'3 mins', u'value': 195}, u'end_location': {u'lat': 30.06741289999999, u'lng': 31.2738986}}]}
+Note: the response string comes in one line, but I've separated it to ease the reading.
+
+{u'overview_polyline': {u'points': u'g~nvDop{}D{Af@Pp@j@~BwE`BkDfA[Rm@WWQa@[Y\\AB'}, u'warnings': []
+, u'bounds': {u'northeast': {u'lat': 30.06741289999999, u'lng': 31.2757637}, u'southwest': {u'lat': 30.0645195, u'lng': 31.2737244}},
+u'waypoint_order': [], u'summary': u'Masoud', u'copyrights': u'Map data \xa92016 Google, ORION-ME'
+, u'legs': [{u'distance': {u'text': u'0.5 km', u'value': 485}, u'traffic_speed_entry': []
+, u'end_address': u'Rahmi, Ganayen Al Waileyah, Al Waili, Cairo Governorate, Egypt', u'via_waypoint': []
+, u'start_address': u'7 Selim Abdou, Al Waili, Cairo Governorate, Egypt', u'start_location': {u'lat': 30.0645195, u'lng': 31.2757637},
+u'steps': [{u'html_instructions': u'Head <b>north</b> on <b>Selim Abdou</b> toward <b>El-Abaseya</b>',
+u'distance': {u'text': u'55 m', u'value': 55}, u'travel_mode': u'DRIVING', u'start_location': {u'lat': 30.0645195, u'lng': 31.2757637},
+u'polyline': {u'points': u'g~nvDop{}D{Af@'}, u'duration': {u'text': u'1 min', u'value': 18}, 
+u'end_location': {u'lat': 30.064977, u'lng': 31.2755568}}, {u'html_instructions': u'Turn <b>left</b> onto <b>El-Abaseya</b>',
+u'distance': {u'text': u'92 m', u'value': 92}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-left',
+u'start_location': {u'lat': 30.064977, u'lng': 31.2755568}, u'polyline': {u'points': u'caovDgo{}DPp@^|AJ`@'},
+u'duration': {u'text': u'1 min', u'value': 34}, u'end_location': {u'lat': 30.0646714, u'lng': 31.2746723}},
+{u'html_instructions': u'Turn <b>right</b> onto <b>Masoud</b>', u'distance': {u'text': u'0.2 km', u'value': 249},
+u'travel_mode': u'DRIVING', u'maneuver': u'turn-right', u'start_location': {u'lat': 30.0646714, u'lng': 31.2746723},
+u'polyline': {u'points': u'e_ovDui{}DeA`@qC~@kDfA[R'}, u'duration': {u'text': u'2 mins', u'value': 109},
+u'end_location': {u'lat': 30.0667537, u'lng': 31.2737244}}, {u'html_instructions': u'Turn <b>right</b> onto <b>Ahmed Naguib</b>',
+u'distance': {u'text': u'66 m', u'value': 66}, u'travel_mode': u'DRIVING', u'maneuver': u'turn-right',
+u'start_location': {u'lat': 30.0667537, u'lng': 31.2737244}, u'polyline': {u'points': u'elovDwc{}Dm@WWQa@['},
+u'duration': {u'text': u'1 min', u'value': 23}, u'end_location': {u'lat': 30.0672656, u'lng': 31.2740698}},
+{u'html_instructions': u'Turn <b>left</b> onto <b>Rahmi</b>', u'distance': {u'text': u'23 m', u'value': 23},
+u'travel_mode': u'DRIVING', u'maneuver': u'turn-left', u'start_location': {u'lat': 30.0672656, u'lng': 31.2740698},
+u'polyline': {u'points': u'moovD}e{}DY\\AB'}, u'duration': {u'text': u'1 min', u'value': 11}, 
+u'end_location': {u'lat': 30.06741289999999, u'lng': 31.2738986}}], u'duration': {u'text': u'3 mins', u'value': 195},
+u'end_location': {u'lat': 30.06741289999999, u'lng': 31.2738986}}]}

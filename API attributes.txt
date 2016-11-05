@@ -46,13 +46,20 @@ There are many modes other than driving but we are only concerned with driving.
 
 Response format example from 30 Selim to Rahmi street
 
+""" Python code """
+import googlemaps
+
+gmaps = googlemaps.Client(key='AIzaSyCAK1lcL6rxCzooZacVo7lqN7IsqkdygAA')
+
+
 directions_result = gmaps.directions((30.064529, 31.275758),
                                      (30.067410, 31.273897),
                                      mode="driving")
 
 print directions_result
+""" End Python code """
 
-Note: the response string comes in one line, but I've separated it to ease the reading.
+#Note: the response string comes in one line, but I've separated it to ease the reading.
 
 {u'overview_polyline': {u'points': u'g~nvDop{}D{Af@Pp@j@~BwE`BkDfA[Rm@WWQa@[Y\\AB'}, u'warnings': []
 , u'bounds': {u'northeast': {u'lat': 30.06741289999999, u'lng': 31.2757637}, u'southwest': {u'lat': 30.0645195, u'lng': 31.2737244}},

@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
     <title>Map</title>
+    {% load staticfiles %}
+    <link href="{% static 'map/style.css' %}" rel="stylesheet" type="text/css" />
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    <script src="{% static 'map/js/map.js' %}"></script>
+
 </head>
 <body>
-
+    <div id="map"></div>
 </body>
 </html>

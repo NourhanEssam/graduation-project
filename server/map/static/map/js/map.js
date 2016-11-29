@@ -1,6 +1,8 @@
 /**
  * Created by Eslam on 2016-11-27.
  */
+var directionsDisplay;
+var directionsService;
 var marker, geoMarker;
 var geoCircle;
 var currentPos;
@@ -21,6 +23,8 @@ function initMap() {
 
 // center the map at the current location
 function navigateToCurrentLocation() {
+    directionsService = new google.maps.DirectionsService();
+    directionsDisplay = new google.maps.DirectionsRenderer();
     var infoWindow = new google.maps.InfoWindow({map: map});
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -61,6 +65,8 @@ function navigateToCurrentLocation() {
             geoMarker.setMap(map);
             console.log('Source: ' + currentPos.lat() + ', ' + currentPos.lng());
 
+            directionsDisplay.setMap(map);
+
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -82,7 +88,65 @@ function addMarker(location) {
         title: 'Destination'
     });
     marker.setMap(map);
+    calcRoute(location);
     console.log('Destination: ' + location.lat() + ', ' + location.lng());
+}
+
+// TODO use this on button click in html
+function calcRoute(location) {
+    var request = {
+        origin: currentPos,
+        destination: location,
+        travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function (result, status) {
+        if (status == 'OK') {
+            console.log(result);
+            directionsDisplay.setDirections(result);
+        }
+        else {
+            console.log(status);
+        }
+    });
+
+    $.ajax({
+        // points to the url where your data will be posted
+        url: '',
+        // post for security reason
+        type: "POST",
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        // data that you will like to return
+        data: {
+            currentPosLat: currentPos.lat(),
+            currentPosLng: currentPos.lng(),
+            targetLat: currentPos.lat(),
+            targetLng: currentPos.lng()},
+        // what to do when the call is success
+        success: function (response) {
+        },
+        // what to do when the call is complete ( you can right your clean from code here)
+        complete: function () {
+        },
+        // what to do when there is an error
+        error: function (xhr, textStatus, thrownError) {
+        }
+    });
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {

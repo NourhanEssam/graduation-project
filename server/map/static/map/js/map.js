@@ -17,7 +17,8 @@ function initMap() {
     navigateToCurrentLocation();
 
     map.addListener("click", function (event) {
-        addMarker(event.latLng, map);
+        calcRoute(event.latLng);
+        //addMarker(event.latLng, map);
     });
 }
 
@@ -25,7 +26,6 @@ function initMap() {
 function navigateToCurrentLocation() {
     directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var infoWindow = new google.maps.InfoWindow({map: map});
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(function (position) {
@@ -77,6 +77,7 @@ function navigateToCurrentLocation() {
 }
 
 // adds destination marker on click event
+/*
 function addMarker(location) {
     if (marker != null)
     {
@@ -91,7 +92,7 @@ function addMarker(location) {
     calcRoute(location);
     console.log('Destination: ' + location.lat() + ', ' + location.lng());
 }
-
+*/
 // TODO use this on button click in html
 function calcRoute(location) {
     var request = {

@@ -26,6 +26,8 @@ function initMap() {
 function navigateToCurrentLocation() {
     directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(function (position) {

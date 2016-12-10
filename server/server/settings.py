@@ -25,7 +25,7 @@ SECRET_KEY = '(nvj$0#)ii*rkkr&l&96!bq(l+a611n7@67!unr&cn%pxp#3_0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.81']
+ALLOWED_HOSTS = ['*'] #TODO set allowed hosts IPs
 
 
 # Application definition

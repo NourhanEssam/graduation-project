@@ -3,7 +3,7 @@
  */
 var directionsDisplay;
 var directionsService;
-var marker, geoMarker;
+var geoMarker;
 var geoCircle;
 var currentPos;
 var map;
@@ -18,7 +18,6 @@ function initMap() {
 
     map.addListener("click", function (event) {
         calcRoute(event.latLng);
-        //addMarker(event.latLng, map);
     });
 }
 
@@ -26,8 +25,7 @@ function initMap() {
 function navigateToCurrentLocation() {
     directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var infoWindow = new google.maps.InfoWindow({map: map});
-    
+
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(function (position) {
@@ -70,32 +68,14 @@ function navigateToCurrentLocation() {
             directionsDisplay.setMap(map);
 
         }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
+            handleLocationError(true);
         });
     } else {
         // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
+        handleLocationError(false);
     }
 }
 
-// adds destination marker on click event
-/*
-function addMarker(location) {
-    if (marker != null)
-    {
-        marker.setMap(null);
-    }
-    marker = new google.maps.Marker({
-        position: location,
-        map: map,
-        title: 'Destination'
-    });
-    marker.setMap(map);
-    calcRoute(location);
-    console.log('Destination: ' + location.lat() + ', ' + location.lng());
-}
-*/
-// TODO use this on button click in html
 function calcRoute(location) {
     var request = {
         origin: currentPos,
@@ -152,9 +132,11 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
+function handleLocationError(browserHasGeolocation) {
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    infoWindow.setPosition(map.getCenter());
     infoWindow.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
+
 }

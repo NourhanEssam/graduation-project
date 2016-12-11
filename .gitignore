@@ -1,4 +1,4 @@
 *.pyc
 *.xml
-*.xmi
+*.iml
 *.sqlite3

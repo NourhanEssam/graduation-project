@@ -21,7 +21,12 @@ class Street(models.Model):
     Start_Latitude = models.FloatField(max_length=25)
     End_Longitude = models.FloatField(max_length=25)
     End_Latitude = models.FloatField(max_length=25)
-    Intersection_ID = models.ManyToManyField(Intersection)
+
+
+class IntersectionsStreets(models.Model):
+    unique_together = ('Street_ID', 'Intersection_ID')
+    Street_ID = models.ForeignKey(Street)
+    Intersection_ID = models.ForeignKey(Intersection)
 
 
 class Driver(models.Model):
@@ -29,12 +34,12 @@ class Driver(models.Model):
     First_Name = models.CharField(max_length=250)
     Last_Name = models.CharField(max_length=250)
     Username = models.CharField(max_length=25)
-    Encrypted_Password = models.CharField(max_length=15)
+    Encrypted_Password = models.CharField(max_length=25)
 
 
 class EmergencyVehicle(models.Model):
     Car_ID = models.CharField(max_length=10, primary_key=True)
-    Type = models.CharField(max_length=20)
+    Priority = models.IntegerField(default=1)
 
 
 class Use(models.Model):

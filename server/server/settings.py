@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*'] #TODO set allowed hosts IPs
 
 INSTALLED_APPS = [
     'gettrafficlights.apps.GettrafficlightsConfig',
+    'controller.apps.ControllerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

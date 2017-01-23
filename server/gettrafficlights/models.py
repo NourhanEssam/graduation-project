@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Intersection(models.Model):
-    Intersection_ID = models.AutoField(primary_key=True)
+    Intersection_MAC = models.CharField(max_length=15, primary_key=True)
     Intersection_IP = models.CharField(max_length=15, default='000.000.000.000')
 
 

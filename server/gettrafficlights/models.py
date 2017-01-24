@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -31,10 +32,12 @@ class IntersectionsStreets(models.Model):
 
 class Driver(models.Model):
     National_ID = models.CharField(max_length=20, primary_key=True)
-    First_Name = models.CharField(max_length=250)
-    Last_Name = models.CharField(max_length=250)
-    Username = models.CharField(max_length=25)
-    Encrypted_Password = models.CharField(max_length=25)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+
+    class Meta:
+        permissions = (
+            ("is_driver", "Can login as driver"),
+        )
 
 
 class EmergencyVehicle(models.Model):
@@ -47,4 +50,5 @@ class Use(models.Model):
     National_ID = models.ForeignKey(Driver, on_delete=models.CASCADE)
     Car_ID = models.ForeignKey(EmergencyVehicle, on_delete=models.CASCADE)
     Date = models.DateTimeField
+
 

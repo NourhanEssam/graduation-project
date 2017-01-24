@@ -4,10 +4,13 @@ from django.db import models
 
 
 class Intersection(models.Model):
-    Intersection_ID = models.CharField(max_length=10, primary_key=True)
+    # MAC address
+    Intersection_ID = models.CharField(max_length=12, primary_key=True)
+    IP = models.CharField(max_length=8, default='0')
 
 
 class TrafficLight(models.Model):
+    unique_together = ('TL_ID', 'Direction')
     TL_ID = models.CharField(max_length=10, primary_key=True)
     Longitude = models.FloatField(max_length=25)
     Latitude = models.FloatField(max_length=25)

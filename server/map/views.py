@@ -13,7 +13,7 @@ def index(request):
         directions_result = gmaps.directions((data.get('currentPosLat'), data.get('currentPosLng')),
                                              (data.get('targetLat'), data.get('targetLng')),
                                              mode="driving")
-        print directions_result
+        print (directions_result)
     return render(request, 'map/index.html')
 
 

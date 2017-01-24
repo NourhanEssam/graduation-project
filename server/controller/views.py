@@ -11,16 +11,10 @@ import socket
 def index(request):
     tls = ['1N', '2W', '3E', '5W', '6N']
 
-    print("Hello from controller")
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("Hello from socket1")
-    print(socket.gethostname())
     s.bind((socket.gethostname(), 12346))
-    print("Hello from socket2")
     s.listen(1)
-    print("Hello from socket3")
     (EVconnection, EVaddress) = s.accept()
-    print("Hello from socket4")
 
     if EVconnection.recv(20) == '1':  # EV is Ready
         for tl in tls:

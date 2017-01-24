@@ -2,29 +2,28 @@ from django.http import HttpResponse
 from .models import TrafficLight
 from .models import IntersectionsStreets
 from django.conf import settings
+from django.shortcuts import render
 
 
 def index(request):
     path = settings.GETTRAFFICLIGHTS_FOLDER+'myfile.txt'
-    lines = open(path,
-                 'r').readlines()
+    lines = open(path, 'r').readlines()
     l = file_len(path)
-    i = 0
+    i = 1
     while i < l:
         street1 = lines[i]
         direct = lines[i + 1]
         street2 = lines[i + 2]
         tls = []
         i += 2
-        query = 'SELECT Intersection_ID FROM IntersectionsStreets A B WHERE A.Street_ID = ' + street1 + 'AND B.Street_ID = ' + street2 + 'AND A.Intersection_ID = B.Intersection_ID'
+        query = 'SELECT Intersection_ID FROM IntersectionsStreets A, B WHERE A.Street_ID = ' + street1 + 'AND B.Street_ID = ' + street2 + 'AND A.Intersection_ID = B.Intersection_ID'
         int_id = IntersectionsStreets.objects.raw(query)
 
         tls[i] = TrafficLight.objects.get(Direction=direct, Intersection_ID=int_id)
-        print('hii')
         print(tls[i])
-    open(path, 'w').writelines(tls)
-
-    return HttpResponse("Hello, world. You're at the gettrafficlights index.")
+        open(path, 'w').writelines(tls[i])
+    return render(request, 'gettrafficlights/index.html')
+   # return HttpResponse("Hello, world. You're at the gettrafficlights index.")
 
 
 def file_len(fname):
@@ -35,24 +34,8 @@ def file_len(fname):
     return j + 1
 
 
-def gettl():
-    path = settings.GETTRAFFICLIGHTS_FOLDER + 'myfile.txt'
-    lines = open(path,'r').readlines()
-    l = file_len(path)
-    i = 0
-    while i < l:
-        street1 = lines[i]
-        direct = lines[i + 1]
-        street2 = lines[i + 2]
-        tls = []
-        i += 2
-        query = 'SELECT Intersection_ID FROM IntersectionsStreets A B WHERE A.Street_ID = '+street1+ 'AND B.Street_ID = '+street2+ 'AND A.Intersection_ID = B.Intersection_ID'
-        int_id = IntersectionsStreets.objects.raw(query)
 
-        tls[i] = TrafficLight.objects.get(Direction=direct, Intersection_ID=int_id)
-        print('hii')
-        print(tls[i])
-    open(path, 'w').writelines(tls)
+
 
 
 

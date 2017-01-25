@@ -11,19 +11,21 @@ def index(request):
     l = file_len(path)
     i = 0
     tls = []
+    print path
+    print l
     while i < l-2:
         street1 = lines[i]
         direct = lines[i + 1]
         street2 = lines[i + 2]
 
         Queryset = IntersectionsStreets.objects.filter(Street_ID=street1).values('Intersection_ID')
-        Queryset2 = IntersectionsStreets.objects.filter(Street_ID=street2, Intersection_ID=Queryset).values('Intersection_ID')
+        Queryset2 = IntersectionsStreets.objects.filter(Street_ID=street2, Intersection_ID__in=Queryset).values('Intersection_ID')
         Queryset3 = TrafficLight.objects.filter(Intersection_ID=Queryset2, Direction=direct).values('TL_ID')
         for element in Queryset3:
             tls.append(element['TL_ID'])
-        open(path, 'w').writelines(element['TL_ID'])
+        open(path, 'a').writelines(element['TL_ID'])
         i += 2
-    return render(request, 'gettrafficlights/index.html')
+    return render(request, 'map/index.html')
    # return HttpResponse("Hello, world. You're at the gettrafficlights index.")
 
 

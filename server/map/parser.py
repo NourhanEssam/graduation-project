@@ -28,7 +28,7 @@ def calculate_initial_compass_bearing(pointA, pointB):
 
 def parse_directions(directions):
     Output = []
-
+    Head_Flag = True
     JSON = json.loads(directions)
 
     for STEP in JSON['routes'][0]['legs'][0]['steps']:
@@ -72,22 +72,27 @@ def parse_directions(directions):
                                                     (start_loc['lat'], start_loc['lng']))
         # Assigning the direction based on the bearing
         if 0 < Bearing < 22.5:
-            Output += ['N']
-        elif 22.5 <= Bearing < 67.5:
-            Output += ['NE']
-        elif 67.5 <= Bearing < 112.5:
-            Output += ['E']
-        elif 112.5 <= Bearing < 157.5:
-            Output += ['SE']
-        elif 157.5 <= Bearing < 202.5:
             Output += ['S']
-        elif 202.5 <= Bearing < 247.5:
+        elif 22.5 <= Bearing < 67.5:
             Output += ['SW']
-        elif 247.5 <= Bearing < 292.5:
+        elif 67.5 <= Bearing < 112.5:
             Output += ['W']
-        elif 292.5 <= Bearing < 337.5:
+        elif 112.5 <= Bearing < 157.5:
             Output += ['NW']
-        elif 337.5 <= Bearing < 382.5:
+        elif 157.5 <= Bearing < 202.5:
             Output += ['N']
+        elif 202.5 <= Bearing < 247.5:
+            Output += ['NE']
+        elif 247.5 <= Bearing < 292.5:
+            Output += ['E']
+        elif 292.5 <= Bearing < 337.5:
+            Output += ['SE']
+        elif 337.5 <= Bearing < 382.5:
+            Output += ['S']
+
+    Output.pop(1)
+    if (Output.count("")):
+        Output.remove("")
+
 
     return Output

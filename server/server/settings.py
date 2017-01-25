@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+settings_dir = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
+GETTRAFFICLIGHTS_FOLDER = os.path.join(PROJECT_ROOT, 'gettrafficlights/')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,15 +34,20 @@ ALLOWED_HOSTS = ['*'] #TODO set allowed hosts IPs
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     'gettrafficlights.apps.GettrafficlightsConfig',
     'controller.apps.ControllerConfig',
+=======
+>>>>>>> Server_master
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'map'
+    'map',
+    'gettrafficlights',
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +129,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/login/'

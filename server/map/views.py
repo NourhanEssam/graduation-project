@@ -33,10 +33,13 @@ def index(request):
         # pass the json string to the parser which michel implemented
         directions = parser.parse_directions(result_string)
 
+        request.session['directions'] = directions
         # for testing
         print request_url, "\n\n"
         print result_string, "\n\n"
         print directions, "\n\n"
+
+        return redirect('gettrafficlights:gettrafficlights')
 
     return render(request, 'map/index.html')
 

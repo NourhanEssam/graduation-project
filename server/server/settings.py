@@ -34,11 +34,6 @@ ALLOWED_HOSTS = ['*'] #TODO set allowed hosts IPs
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-    'gettrafficlights.apps.GettrafficlightsConfig',
-    'controller.apps.ControllerConfig',
-=======
->>>>>>> Server_master
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'map',
     'gettrafficlights',
-    'login'
+    'login',
+    'controller'
 ]
 
 MIDDLEWARE = [

@@ -1,9 +1,23 @@
+#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
 #map {
-    height: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+#header #branding h1 a {
+    color: #eaeaea;
 }

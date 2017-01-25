@@ -5,6 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <title>Map</title>
     {% load staticfiles %}
+    <link href="{% static 'admin/css/base.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'map/style.css' %}" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwI32R7w5UyY3nvL8Pv-sJqBvUiGCTzOc&callback=initMap" async defer></script>
@@ -12,6 +13,18 @@
 
 </head>
 <body>
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name"><a href="{% url 'map:map' %}">Emergency Traffic Lighting System</a></h1>
+        </div>
+        <div id="user-tools">
+            {% if request.user.is_authenticated %}Welcome, <strong>'{{ request.user.username }}'</strong>.
+            {% endif %}
+            <a href="{% url 'login:logout' %}">Log out</a>
+        </div>
+    </div>
+    <!-- END Header -->
     <div id="map"></div>
 </body>
 </html>

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'map',
     'gettrafficlights',
-    'login'
+    'login',
+    'controller'
 ]
 
 MIDDLEWARE = [

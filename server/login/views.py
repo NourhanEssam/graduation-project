@@ -22,6 +22,8 @@ def index(request):
                 return render(request, 'login/index.html', {'error_message': 'Wrong Username or Password'})
             elif not user.has_perm('gettrafficlights.is_driver'):
                 return render(request, 'login/index.html', {'error_message': "You don't have the required permissions"})
+            elif user.is_superuser or user.is_staff:
+                return render(request, 'login/index.html', {'error_message': "You don't have the required permissions"})
             else:
                 auth.login(request, user)
                 return redirect('map:map')

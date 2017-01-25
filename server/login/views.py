@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
+from django.template import RequestContext
 
 
 # Create your views here.
@@ -14,16 +15,13 @@ def index(request):
         username = data.get('Username')
         password = data.get('Password')
         if username == "" or password == "":
-            print 'error'
-            # error
+            return render(request, 'login/index.html', {'error_message': 'Missing Username or Password'})
         else:
             user = auth.authenticate(username=username, password=password)
-            print user
             if user is None:
-                # A backend authenticated the credentials
-                print 'error no user'
+                return render(request, 'login/index.html', {'error_message': 'Wrong Username or Password'})
             elif not user.has_perm('gettrafficlights.is_driver'):
-                print 'not driver'
+                return render(request, 'login/index.html', {'error_message': "You don't have the required permissions"})
             else:
                 auth.login(request, user)
                 return redirect('map:map')

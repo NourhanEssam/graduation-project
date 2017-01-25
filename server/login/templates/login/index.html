@@ -4,20 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0">
     <title>Login</title>
-
+    {% load staticfiles %}
+    <link href="{% static 'admin/css/base.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'login/style.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'login/js/map.js' %}"></script>
 </head>
-<body>
-    <div>
-        <form action="{% url 'login:login' %}" method='POST'>
-            {% csrf_token %}
-            <div>
-                <label for='username'> Username </label>
-                <input type='text' name='Username' id='username'>
-                <label for='password'>Password </label>
-                <input type='password' name='Password' id='password'>
-                <input type='submit' value='login'>
-            </div>
-        </form>
+<body class=" login" data-admin-utc-offset="0">
+<!-- Container -->
+<div id="container">
+
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name"><a href='{% url 'login:login' %}'>Emergency Traffic Lighting System</a></h1>
+        </div>
     </div>
+    <!-- END Header -->
+
+    <!-- Content -->
+    <div id="content" class="colM">
+        <div id="content-main">
+            <form action='{% url 'login:login' %}' method="post" id="login-form"> {% csrf_token %}
+                <div class="form-row">
+                    <label class="required" for="id_username">Username:</label>
+                    <input autofocus="" id="id_username" maxlength="254" name="Username" type="text" required/>
+                </div>
+                <div class="form-row">
+                    <label class="required" for="id_password">Password:</label>
+                    <input id="id_password" name="Password" type="password" required/>
+                    <input type="hidden" name="next" value='{{ next }}'/>
+                </div>
+                {% if error_message %}
+                    <p class="error">{{ error_message }}</p>
+                {% endif %}
+                <div class="submit-row">
+                    <label>&nbsp;</label><input type="submit" value="Log in"/>
+                </div>
+            </form>
+        </div>
+        <br class="clear"/>
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
 </body>
 </html>

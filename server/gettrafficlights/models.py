@@ -55,7 +55,7 @@ class Driver(models.Model):
         )
 
     def __str__(self):
-        return self.Username
+        return self.user.username
 
 
 class EmergencyVehicle(models.Model):
@@ -64,6 +64,7 @@ class EmergencyVehicle(models.Model):
 
     def __str__(self):
         return self.Car_ID
+
 
 class Use(models.Model):
     unique_together = ('National_ID', 'Car_ID')

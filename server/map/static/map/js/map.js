@@ -102,8 +102,8 @@ function calcRoute(location) {
         data: {
             currentPosLat: currentPos.lat(),
             currentPosLng: currentPos.lng(),
-            targetLat: currentPos.lat(),
-            targetLng: currentPos.lng()},
+            targetLat: location.lat(),
+            targetLng: location.lng()},
         // what to do when the call is success
         success: function (response) {
         },

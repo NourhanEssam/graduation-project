@@ -7,21 +7,22 @@ from django.shortcuts import render
 
 def index(request):
     path = settings.GETTRAFFICLIGHTS_FOLDER+'myfile.txt'
-    lines = open(path, 'r').readlines()
+    lines = open(path, 'r').read().replace('\n', '')
     l = file_len(path)
-    i = 1
-    while i < l:
+    i = 0
+    tls = []
+    while i < l-2:
         street1 = lines[i]
         direct = lines[i + 1]
         street2 = lines[i + 2]
-        tls = []
-        i += 2
-        query = 'SELECT Intersection_ID FROM IntersectionsStreets A, B WHERE A.Street_ID = ' + street1 + 'AND B.Street_ID = ' + street2 + 'AND A.Intersection_ID = B.Intersection_ID'
-        int_id = IntersectionsStreets.objects.raw(query)
 
-        tls[i] = TrafficLight.objects.get(Direction=direct, Intersection_ID=int_id)
-        print(tls[i])
-        open(path, 'w').writelines(tls[i])
+        Queryset = IntersectionsStreets.objects.filter(Street_ID=street1).values('Intersection_ID')
+        Queryset2 = IntersectionsStreets.objects.filter(Street_ID=street2, Intersection_ID=Queryset).values('Intersection_ID')
+        Queryset3 = TrafficLight.objects.filter(Intersection_ID=Queryset2, Direction=direct).values('TL_ID')
+        for element in Queryset3:
+            tls.append(element['TL_ID'])
+        open(path, 'w').writelines(element['TL_ID'])
+        i += 2
     return render(request, 'gettrafficlights/index.html')
    # return HttpResponse("Hello, world. You're at the gettrafficlights index.")
 

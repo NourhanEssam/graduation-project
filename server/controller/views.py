@@ -1,5 +1,4 @@
 from _socket import socket
-
 from controller.models import TrafficLight
 from django.http import HttpResponse
 import re
@@ -15,8 +14,12 @@ def index(request):
 
   if 'TrafficLights' in request.session:
     TLs_IDs = request.session['TrafficLights']
-    print TLs_IDs
-    tls = ['1N', '2W', '6E', '8W', '9N']
+
+    tls = []
+    for tl_id in TLs_IDs:
+        Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID','Direction')
+        for e in Queryset:
+            tls.append(e['Intersection_ID']+e['Direction'])
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((socket.gethostname(), 12346))
@@ -25,9 +28,11 @@ def index(request):
 
     if EVconnection.recv(20) == '1':  # EV is Ready
         for tl in tls:
+            print tl
             Queryset = TrafficLight.objects.filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
             for element in Queryset:
-                tl_ip = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
+                tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
+                tl_ip = tl_ip_raw['TL_ID']
                 tl_port = 12345
                 #Testing
                 tl_ip = 'DESKTOP-55DJIJS'

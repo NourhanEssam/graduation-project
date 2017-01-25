@@ -5,6 +5,7 @@ while 1:
     s.bind((socket.gethostname(), 12345))
     s.listen(1)
     (EVconnection, EVaddress) = s.accept()
+    print  'done connection'
     EVconnection.send('1')
     data = EVconnection.recv(20)
     print data

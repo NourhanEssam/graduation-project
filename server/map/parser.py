@@ -90,9 +90,9 @@ def parse_directions(directions):
         elif 337.5 <= Bearing < 382.5:
             Output += ['S']
 
-    Output.pop(1)
+    if (Output[1] not in ["N", "S", "E", "W", "NE", "NW", "SE", "SW"]):
+        Output.pop(1)
     if (Output.count("")):
         Output.remove("")
-
 
     return Output

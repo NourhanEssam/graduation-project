@@ -17,6 +17,9 @@ def index(request):
         # start
         originLat = float(data.get('currentPosLat'))
         originLong = float(data.get('currentPosLng'))
+        #originLat = 30.064574
+        #originLong = 31.274313
+
         # destination
         destinationLat = float(data.get('targetLat'))
         destinationLong = float(data.get('targetLng'))

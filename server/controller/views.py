@@ -20,9 +20,9 @@ def index(request):
         Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID','Direction')
         for e in Queryset:
             tls.append(e['Intersection_ID']+e['Direction'])
-
+    print 'here'
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((socket.gethostname(), 12346))
+    s.bind((socket.gethostname(), 12347))
     s.listen(1)
     (EVconnection, EVaddress) = s.accept()
 
@@ -31,11 +31,11 @@ def index(request):
             print tl
             Queryset = TrafficLight.objects.filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
             for element in Queryset:
-                tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
-                tl_ip = tl_ip_raw['TL_ID']
-                tl_port = 12345
+                #tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
+                #tl_ip = tl_ip_raw['TL_ID']
+                tl_port = 12348
                 #Testing
-                tl_ip = 'DESKTOP-55DJIJS'
+                tl_ip = 'LAPTOP-S9D924P3'
                 tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 tlsocket.connect((tl_ip, tl_port))
 

@@ -1,5 +1,6 @@
 #include "tm4c123gh6pm.h"
 
+#define BufferSize 100
 //------------UART_Init------------
 // Initialize the UART for 115200 baud rate (assuming 80 MHz UART clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
@@ -25,3 +26,9 @@ void UART_OutChar(unsigned char data);
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
 void UART_OutString(unsigned char buffer[]);
+
+//------------UART_InString------------
+// Read String (NULL termination)
+// Input: none
+// Output: pointer to a NULL-terminated string
+unsigned char * UART_InString(void);

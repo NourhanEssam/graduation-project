@@ -65,3 +65,21 @@ void UART_OutString(unsigned char buffer[])
 		i++;
 	}
 }
+
+//------------UART_InString------------
+// Read String (NULL termination)
+// Input: none
+// Output: pointer to a NULL-terminated string
+/* TODO
+unsigned char * UART_InString(void)
+{
+	int size = BufferSize;
+	unsigned char buffer[size];
+	int i = 0;
+	while((buffer[i] = UART_InChar()) != 0)
+	{
+		i++;
+	}
+	return buffer;
+}
+*/

@@ -1,31 +1,0 @@
-Dependencies for Project 'Traffic_Light', Target 'TL': (DO NOT MODIFY !)
-F (.\GSM.c)(0x58B9B0DA)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --signed_chars-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C1231C3PM-o .\gsm.o --omf_browse .\gsm.crf --depend .\gsm.d)
-I (GSM.h)(0x58B9B073)
-I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C819B4)
-I (SysTick.h)(0x58B5978C)
-I (tm4c123gh6pm.h)(0x51D44682)
-I (UART.h)(0x58B9AA5E)
-F (.\main.c)(0x58B9B150)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --signed_chars-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C1231C3PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
-I (PLL.h)(0x58B59798)
-I (tm4c123gh6pm.h)(0x51D44682)
-I (GSM.h)(0x58B9B073)
-I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C819B4)
-I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C819B4)
-I (SysTick.h)(0x58B5978C)
-I (UART.h)(0x58B9AA5E)
-F (.\PLL.c)(0x58B59752)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --signed_chars-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C1231C3PM-o .\pll.o --omf_browse .\pll.crf --depend .\pll.d)
-I (PLL.h)(0x58B59798)
-I (tm4c123gh6pm.h)(0x51D44682)
-F (.\SysTick.c)(0x58B59756)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --signed_chars-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C1231C3PM-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
-I (SysTick.h)(0x58B5978C)
-I (tm4c123gh6pm.h)(0x51D44682)
-F (.\UART.c)(0x58B9AA6A)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --signed_chars-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C1231C3PM-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
-I (UART.h)(0x58B9AA5E)
-I (tm4c123gh6pm.h)(0x51D44682)
-F (.\GSM.h)(0x58B9B073)()
-F (.\PLL.h)(0x58B59798)()
-F (.\SysTick.h)(0x58B5978C)()
-F (.\tm4c123gh6pm.h)(0x51D44682)()
-F (.\UART.h)(0x58B9AA5E)()
-F (.\startup.s)(0x57017F98)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)

@@ -1,6 +1,5 @@
 #include "tm4c123gh6pm.h"
 
-#define BufferSize 100
 //------------UART_Init------------
 // Initialize the UART for 115200 baud rate (assuming 80 MHz UART clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
@@ -13,6 +12,12 @@ void UART_Init(void);
 // Input: none
 // Output: ASCII code for key typed
 unsigned char UART_InChar(void);
+
+//------------UART_InCharNonBlocking------------
+// Immediately return input or 0 if no input
+// Input: none
+// Output: ASCII code for key typed
+unsigned char UART_InCharNonBlocking(void);
 
 //------------UART_OutChar------------
 // Wait for buffer to be not full, then output

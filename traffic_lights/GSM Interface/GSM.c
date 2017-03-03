@@ -18,7 +18,7 @@ void GSM_Init(void)
 // Output: none
 void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[])
 {
-	UART_OutString("\r\nAT+CIPSTART='TCP',");	// TCP connection
+	UART_OutString("\r\nAT+CIPSTART=\"TCP\",");	// TCP connection
 	UART_OutString(Server_IP);								// Server IP
 	UART_OutString(",");											
 	UART_OutString(Server_Port);							// Server Port
@@ -30,20 +30,48 @@ void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[])
 // Output: none
 void GSM_Send(unsigned char message[])
 {
-	UART_OutString("\r\nAT+CIPSEND\r\n");
+	UART_OutString("\r\nAT+CIPSEND\r\n\r\n");
 	UART_OutString(message);
 	UART_OutString("\r\n");
 }
 
 //------------GSM_Rcv------------
 // Receive Data From an Established TCP Connection
-// Input: none
+// Don't Forget To Free The Memory Allocated When This Function Is Used
+// Input: received message buffer size
 // Output: pointer to a NULL-terminated message string 
-/* TODO
-unsigned char * GSM_Rcv(void)
+unsigned char * GSM_Rcv(unsigned int BufferSize)
 {
+	unsigned char * buffer = (unsigned char*) malloc(BufferSize);
+	unsigned char * newBuffer;
+	int j;
+	unsigned int i = 0;
+	while(i < BufferSize)
+	{
+		if((buffer[i] = UART_InCharNonBlocking()) == 0)
+		{
+			SysTick_Wait10ms(1); // modify the delay to make it reasonable
+			if((buffer[i] = UART_InCharNonBlocking()) == 0)
+			{
+				BufferSize = i+1;
+				newBuffer = (unsigned char*) malloc(BufferSize);
+				for(j = 0; j < BufferSize; j++)
+				{
+					newBuffer[j] = buffer[j];
+				}
+				free(buffer);
+				return newBuffer;
+			}
+		}
+		else
+		{
+			i++;
+		}
+	}
+	buffer[i] = 0;
+	return buffer;
 }
-*/
+
 
 //------------GSM_Close_Connection------------
 // Close The TCP Client Connection

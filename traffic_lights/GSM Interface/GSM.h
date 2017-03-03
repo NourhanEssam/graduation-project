@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+#include "SysTick.h"
 #include "UART.h"
 
 //------------GSM_Init------------
@@ -20,9 +23,10 @@ void GSM_Send(unsigned char message[]);
 
 //------------GSM_Rcv------------
 // Receive Data From an Established TCP Connection
+// Don't Forget To Free The Memory Allocated When This Function Is Used
 // Input: none
 // Output: pointer to a NULL-terminated message string 
-unsigned char * GSM_Rcv(void);
+unsigned char * GSM_Rcv(unsigned int BufferSize);
 
 //------------GSM_Close_Connection------------
 // Close The TCP Client Connection

@@ -41,6 +41,18 @@ unsigned char UART_InChar(void)
   return((unsigned char)(UART0_DR_R&0xFF));
 }
 
+//------------UART_InCharNonBlocking------------
+// Immediately return input or 0 if no input
+// Input: none
+// Output: ASCII code for key typed
+unsigned char UART_InCharNonBlocking(void){
+  if((UART1_FR_R&UART_FR_RXFE) == 0){
+    return((unsigned char)(UART1_DR_R&0xFF));
+  } else{
+    return 0;
+  }
+}
+
 //------------UART_OutChar------------
 // Wait for buffer to be not full, then output
 // Output 8-bit to serial port

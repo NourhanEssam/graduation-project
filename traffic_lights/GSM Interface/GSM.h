@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-#include "SysTick.h"
 #include "UART.h"
 
 //------------GSM_Init------------
@@ -23,13 +20,22 @@ void GSM_Send(unsigned char message[]);
 
 //------------GSM_Rcv------------
 // Receive Data From an Established TCP Connection
-// Don't Forget To Free The Memory Allocated When This Function Is Used
-// Input: none
-// Output: pointer to a NULL-terminated message string 
-unsigned char * GSM_Rcv(unsigned int BufferSize);
+// Input: buffer size, buffer to save the received NULL-terminated string  
+// Output: none
+void GSM_Rcv(unsigned char * buffer, unsigned int BufferSize);
 
 //------------GSM_Close_Connection------------
 // Close The TCP Client Connection
 // Input: none
 // Output: none
 void GSM_Close_Connection(void);
+
+//------------ATCommand------------
+// Send AT Command to the GSM module and check the response
+// Input: NULL-terminated command string, response in case of success
+// Output: 0 in case of success, 1 otherwise
+unsigned int ATCommand(unsigned char * command, unsigned char * successResponse);
+
+unsigned int string_compare(unsigned char * s1, unsigned char * s2);
+
+void string_concatination(unsigned char * s1, unsigned char * s2, unsigned char * s3, unsigned char * s4, unsigned char * s5, unsigned char * s6);

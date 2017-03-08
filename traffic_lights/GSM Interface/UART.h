@@ -1,39 +1,76 @@
 #include "tm4c123gh6pm.h"
+#include "SysTick.h"
+
+//------------UART0---------------------
+
+//------------UART0_Init------------
+// Initialize the UART0 for 115200 baud rate (assuming 80 MHz UART clock),
+// 8 bit word length, no parity bits, one stop bit, FIFOs enabled
+// Input: none
+// Output: none
+void UART0_Init(void);
+
+//------------UART0_OutChar------------
+// Wait for buffer to be not full, then output
+// Output 8-bit to serial port
+// Input: letter is an 8-bit ASCII character to be transferred
+// Output: none
+void UART0_OutChar(unsigned char data);
+
+//------------UART0_OutString------------
+// Output String (NULL termination)
+// Input: pointer to a NULL-terminated string to be transferred
+// Output: none
+void UART0_OutString(unsigned char buffer[]);
+
+//------------UART1---------------------
 
 //------------UART_Init------------
 // Initialize the UART for 115200 baud rate (assuming 80 MHz UART clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
 // Input: none
 // Output: none
-void UART_Init(void);
+void UART1_Init(void);
 
-//------------UART_InChar------------
+//------------UART1_InChar------------
 // Wait for new serial port input
 // Input: none
 // Output: ASCII code for key typed
-unsigned char UART_InChar(void);
+unsigned char UART1_InChar(void);
 
-//------------UART_InCharNonBlocking------------
+//------------UART1_InCharNonBlocking------------
 // Immediately return input or 0 if no input
 // Input: none
 // Output: ASCII code for key typed
-unsigned char UART_InCharNonBlocking(void);
+unsigned char UART1_InCharNonBlocking(void);
 
-//------------UART_OutChar------------
+//------------UART1_OutChar------------
 // Wait for buffer to be not full, then output
 // Output 8-bit to serial port
 // Input: letter is an 8-bit ASCII character to be transferred
 // Output: none
-void UART_OutChar(unsigned char data);
+void UART1_OutChar(unsigned char data);
 
-//------------UART_OutString------------
+//------------UART1_OutString------------
 // Output String (NULL termination)
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
-void UART_OutString(unsigned char buffer[]);
+void UART1_OutString(unsigned char buffer[]);
 
-//------------UART_InString------------
+//------------UART1_InString------------
 // Read String (NULL termination)
+// Input: pointer to a NULL-terminated string, buffer size
+// Output: none
+void UART1_InString(unsigned char * buffer, unsigned int BufferSize);
+
+//------------UART1_Interupt_Enable------------
+// Enable UART1 Rx Interrupt
 // Input: none
-// Output: pointer to a NULL-terminated string
-unsigned char * UART_InString(void);
+// Output: none
+void UART1_Interrupt_Enable(void);
+
+//------------UART1_Interrupt_Disable------------
+// Disable UART1 Rx Interrupt
+// Input: none
+// Output: none
+void UART1_Interrupt_Disable(void);

@@ -7,12 +7,14 @@
 void GSM_Init(void)
 {
 	int check = 0;
-	UART1_Init();																				// Initialize UART1
+	UART1_Init();																										// Initialize UART1
 	UART0_Init();
 
-	check = ATCommand("ATE0\r\n", "\r\nOK\r\n");								// Test GSM communication (Response: OK), turn echo off	
-	check = ATCommand("AT+CREG?\r\n", "\r\n+CREG: 1,1\r\nOK");	// Sim is ready and has connected to the network
-	check = ATCommand("AT+CGATT?\r\n", "\r\n+CGATT: 1\r\n"); 		// Check if SIM has internet access(Response: +CGATT:1)
+	check = ATCommand(2, "ATE0", "\r\nOK\r\n");									// Test GSM communication (Response: OK), turn echo off	
+	check = ATCommand(2, "AT+CREG?", "\r\n+CREG: 1,1\r\nOK");		// Sim is ready and has connected to the network
+	check = ATCommand(2, "AT+CREG=0", "\r\nOK\r\n");
+	check = ATCommand(2, "AT+CGATT?", "\r\n+CGATT: 1\r\n"); 		// Check if SIM has internet access(Response: +CGATT:1)
+	check = ATCommand(2, "AT+CGATT=1", "\r\nOK\r\n");
 }
 
 //------------GSM_Init------------
@@ -21,9 +23,9 @@ void GSM_Init(void)
 // Output: none
 void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[])
 {	
-	unsigned char buffer[46];
-	string_concatination("AT+CIPSTART=\"TCP\",", Server_IP, ",", Server_Port, "\r\n", buffer);
-	ATCommand(buffer, "\r\nOK\r\nCONNECT OK\r\n"); // (Response: OK\r\nCONNECT OK)
+	ATCommand(2, "AT+CIPMUX=0", "\r\nOK\r\n");				// disable multiple connections
+	ATCommand(2, "AT+CIPSTATUS", "\r\nOK\r\n");				// get connection status
+	ATCommand(5, "AT+CIPSTART=\"TCP\",", Server_IP, ",", Server_Port, "\r\nOK\r\nCONNECT\r\n"); // (Response: OK\r\nCONNECT)
 }
 
 // Send Data Using an Established TCP Connection
@@ -31,9 +33,9 @@ void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[])
 // Output: none
 void GSM_Send(unsigned char message[])
 {
-	ATCommand("AT+CIPSEND\r\n", "\r\n>\r\n");
+	ATCommand(2, "AT+CIPSEND\r\n", "\r\n>\r\n");
 	UART1_OutString(message);
-	UART1_OutString("\r\n\r\n");
+	UART1_OutChar(0x1A);
 }
 
 //------------GSM_Rcv------------
@@ -52,22 +54,29 @@ void GSM_Rcv(unsigned char * buffer, unsigned int BufferSize)
 // Output: none
 void GSM_Close_Connection(void)
 {
-	ATCommand("AT+CIPSHUT\r\n", "\r\nSHUT OK\r\n");
+	ATCommand(2, "AT+CIPSHUT\r\n", "\r\nSHUT OK\r\n");
 }
 
 //------------ATCommand------------
 // Send AT Command to the GSM module and check the response
-// Input: NULL-terminated command string, response in case of success
+// Input: NULL-terminated command strings, response in case of success
 // Output: 0 in case of success, 1 otherwise
-unsigned int ATCommand(unsigned char * command, unsigned char * successResponse)
+unsigned int ATCommand(int argc, ...)
 {
+	
+	int i;
+	va_list valist;
 	unsigned char response[30];
-	UART1_OutString(command);
-	UART0_OutString(command);
+	va_start(valist, argc);
+	for (i = 0; i < argc - 1; i++) 
+	{
+		UART1_OutString(va_arg(valist, unsigned char *));
+  }
+	UART1_OutString("\r\n");
 	SysTick_Wait10ms(200);
 	UART1_InString(response, 30);
 	
-	if(string_compare(response, successResponse))
+	if(string_compare(response, va_arg(valist, unsigned char *)))
 	{
 		return 0;
 	}
@@ -93,44 +102,4 @@ unsigned int string_compare(unsigned char * s1, unsigned char * s2)
 		i++;
 	}
 	return 0;
-}
-
-void string_concatination(unsigned char * s1, unsigned char * s2, unsigned char * s3, unsigned char * s4, unsigned char * s5, unsigned char * s6)
-{
-	int i = 0;
-	int size1, size2, size3, size4;
-	while(s1[i] != 0)
-	{
-		s6[i] = s1[i];
-		i++;
-	}
-	size1 = i;
-	i = 0;
-	while(s2[i] != 0)
-	{
-		s6[i+size1] = s2[i];
-		i++;
-	}
-	size2 = i + size1;
-	i = 0;
-	while(s3[i] != 0)
-	{
-		s6[i+size2] = s3[i];
-		i++;
-	}
-	size3 = i + size2;
-	i = 0;
-	while(s4[i] != 0)
-	{
-		s6[i+size3] = s4[i];
-		i++;
-	}
-	size4 = i + size3;
-	i = 0;
-	while(s5[i] != 0)
-	{
-		s6[i+size4] = s5[i];
-		i++;
-	}
-	s6[i+size4] = 0;
 }

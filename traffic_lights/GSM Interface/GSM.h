@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include "UART.h"
 
 //------------GSM_Init------------
@@ -32,9 +33,9 @@ void GSM_Close_Connection(void);
 
 //------------ATCommand------------
 // Send AT Command to the GSM module and check the response
-// Input: NULL-terminated command string, response in case of success
+// Input: NULL-terminated command strings, response in case of success
 // Output: 0 in case of success, 1 otherwise
-unsigned int ATCommand(unsigned char * command, unsigned char * successResponse);
+unsigned int ATCommand(int argc, ...);
 
 unsigned int string_compare(unsigned char * s1, unsigned char * s2);
 

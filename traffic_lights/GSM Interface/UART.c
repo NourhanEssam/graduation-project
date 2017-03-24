@@ -134,6 +134,7 @@ void UART1_OutString(unsigned char buffer[])
 	while(buffer[i] != 0)
 	{
 		UART1_OutChar(buffer[i]);
+		UART0_OutChar(buffer[i]);
 		i++;
 	}
 }

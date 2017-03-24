@@ -13,6 +13,12 @@ void GSM_Init(void);
 // Output: none
 void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[]);
 
+//------------GSM_Start_Server------------
+// Start TCP Server
+// Input: none
+// Output: none
+void GSM_Start_Server(void);
+
 //------------GSM_Send------------
 // Send Data Using an Established TCP Connection
 // Input: pointer to a NULL-terminated message string to be sent
@@ -35,7 +41,7 @@ void GSM_Close_Connection(void);
 // Send AT Command to the GSM module and check the response
 // Input: NULL-terminated command strings, response in case of success
 // Output: 0 in case of success, 1 otherwise
-unsigned int ATCommand(int argc, ...);
+void ATCommand(int argc, ...);
 
 unsigned int string_compare(unsigned char * s1, unsigned char * s2);
 

@@ -6,23 +6,40 @@
 // Output: none
 void GSM_Init(void)
 {
-	int check = 0;
 	UART1_Init();																										// Initialize UART1
 	UART0_Init();
 
-	check = ATCommand(2, "ATE0", "\r\nOK\r\n");									// Test GSM communication (Response: OK), turn echo off	
-	check = ATCommand(2, "AT+CREG?", "\r\n+CREG: 1,1\r\nOK");		// Sim is ready and has connected to the network
-	check = ATCommand(2, "AT+CREG=0", "\r\nOK\r\n");
-	check = ATCommand(2, "AT+CGATT?", "\r\n+CGATT: 1\r\n"); 		// Check if SIM has internet access(Response: +CGATT:1)
-	check = ATCommand(2, "AT+CGATT=1", "\r\nOK\r\n");
+	ATCommand(1, "ATE0", "\r\nOK\r\n");									// Test GSM communication (Response: OK), turn echo off	
+	ATCommand(1, "AT+CREG?", "\r\n+CREG: 0,1\r\nOK");		// Sim is ready and has connected to the network
+	ATCommand(1, "AT+CREG=0", "\r\nOK\r\n");
+	ATCommand(1, "AT+CGATT?", "\r\n+CGATT: 1\r\n"); 		// Check if SIM has internet access(Response: +CGATT:1)
 }
 
-//------------GSM_Init------------
+//------------GSM_Start_Server------------
+// Start TCP Server
+// Input: none
+// Output: none
+void GSM_Start_Server(void)
+{
+	ATCommand(2, "AT+CIPSHUT\r\n", "\r\nSHUT OK\r\n");
+	ATCommand(2, "AT+CIPMUX=0\r\n", "\r\nOK\r\n");
+	ATCommand(2, "AT+CGATT=1", "\r\nOK\r\n");
+	//ATCommand(2, "AT+CSTT=\"www\",\"\",\"\"", "\r\nOK\r\n");
+	ATCommand(2, "AT+CSTT", "\r\nOK\r\n");
+	ATCommand(2, "AT+CIICR", "\r\nOK\r\n");
+	ATCommand(2, "AT+CIFSR", "\r\nOK\r\n");
+	ATCommand(2, "AT+CIPSERVER=1,32000", "\r\nSERVER OK\r\n");
+}
+
+//------------GSM_Connect_To------------
 // Start TCP Client Connection
 // Input: The Server IP, and Port Number
 // Output: none
 void GSM_Connect_To(unsigned char Server_IP[], unsigned char Server_Port[])
 {	
+	ATCommand(2, "AT+CSTT", "\r\nOK\r\n");
+	ATCommand(2, "AT+CIICR", "\r\nOK\r\n");
+	ATCommand(2, "AT+CIFSR", "\r\n");
 	ATCommand(2, "AT+CIPMUX=0", "\r\nOK\r\n");				// disable multiple connections
 	ATCommand(2, "AT+CIPSTATUS", "\r\nOK\r\n");				// get connection status
 	ATCommand(5, "AT+CIPSTART=\"TCP\",", Server_IP, ",", Server_Port, "\r\nOK\r\nCONNECT\r\n"); // (Response: OK\r\nCONNECT)
@@ -61,29 +78,17 @@ void GSM_Close_Connection(void)
 // Send AT Command to the GSM module and check the response
 // Input: NULL-terminated command strings, response in case of success
 // Output: 0 in case of success, 1 otherwise
-unsigned int ATCommand(int argc, ...)
+void ATCommand(int argc, ...)
 {
-	
+	unsigned char buffer_rcv[100];
 	int i;
 	va_list valist;
-	unsigned char response[30];
 	va_start(valist, argc);
-	for (i = 0; i < argc - 1; i++) 
+	for (i = 0; i < argc; i++) 
 	{
 		UART1_OutString(va_arg(valist, unsigned char *));
   }
 	UART1_OutString("\r\n");
-	SysTick_Wait10ms(200);
-	UART1_InString(response, 30);
-	
-	if(string_compare(response, va_arg(valist, unsigned char *)))
-	{
-		return 0;
-	}
-	else
-	{
-		return 1;
-	}
 }
 
 unsigned int string_compare(unsigned char * s1, unsigned char * s2)

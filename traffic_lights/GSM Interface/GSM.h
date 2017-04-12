@@ -29,7 +29,7 @@ void GSM_Send(unsigned char message[]);
 // Receive Data From an Established TCP Connection
 // Input: buffer size, buffer to save the received NULL-terminated string  
 // Output: none
-void GSM_Rcv(unsigned char * buffer, unsigned int BufferSize);
+void GSM_Rcv(struct Buffer * b);
 
 //------------GSM_Close_Connection------------
 // Close The TCP Client Connection
@@ -43,6 +43,4 @@ void GSM_Close_Connection(void);
 // Output: 0 in case of success, 1 otherwise
 void ATCommand(int argc, ...);
 
-unsigned int string_compare(unsigned char * s1, unsigned char * s2);
-
-void string_concatination(unsigned char * s1, unsigned char * s2, unsigned char * s3, unsigned char * s4, unsigned char * s5, unsigned char * s6);
+unsigned int string_compare(struct Buffer * b, unsigned char * s);

@@ -1,5 +1,40 @@
 #include "UART.h"
 
+//-----------Circular Buffer------------
+
+void UART1_InBuffer(struct Buffer * b)
+{
+	b->head = b->tail;
+	while(1)
+	{
+		if((b->buffer[b->tail] = UART1_InCharNonBlocking()) == 0)
+		{
+			SysTick_Wait10ms(10); // modify the delay to make it reasonable
+			if((b->buffer[b->tail] = UART1_InCharNonBlocking()) == 0)
+			{
+				break;
+			}
+		}
+		else
+		{
+			b->tail = (b->tail + 1) % BUFFER_SIZE;
+		}
+	}
+	b->buffer[b->tail] = 0;
+}
+
+void Read_Buffer(struct Buffer * b, unsigned char * c)
+{
+	int i = 0;
+	while(b->tail != b->head)
+	{
+		c[i] = b->buffer[b->head];
+		b->head = (b->head + 1) % BUFFER_SIZE;
+		i++;
+	}
+	c[i] = 0;
+}
+
 //------------UART0---------------------
 
 //------------UART0_Init------------
@@ -72,7 +107,6 @@ void UART1_Init(void)
 	UART1_CTL_R &= ~UART_CTL_UARTEN;      // Disable UART
 	
 	UART1_IFLS_R &= ~0x00000038;
-	UART1_IM_R &= ~0x00000010;
 	// Baud16/16 = (Bus clock frequency)/(16*divider) where divider is the desired baud rate
 	// 80,000,000/(16*115200) = 43.40277778
 	// m = int(Baud16/16) = 43
@@ -89,6 +123,8 @@ void UART1_Init(void)
 	GPIO_PORTB_PCTL_R &= 0xFFFFFF00;
 	GPIO_PORTB_PCTL_R |= 0x00000011;			// Enable UART0 Rx, Tx on pins B0, B1	
 	GPIO_PORTB_AMSEL_R &= ~0x03;					// Disable analog functionality on pins B0, B1
+	
+	NVIC_EN0_R |= 0x00400000;
 }
 
 //------------UART1_InChar------------
@@ -134,7 +170,7 @@ void UART1_OutString(unsigned char buffer[])
 	while(buffer[i] != 0)
 	{
 		UART1_OutChar(buffer[i]);
-		UART0_OutChar(buffer[i]);
+		//UART0_OutChar(buffer[i]);
 		i++;
 	}
 }
@@ -143,10 +179,10 @@ void UART1_OutString(unsigned char buffer[])
 // Read String (NULL termination)
 // Input: pointer to a NULL-terminated string, buffer size
 // Output: none
-void UART1_InString(unsigned char * buffer, unsigned int BufferSize)
+void UART1_InString(unsigned char * buffer, unsigned int size)
 {
 	unsigned int i = 0;
-	while(i < BufferSize)
+	while(i < size)
 	{
 		if((buffer[i] = UART1_InCharNonBlocking()) == 0)
 		{
@@ -162,7 +198,7 @@ void UART1_InString(unsigned char * buffer, unsigned int BufferSize)
 		}
 	}
 	buffer[i] = 0;
-	UART0_OutString(buffer);
+	//UART0_OutString(buffer);
 }
 
 
@@ -177,6 +213,8 @@ void UART1_InString(unsigned char * buffer, unsigned int BufferSize)
 void UART1_Interrupt_Enable(void)
 {
 	UART1_IM_R |= 0x00000010;
+	NVIC_PRI1_R &= ~0x00E00000;
+	NVIC_EN0_R |= 0x00000040;
 }
 
 //------------UART1_Interrupt_Disable------------
@@ -186,4 +224,5 @@ void UART1_Interrupt_Enable(void)
 void UART1_Interrupt_Disable(void)
 {
 	UART1_IM_R &= ~0x00000010;
+	NVIC_DIS0_R &= ~0x00000040;
 }

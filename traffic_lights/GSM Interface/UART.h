@@ -1,6 +1,20 @@
 #include "tm4c123gh6pm.h"
 #include "SysTick.h"
 
+#define BUFFER_SIZE 100
+
+//-----------Circular Buffer------------
+
+struct Buffer {
+   unsigned char  buffer[BUFFER_SIZE];
+   unsigned int   head;
+   unsigned int   tail;
+};
+
+void UART1_InBuffer(struct Buffer * b);
+
+void Read_Buffer(struct Buffer * b, unsigned char * c);
+
 //------------UART0---------------------
 
 //------------UART0_Init------------
@@ -61,7 +75,7 @@ void UART1_OutString(unsigned char buffer[]);
 // Read String (NULL termination)
 // Input: pointer to a NULL-terminated string, buffer size
 // Output: none
-void UART1_InString(unsigned char * buffer, unsigned int BufferSize);
+void UART1_InString(unsigned char * buffer, unsigned int size);
 
 //------------UART1_Interupt_Enable------------
 // Enable UART1 Rx Interrupt

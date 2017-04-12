@@ -59,9 +59,9 @@ void GSM_Send(unsigned char message[])
 // Receive Data From an Established TCP Connection
 // Input: buffer size, buffer to save the received NULL-terminated string  
 // Output: none
-void GSM_Rcv(unsigned char * buffer, unsigned int BufferSize)
+void GSM_Rcv(struct Buffer * b)
 {
-	UART1_InString(buffer, BufferSize);
+	UART1_InBuffer(b);
 }
 
 
@@ -80,7 +80,6 @@ void GSM_Close_Connection(void)
 // Output: 0 in case of success, 1 otherwise
 void ATCommand(int argc, ...)
 {
-	unsigned char buffer_rcv[100];
 	int i;
 	va_list valist;
 	va_start(valist, argc);
@@ -91,16 +90,18 @@ void ATCommand(int argc, ...)
 	UART1_OutString("\r\n");
 }
 
-unsigned int string_compare(unsigned char * s1, unsigned char * s2)
+unsigned int string_compare(struct Buffer * b, unsigned char * s)
 {
 	int i = 0;
-	while(s1[i] == s2[i])
+	unsigned char buffer[BUFFER_SIZE];
+	Read_Buffer(b, buffer);
+	while(buffer[i] == s[i])
 	{
-		if(s1[i] == 0 && s2[i] == 0)
+		if(buffer[i] == 0 && s[i] == 0)
 		{
 			return 1;
 		}
-		else if(s1[i] == 0 || s2[i] == 0)
+		else if(buffer[i] == 0 || s[i] == 0)
 		{
 			return 0;
 		}

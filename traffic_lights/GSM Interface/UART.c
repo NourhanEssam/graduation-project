@@ -9,11 +9,8 @@ void UART1_InBuffer(struct Buffer * b)
 	{
 		if((b->buffer[b->tail] = UART1_InCharNonBlocking()) == 0)
 		{
-			SysTick_Wait10ms(10); // modify the delay to make it reasonable
-			if((b->buffer[b->tail] = UART1_InCharNonBlocking()) == 0)
-			{
-				break;
-			}
+			break;
+			
 		}
 		else
 		{

@@ -14,12 +14,13 @@
 #define GSM_S10 10 	// shut down
 #define GSM_S11 11 	// initiate send message
 #define GSM_S12 12 	// send message
+#define GSM_INIT 13 
 
 // global variables
 struct Buffer buffer_rcv;
 
 unsigned int Current_State, Next_State;
-unsigned char Server_IP[18] = "\"41.234.41.200\"";
+unsigned char Server_IP[16] = "\"itls.dynu.net\"";
 unsigned char Server_Port[8] = "\"31001\"";
 
 // basic functions defined at end of startup.s
@@ -39,8 +40,7 @@ void UART1_Handler(void)
 
 int main(void)
 {
-//	unsigned char buffer[100];
-	Next_State = GSM_S0;
+	Next_State = GSM_INIT;
 	PLL_Init();
 	SysTick_Init();
 	//UART0_Init();
@@ -67,6 +67,10 @@ void GSM_FSM(void)
 	Current_State = Next_State;
 	switch(Current_State)
 	{
+		case GSM_INIT:
+			ATCommand(1, "ATE0");	// Test Connection and Turn off echo back
+			Next_State = GSM_S0;
+			break;
 		case GSM_S0:
 			ATCommand(1, "ATE0");	// Test Connection and Turn off echo back
 			Next_State = GSM_S1;

@@ -6,10 +6,10 @@
 
 #include "tm4c123gh6pm.h"
 
-#define North 	(*((volatile unsigned long *)0x40005080)) // PB2, PB3, PB4
+#define North 	(*((volatile unsigned long *)0x40005070)) // PB2, PB3, PB4
 #define West		(*((volatile unsigned long *)0x40005380)) // PB5, PB6, PB7
 #define East 		(*((volatile unsigned long *)0x4002401C)) // PE0, PE1, PE2
-#define South 	(*((volatile unsigned long *)0x40024020)) // PE3, PE4, PE5
+#define South 	(*((volatile unsigned long *)0x400240E0)) // PE3, PE4, PE5
 
 void Lights_Init(void);
 void North_Green_On(void);

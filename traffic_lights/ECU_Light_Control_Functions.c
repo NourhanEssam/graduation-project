@@ -71,7 +71,7 @@ void West_Red_On(void)
 	West = 0x80;
 }
 
-void West_Red_Off(void)
+void West_Off(void)
 {
 	// Pins PB5, PB6, PB7 = 0 (off)
 	West = 0;

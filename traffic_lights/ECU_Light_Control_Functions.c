@@ -25,144 +25,108 @@ void Lights_Init(void)
 
 void North_Green_On(void)
 {
+	// Pins PB3, PB4 (off)
 	// Pin PB2 = 1 (on)
-	North_Green = 0xFF;
-}
-
-void North_Green_Off(void)
-{
-	// Pin PB2 = 0 (off)
-	North_Green = 0;
+	North = 0x04;
 }
 
 void North_Orange_On(void)
 {
+	// Pins PB2, PB4 (off)
 	// Pin PB3 = 1 (on)
-	North_Orange = 0xFF;
-}
-
-void North_Orange_Off(void)
-{
-	// Pin PB3 = 0 (off)
-	North_Orange = 0;
+	North = 0x08;
 }
 
 void North_Red_On(void)
 {
+	// Pins PB2, PB3 (off)
 	// Pin PB4 = 1 (on)
-	North_Red = 0xFF;
+	North = 0x10;
 }
 
-void North_Red_Off(void)
+void North_Off(void)
 {
-	// Pin PB4 = 0 (off)
-	North_Red = 0;
+	// Pins PB2, PB3, PB4 = 0 (off)
+	North = 0;
 }
 
 void West_Green_On(void)
 {
+	// Pins PB6, PB7 = 0 (off)
 	// Pin PB5 = 1 (on)
-	West_Green = 0xFF;
-}
-
-void West_Green_Off(void)
-{
-	// Pin PB5 = 0 (off)
-	West_Green = 0;
+	West = 0x20;
 }
 
 void West_Orange_On(void)
 {
+	// Pins PB5, PB7 = 0 (off)
 	// Pin PB6 = 1 (on)
-	West_Orange = 0xFF;
-}
-
-void West_Orange_Off(void)
-{
-	// Pin PB6 = 0 (off)
-	West_Orange = 0;
+	West = 0x40;
 }
 
 void West_Red_On(void)
 {
+	// Pins PB5, PB6 = 0 (off)
 	// Pin PB7 = 1 (on)
-	West_Red = 0xFF;
+	West = 0x80;
 }
 
 void West_Red_Off(void)
 {
-	// Pin PB7 = 0 (off)
-	West_Red = 0;
+	// Pins PB5, PB6, PB7 = 0 (off)
+	West = 0;
 }
 
 void East_Green_On(void)
 {
+	// Pins PE1, PE2 = 0 (off)
 	// Pin PE0 = 1 (on)
-	East_Green = 0xFF;
-}
-
-void East_Green_Off(void)
-{
-	// Pin PE0 = 0 (off)
-	East_Green = 0;
+	East = 0x01;
 }
 
 void East_Orange_On(void)
 {
+	// Pins PE0, PE2 = 0 (off)
 	// Pin PE1 = 1 (on)
-	East_Orange = 0xFF;
-}
-
-void East_Orange_Off(void)
-{
-	// Pin PE1 = 0 (off)
-	East_Orange = 0;
+	East = 0x02;
 }
 
 void East_Red_On(void)
 {
+	// Pins PE0, PE1 = 0 (off)
 	// Pin PE2 = 1 (on)
-	East_Red = 0xFF;
+	East = 0x04;
 }
 
-void East_Red_Off(void)
+void East_Off(void)
 {
-	// Pin PE2 = 0 (off)
-	East_Red = 0;
+	// Pins PE0, PE1, PE2 = 0 (off)
+	East = 0;
 }
 
 void South_Green_On(void)
 {
+	// Pins PE4, PE5 = 0 (off)
 	// Pin PE3 = 1 (on)
-	South_Green = 0xFF;
-}
-
-void South_Green_Off(void)
-{
-	// Pin PE3 = 0 (off)
-	South_Green = 0;
+	South = 0x08;
 }
 
 void South_Orange_On(void)
 {
+	// Pins PE3, PE5 = 0 (off)
 	// Pin PE4 = 1 (on)
-	South_Orange = 0xFF;
-}
-
-void South_Orange_Off(void)
-{
-	// Pin PE4 = 0 (off)
-	South_Orange = 0;
+	South = 0x10;
 }
 
 void South_Red_On(void)
 {
+	// Pins PE3, PE4 = 0 (off)
 	// Pin PE5 = 1 (on)
-	South_Red = 0xFF;
+	South = 0x20;
 }
 
-void South_Red_Off(void)
+void South_Off(void)
 {
-	// Pin PE5 = 0 (off)
-	South_Red = 0;
+	// Pins PE3, PE4, PE5 = 0 (off)
+	South = 0;
 }

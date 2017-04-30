@@ -6,8 +6,10 @@ Intelligent Traffic Lights System for Emergency Vehicles Design
 ### Getting Started:
 
 1- Connect the BeagleBone to the Laptop using the usb cable
+
 2- Open the start.htm file and follow the instructions
-3- If you faced a problem installing the drivers follow these instructions and then try installing it again:
+
+3- If you are having a problem installing the drivers follow these instructions and then try installing it again:
 https://www.element14.com/community/community/designcenter/single-board-computers/next-gen_beaglebone/blog/2016/11/14/beagle-bone-black-window-10-driver-fix
 
 ### For network sharing through Laptop: 

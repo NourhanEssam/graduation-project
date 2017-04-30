@@ -30,7 +30,11 @@ http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
 4- on the beaglebone type tightvnc in the terminal and enter a new password if its the first time to use it (the current tightvnc password is eslamsamir)
 
-5- run the following command on the BeagleBone terminal tightvncserver :1 geometry 1920x1080 -depth 24 -dpi 96
+5- run the following commands on the BeagleBone terminal: 
+
+tightvncserver
+
+tightvncserver :1 geometry 1920x1080 -depth 24 -dpi 96
 
 6- open tightvnc on the laptop and connect to the ip address 192.168.7.2:1 and enter the password you entered in the BeagleBone terminal (eslamsamir)
 

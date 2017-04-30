@@ -12,6 +12,8 @@ Intelligent Traffic Lights System for Emergency Vehicles Design
 3- If you are having a problem installing the drivers follow these instructions and then try installing it again:
 https://www.element14.com/community/community/designcenter/single-board-computers/next-gen_beaglebone/blog/2016/11/14/beagle-bone-black-window-10-driver-fix
 
+4- Never disconnect the BeagleBone from the power source without shutting it down first. You have to use the shutdown command or use the power button.
+
 ### For network sharing through Laptop: 
 
 connect the BeagleBone with the Laptop though an ethernet cable and follow these instructions:

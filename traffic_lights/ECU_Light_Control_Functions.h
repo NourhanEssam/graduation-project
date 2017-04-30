@@ -1,25 +1,23 @@
-// B 0,1,2 is North 
-// B 3,4,5 is West
+// B 2,3,4 is North 
+// B 5,6,7 is West
 // E 0,1,2 is East
 // E 3,4,5 is South
 // Green, Orange and Red respectively
 
-#define North_Port GPIO_PORTB_BASE
-#define West_Port GPIO_PORTB_BASE
-#define East_Port GPIO_PORTE_BASE
-#define South_Port GPIO_PORTE_BASE
-#define North_Green GPIO_PIN_0
-#define North_Orange GPIO_PIN_1
-#define North_Red GPIO_PIN_2
-#define West_Green GPIO_PIN_3
-#define West_Orange GPIO_PIN_4
-#define West_Red GPIO_PIN_5
-#define East_Green GPIO_PIN_0
-#define East_Orange GPIO_PIN_1
-#define East_Red GPIO_PIN_2
-#define South_Green GPIO_PIN_3
-#define South_Orange GPIO_PIN_4
-#define South_Red GPIO_PIN_5
+#include "tm4c123gh6pm.h"
+
+#define North_Green 	(*((volatile unsigned long *)0x40005010)) // PB2
+#define North_Orange 	(*((volatile unsigned long *)0x40005020)) // PB3
+#define North_Red 		(*((volatile unsigned long *)0x40005040)) // PB4
+#define West_Green 		(*((volatile unsigned long *)0x40005080)) // PB5
+#define West_Orange 	(*((volatile unsigned long *)0x40005100)) // PB6
+#define West_Red 			(*((volatile unsigned long *)0x40005200)) // PB7
+#define East_Green 		(*((volatile unsigned long *)0x40024004)) // PE0
+#define East_Orange 	(*((volatile unsigned long *)0x40024008)) // PE1
+#define East_Red 			(*((volatile unsigned long *)0x40024010)) // PE2
+#define South_Green 	(*((volatile unsigned long *)0x40024020)) // PE3
+#define South_Orange 	(*((volatile unsigned long *)0x40024040)) // PE4
+#define South_Red 		(*((volatile unsigned long *)0x40024080)) // PE5
 
 void Lights_Init(void);
 void North_Green_On(void);

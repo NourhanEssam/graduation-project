@@ -1,265 +1,168 @@
-#pragma once
 #include "ECU_Light_Control_Functions.h"
 
 
 void Lights_Init(void)
 {
+	unsigned long volatile delay;
+	// PORTB Init Pins 2 ---> 7
+	SYSCTL_RCGC2_R |= 0x02;           // Port B clock
+  delay = SYSCTL_RCGC2_R;           // wait 3-5 bus cycles
+	GPIO_PORTB_DIR_R |= 0xFC;					// Enable as output
+	GPIO_PORTB_AFSEL_R &= ~0xFC;      // not alternative
+  GPIO_PORTB_AMSEL_R &= ~0xFC;      // no analog
+  GPIO_PORTB_PCTL_R &= ~0xFFFFFF00; // bits for PB2 ---> PB7
+	GPIO_PORTB_DEN_R |= 0xFC;					// Enable Digital Function
 	
-	// Enable the peripherals themselves
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-	
-	//Check if B is working (wait till its ready)
-	while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB))
-    {
-    }
-	
-	// Check if E is working (wait till its ready)
-	while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
-    {
-    }
+	// PORTE Init Pins 0 ---> 5
+	SYSCTL_RCGC2_R |= 0x10;           // Port E clock
+  delay = SYSCTL_RCGC2_R;           // wait 3-5 bus cycles
+	GPIO_PORTE_DIR_R |= 0x3F;					// Enable as output
+	GPIO_PORTE_AFSEL_R &= ~0x3F;      // not alternative
+  GPIO_PORTE_AMSEL_R &= ~0x3F;      // no analog
+  GPIO_PORTE_PCTL_R &= ~0x00FFFFFF; // bits for PE0	---> PE5
+	GPIO_PORTE_DEN_R |= 0x3F;					// Enable Digital Function
 }
-
-
-
 
 void North_Green_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Green);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(North_Port, North_Green, North_Green);
-
+	// Pin PB2 = 1 (on)
+	North_Green = 0xFF;
 }
 
 void North_Green_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Green);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(North_Port, North_Green, 0);
-
+	// Pin PB2 = 0 (off)
+	North_Green = 0;
 }
 
 void North_Orange_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Orange);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(North_Port, North_Orange, North_Orange);
-
+	// Pin PB3 = 1 (on)
+	North_Orange = 0xFF;
 }
 
 void North_Orange_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Orange);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(North_Port, North_Orange, 0);
-
+	// Pin PB3 = 0 (off)
+	North_Orange = 0;
 }
 
 void North_Red_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Red);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(North_Port, North_Red, North_Red);
-
+	// Pin PB4 = 1 (on)
+	North_Red = 0xFF;
 }
 
 void North_Red_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(North_Port, North_Red);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(North_Port, North_Red, 0);
-
+	// Pin PB4 = 0 (off)
+	North_Red = 0;
 }
 
 void West_Green_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Green);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(West_Port, West_Green, West_Green);
-
+	// Pin PB5 = 1 (on)
+	West_Green = 0xFF;
 }
 
 void West_Green_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Green);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(West_Port, West_Green, 0);
-
+	// Pin PB5 = 0 (off)
+	West_Green = 0;
 }
 
 void West_Orange_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Orange);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(West_Port, West_Orange, West_Orange);
-
+	// Pin PB6 = 1 (on)
+	West_Orange = 0xFF;
 }
 
 void West_Orange_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Orange);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(West_Port, West_Orange, 0);
-
+	// Pin PB6 = 0 (off)
+	West_Orange = 0;
 }
 
 void West_Red_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Red);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(West_Port, West_Red, West_Red);
-
+	// Pin PB7 = 1 (on)
+	West_Red = 0xFF;
 }
 
 void West_Red_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(West_Port, West_Red);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(West_Port, West_Red, 0);
-
+	// Pin PB7 = 0 (off)
+	West_Red = 0;
 }
 
 void East_Green_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Green);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(East_Port, East_Green, East_Green);
-
+	// Pin PE0 = 1 (on)
+	East_Green = 0xFF;
 }
 
 void East_Green_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Green);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(East_Port, East_Green, 0);
-
+	// Pin PE0 = 0 (off)
+	East_Green = 0;
 }
 
 void East_Orange_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Orange);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(East_Port, East_Orange, East_Orange);
-
+	// Pin PE1 = 1 (on)
+	East_Orange = 0xFF;
 }
 
 void East_Orange_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Orange);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(East_Port, East_Orange, 0);
-
+	// Pin PE1 = 0 (off)
+	East_Orange = 0;
 }
 
 void East_Red_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Red);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(East_Port, East_Red, East_Red);
-
+	// Pin PE2 = 1 (on)
+	East_Red = 0xFF;
 }
 
 void East_Red_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(East_Port, East_Red);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(East_Port, East_Red, 0);
-
+	// Pin PE2 = 0 (off)
+	East_Red = 0;
 }
 
 void South_Green_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Green);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(South_Port, South_Green, South_Green);
-
+	// Pin PE3 = 1 (on)
+	South_Green = 0xFF;
 }
 
 void South_Green_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Green);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(South_Port, South_Green, 0);
-
+	// Pin PE3 = 0 (off)
+	South_Green = 0;
 }
 
 void South_Orange_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Orange);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(South_Port, South_Orange, South_Orange);
-
+	// Pin PE4 = 1 (on)
+	South_Orange = 0xFF;
 }
 
 void South_Orange_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Orange);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(South_Port, South_Orange, 0);
-
+	// Pin PE4 = 0 (off)
+	South_Orange = 0;
 }
 
 void South_Red_On(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Red);
-	
-	// Pin output = 1 (on)
-	GPIOPinWrite(South_Port, South_Red, South_Red);
-
+	// Pin PE5 = 1 (on)
+	South_Red = 0xFF;
 }
 
 void South_Red_Off(void)
 {
-	// Init it as output bit
-	GPIOPinTypeGPIOOutput(South_Port, South_Red);
-	
-	// Pin output = 0 (off)
-	GPIOPinWrite(South_Port, South_Red, 0);
-
+	// Pin PE5 = 0 (off)
+	South_Red = 0;
 }
-

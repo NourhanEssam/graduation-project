@@ -3,13 +3,22 @@ Intelligent Traffic Lights System for Emergency Vehicles Design
 
 ## BeagleBone Black Instructions:
 
+### Getting Started:
+
+1- Connect the BeagleBone to the Laptop using the usb cable
+2- Open the start.htm file and follow the instructions
+3- If you faced a problem installing the drivers follow these instructions and then try installing it again:
+https://www.element14.com/community/community/designcenter/single-board-computers/next-gen_beaglebone/blog/2016/11/14/beagle-bone-black-window-10-driver-fix
+
 ### For network sharing through Laptop: 
 
+connect the BeagleBone with the Laptop though an ethernet cable and follow these instructions:
 http://lanceme.blogspot.com.eg/2013/06/windows-7-internet-sharing-for.html
 
 ### For using the Laptop as a display:
 
-1- install putty on the Laptop to open BeagleBone terminal through ssh: http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+1- install putty on the Laptop to open BeagleBone terminal through ssh:
+http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
 2- install tightvnc on the Laptop: http://www.tightvnc.com/download.php
 

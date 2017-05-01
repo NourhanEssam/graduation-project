@@ -4,6 +4,9 @@
 // E 3,4,5 is South
 // Green, Orange and Red respectively
 
+#ifndef __ECU_LIGHT_CONTROL_FUNCTIONS__
+#define __ECU_LIGHT_CONTROL_FUNCTIONS__
+
 #include "tm4c123gh6pm.h"
 
 #define North 	(*((volatile unsigned long *)0x40005070)) // PB2, PB3, PB4
@@ -43,3 +46,5 @@ void Orange_Except(unsigned char direction);
 // input: unsigned char ('N', 'S', 'E', 'W')
 // output: None
 void Green_Direction(unsigned char direction);
+
+#endif

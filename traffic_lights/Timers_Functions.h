@@ -1,3 +1,10 @@
+#ifndef __TIMERS_FUNCTIONS__
+#define __TIMERS_FUNCTIONS__
+
+#include "tm4c123gh6pm.h"
+
+static unsigned int timer3A = 0;
+
 void SysTick_Init(void);
 void SysTick_Wait(unsigned long delay);
 void SysTick_delay10MS(unsigned long delay);
@@ -17,3 +24,6 @@ void timer2A_delayMs(int ttime);
 void timer3A_init(unsigned long clk);
 void timer3A_disable(void);
 void timer3A_delayMs(int ttime);
+void timer3A_resume(void);
+
+#endif

@@ -1,4 +1,7 @@
 #include "ECU_Light_Control_Functions.h"
+#include "Timers_Functions.h"
+#include "GSM_Interfaces.h"
+#include "PLL.h"
 
 #define ES0 0 // same dir? No -> ES1, Yes -> ES4
 #define ES1 1 // orange 5 seconds & turn off counter -> ES2
@@ -7,15 +10,21 @@
 #define ES4 4 // orange 5 seconds in all directions except emergency direction - > ES5
 #define ES5 5 // turn off counter - wait for car -> ES6
 #define ES6 6 // State = Next
+#define idle 7 // waiting state
 
 void EmergencyHandler(void);
 
 unsigned char emergency_dir, lights_dir;
-unsigned int Current_EState, Next_EState;
+unsigned int Current_State, Next_State, Saved_State;
 
 int main(void){
 	Lights_Init();
-	Next_EState = ES0;
+	PLL_Init();
+	init_gsm_control();
+	timer2A_init(80000000);
+	timer3A_init(80000000);
+	
+	Next_State = ES0;
 	while(1)
 	{
 		/*
@@ -37,54 +46,54 @@ int main(void){
 		South_Red_On();
 		South_Off();
 		*/
+		EmergencyHandler();
 	}
 }
 
 void EmergencyHandler()
 {
-	Current_EState = Next_EState;
-	switch(Current_EState)
+	Current_State = Next_State;
+	switch(Current_State)
 	{
 		case ES0:
 			if(emergency_dir == lights_dir)
 			{
-				Next_EState = ES4;
+				Next_State = ES4;
 			}
 			else
 			{
-				Next_EState = ES1;
+				Next_State = ES1;
 			}
-			// call the FSM again
 			break;
 		case ES1:
 			Orange_Direction(lights_dir);
-			Next_EState = ES2;
+			Next_State = ES2;
 			// pause Lights counters
-			// run 5 seconds timer
+			timer2A_delayMs(5000);
 			break;
 		case ES2:
 			Green_Direction(emergency_dir);
-			Next_EState = ES3;
-			// wait until a signal from Server is received
+			Next_State = idle; // wait until a signal from Server is received
 			break;
 		case ES3:
-			Next_EState = ES0;
-			// resume Lights counters
+			Next_State = Saved_State; // return to normal flow (before emergency)
+			timer3A_resume();
 			break;
 		case ES4:
 			Orange_Except(emergency_dir);
-			Next_EState = ES5;
+			Next_State = ES5;
 			// pause Lights counters
-			// run 5 seconds timer
+			timer2A_delayMs(5000);
 			break;
 		case ES5:
 			Green_Direction(emergency_dir);
-			Next_EState = ES3;
-			// wait until a signal from Server is received
+			Next_State = idle; // wait until a signal from Server is received
 			break;
 		case ES6:
-			Next_EState = ES0;
-			// reset counters and call Lights FSM
+			Next_State = Saved_State; // return to normal flow
+			break;
+		case idle:
+			timer2A_delayMs(1000); // when the vehical interrupt arrives it should change the next state
 			break;
 	}
 }

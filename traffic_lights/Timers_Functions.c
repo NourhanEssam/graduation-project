@@ -1,4 +1,4 @@
-#include "..//tm4c123gh6pm.h"
+#include "Timers_Functions.h"
 
 void SysTick_Init(void){
   NVIC_ST_CTRL_R = 0;
@@ -73,7 +73,7 @@ void timer1A_delayMs(int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER1_RIS_R & 0x1) == 0);
-      TIMER1_ICR_R;
+      TIMER1_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 
@@ -96,7 +96,7 @@ void timer2A_delayMs(int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER2_RIS_R & 0x1) == 0);
-      TIMER2_ICR_R;
+      TIMER2_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 
@@ -118,7 +118,16 @@ void timer3A_disable(void){
 void timer3A_delayMs(int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
-      while ((TIMER3_RIS_R & 0x1) == 0);
-      TIMER3_ICR_R;
+      while ((TIMER3_RIS_R & 0x1) == 0) timer3A = ttime - i;
+      TIMER3_ICR_R = TIMER_ICR_TATOCINT;
     }
+}
+
+void timer3A_resume()
+{
+	int i;
+	for(i = 0; i < timer3A; i++) { 
+		while ((TIMER3_RIS_R & 0x1) == 0);
+		TIMER3_ICR_R = TIMER_ICR_TATOCINT;
+	}
 }

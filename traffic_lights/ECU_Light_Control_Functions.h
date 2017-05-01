@@ -28,3 +28,18 @@ void South_Green_On(void);
 void South_Orange_On(void);
 void South_Red_On(void);
 void South_Off(void);
+
+// Orange on in this direction
+// input: unsigned char ('N', 'S', 'E', 'W')
+// output: None
+void Orange_Direction(unsigned char direction);
+
+// Orange on in all directions except this one
+// input: unsigned char ('N', 'S', 'E', 'W')
+// output: None
+void Orange_Except(unsigned char direction);
+
+// Green on in this direction, Red in all other directions
+// input: unsigned char ('N', 'S', 'E', 'W')
+// output: None
+void Green_Direction(unsigned char direction);

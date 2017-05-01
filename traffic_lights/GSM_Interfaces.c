@@ -1,0 +1,27 @@
+#include "Timers_Functions.h"
+
+void reset_gsm_module(void){
+  SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOD;
+  timer1A_init(80000000);
+  GPIO_PORTD_DIR_R |= 0x1;
+  GPIO_PORTD_AFSEL_R &= ~0x1;
+  GPIO_PORTD_DEN_R |= 0x1;
+  GPIO_PORTD_PCTL_R &= ~0x0000000F;
+  GPIO_PORTD_AMSEL_R = 0;
+  GPIO_PORTD_DATA_R = GPIO_PORTD_DATA_R^0x1;
+  timer1A_delayMs(1000);
+  GPIO_PORTD_DATA_R = GPIO_PORTD_DATA_R^0x1;
+}
+
+void powerup_gsm_module(void){
+  SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOD;
+  timer1A_init(80000000);
+  GPIO_PORTD_DIR_R |= 0x2;
+  GPIO_PORTD_AFSEL_R &= ~0x2;
+  GPIO_PORTD_DEN_R |= 0x2;
+  GPIO_PORTD_PCTL_R &= ~0x000000F0;
+  GPIO_PORTD_AMSEL_R = 0;
+  GPIO_PORTD_DATA_R = GPIO_PORTD_DATA_R^0x2;
+  timer1A_delayMs(1000);
+  GPIO_PORTD_DATA_R = GPIO_PORTD_DATA_R^0x2;
+}

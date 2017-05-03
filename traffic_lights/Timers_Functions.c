@@ -1,4 +1,4 @@
-#include "..//tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 
 void SysTick_Init(void){
   NVIC_ST_CTRL_R = 0;
@@ -19,7 +19,7 @@ void SysTick_Wait(unsigned long delay){
 void SysTick_delay10MS(unsigned long delay){
   unsigned long i;
   for(i=0; i<delay; i++){
-    SysTick_Wait(500000);
+    SysTick_Wait(800000);
   }
 }
 

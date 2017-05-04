@@ -43,3 +43,18 @@ tightvncserver :1 geometry 1920x1080 -depth 24 -dpi 96
 ### solution for chromium can't run as root problem if it happened:
 
 http://www.canbike.org/information-technology/precise-puppy-5-4-3-chromium-browser-run-as-root-and-start-maximized.html
+
+
+## Raspberry Pi Instructions:
+
+### Touchscreen Guide
+
+https://www.element14.com/community/docs/DOC-78156/l/raspberry-pi-7-touchscreen-display
+
+### Raspberry Pi remote control from Laptop:
+
+https://www.raspberrypi.org/documentation/remote-access/vnc/
+
+### Virtual Keyboard for the Touchscreen:
+
+https://raspberrypi.stackexchange.com/questions/41150/virtual-keyboard-activation

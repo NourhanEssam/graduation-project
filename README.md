@@ -57,4 +57,7 @@ https://www.raspberrypi.org/documentation/remote-access/vnc/
 
 ### Virtual Keyboard for the Touchscreen:
 
-https://raspberrypi.stackexchange.com/questions/41150/virtual-keyboard-activation
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install at-spi2-core
+sudo apt-get install florence

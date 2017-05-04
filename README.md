@@ -58,6 +58,19 @@ https://www.raspberrypi.org/documentation/remote-access/vnc/
 ### Virtual Keyboard for the Touchscreen:
 
 sudo apt-get update
+
 sudo apt-get upgrade
+
 sudo apt-get install at-spi2-core
+
 sudo apt-get install florence
+
+### GSM Module Connection:
+
+https://www.rhydolabz.com/wiki/?p=16325
+
+### Raspberry Pi Pins:
+
+https://www.raspberrypi.org/documentation/usage/gpio/
+
+https://pinout.xyz/pinout/uart

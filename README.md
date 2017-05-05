@@ -70,6 +70,11 @@ sudo apt-get install florence
 https://www.rhydolabz.com/wiki/?p=16325
 
 replace /dev/ttyAMA0 with /dev/serial0
+apn: etisalat
+
+configure ppp:
+
+https://www.emnify.com/2015/06/18/how-to-fit-a-raspberry-pi-with-mobile-connectivity/
 
 ### Raspberry Pi Pins:
 

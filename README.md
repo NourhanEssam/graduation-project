@@ -69,8 +69,20 @@ sudo apt-get install florence
 
 https://www.rhydolabz.com/wiki/?p=16325
 
+replace /dev/ttyAMA0 with /dev/serial0
+
 ### Raspberry Pi Pins:
 
 https://www.raspberrypi.org/documentation/usage/gpio/
 
 https://pinout.xyz/pinout/uart
+
+### UART
+
+Test BaudRate:
+
+https://superuser.com/questions/488449/is-there-any-way-to-check-which-baud-rates-are-supported-on-a-serial-device
+
+Enable serial0:
+
+https://raspberrypi.stackexchange.com/questions/45570/how-do-i-make-serial-work-on-the-raspberry-pi3/45571#45571

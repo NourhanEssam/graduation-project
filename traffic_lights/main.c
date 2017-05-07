@@ -3,19 +3,64 @@
 #include "GSM_Interfaces.h"
 #include "PLL.h"
 
-#define ES0 0 // same dir? No -> ES1, Yes -> ES4
-#define ES1 1 // orange 5 seconds & turn off counter -> ES2
-#define ES2 2 // open direction - wait for car -> ES3
-#define ES3 3 // back to original state
-#define ES4 4 // orange 5 seconds in all directions except emergency direction - > ES5
-#define ES5 5 // turn off counter - wait for car -> ES6
-#define ES6 6 // State = Next
-#define idle 7 // waiting state
+#define goN   0
+#define waitN 1
+#define goE   2
+#define waitE 3
+#define goS   4
+#define waitS 5
+#define goW   6
+#define waitW 7
+#define EN1 	8  // orange 5 seconds & turn off counter -> EN2
+#define EN2 	9 // open direction - wait for car
+#define EN3 	10 // orange 5 seconds in all directions except emergency direction - > EN4
+#define EN4 	11 // turn off counter - wait for car 
+#define EE1 	12  // orange 5 seconds & turn off counter -> EE2
+#define EE2 	13 // open direction - wait for car
+#define EE3 	14 // orange 5 seconds in all directions except emergency direction - > EE4
+#define EE4 	15 // turn off counter - wait for car
+#define ES1 	16  // orange 5 seconds & turn off counter -> ES2
+#define ES2 	17 // open direction - wait for car
+#define ES3 	18 // orange 5 seconds in all directions except emergency direction - > ES4
+#define ES4 	19 // turn off counter - wait for car 
+#define EW1 	20  // orange 5 seconds & turn off counter -> EW2
+#define EW2 	21 // open direction - wait for car
+#define EW3 	22 // orange 5 seconds in all directions except emergency direction - > EW4
+#define EW4 	23 // turn off counter - wait for car 
+
+#define GREEN 0
+#define ORANGE 1
+#define ORANGE_EXCEPT 2
 
 void EmergencyHandler(void);
 
-unsigned char emergency_dir, lights_dir;
-unsigned int Current_State, Next_State, Saved_State;
+// Linked data structure
+struct State {
+  mode m; 
+	unsigned char dir;
+  unsigned long Time;  
+  unsigned long Next[5]; // 0 no emerg, 1 N emerg, 2 E emerg, 3 S emerg, 4 W emerg
+};
+
+typedef const struct State STyp;
+
+unsigned int S, NS;  // index to the current state 
+
+unsigned char emergency_dir = 'N';
+unsigned int Next_State, Saved_State = goW;
+unsigned int emergency = 1;
+
+STyp FSM[8]=
+{
+ {GREEN, 'N', 3000, {waitN, ES3, ES1, ES1, ES1}}, 
+ {ORANGE, 'N', 500, {goE, 	goE, goE, goE, goE}},
+ {GREEN, 'E', 3000, {waitE, ES1, ES3, ES1, ES1}},
+ {ORANGE, 'E', 500, {goS, 	goS, goS, goS, goS}},
+ {GREEN, 'S', 3000, {waitS, ES1, ES1, ES3, ES1}}, 
+ {ORANGE, 'S', 500, {goW, 	goW, goW, goW, goW}},
+ {GREEN, 'W', 3000, {waitW, ES1, ES1, ES1, ES3}},
+ {ORANGE, 'W', 500, {goN, 	goN, goN, goN, goN}}
+};
 
 int main(void){
 	Lights_Init();
@@ -24,76 +69,46 @@ int main(void){
 	timer2A_init(80000000);
 	timer3A_init(80000000);
 	
-	Next_State = ES0;
+	NS = ES3;
 	while(1)
 	{
-		/*
-		// some debugging code
-		North_Green_On();
-		North_Orange_On();
-		North_Red_On();
-		North_Off();
-		West_Green_On();
-		West_Orange_On();
-		West_Red_On();
-		West_Off();
-		East_Green_On();
-		East_Orange_On();
-		East_Red_On();
-		East_Off();
-		South_Green_On();
-		South_Orange_On();
-		South_Red_On();
-		South_Off();
-		*/
-		EmergencyHandler();
+			S = NS;
+			if(emergency)
+			{
+				EmergencyHandler();
+			}
+			else
+			{
+				Change_Lights(FSM[S].dir, FSM[S].m);
+				timer2A_delayMs(FSM[S].Time);
+				NS = FSM[S].Next[0];
+			}
 	}
 }
 
 void EmergencyHandler()
 {
-	Current_State = Next_State;
-	switch(Current_State)
+	switch(S)
 	{
-		case ES0:
-			if(emergency_dir == lights_dir)
-			{
-				Next_State = ES4;
-			}
-			else
-			{
-				Next_State = ES1;
-			}
-			break;
 		case ES1:
-			Orange_Direction(lights_dir);
-			Next_State = ES2;
-			// pause Lights counters
+			Change_Lights(FSM[Saved_State].dir, ORANGE);
+			NS = ES2;
 			timer2A_delayMs(5000);
 			break;
 		case ES2:
-			Green_Direction(emergency_dir);
-			Next_State = idle; // wait until a signal from Server is received
+			Change_Lights(emergency_dir, GREEN);
+			NS = ES2; // wait until a signal from Server is received
+			timer2A_delayMs(3000);
 			break;
 		case ES3:
-			Next_State = Saved_State; // return to normal flow (before emergency)
-			timer3A_resume();
-			break;
-		case ES4:
-			Orange_Except(emergency_dir);
-			Next_State = ES5;
-			// pause Lights counters
+			Change_Lights(emergency_dir, ORANGE_EXCEPT);
+			NS = ES4;
 			timer2A_delayMs(5000);
 			break;
-		case ES5:
-			Green_Direction(emergency_dir);
-			Next_State = idle; // wait until a signal from Server is received
-			break;
-		case ES6:
-			Next_State = Saved_State; // return to normal flow
-			break;
-		case idle:
-			timer2A_delayMs(1000); // when the vehical interrupt arrives it should change the next state
+		case ES4:
+			Change_Lights(emergency_dir, GREEN);
+			NS = ES4; // wait until a signal from Server is received
+			timer2A_delayMs(3000);
 			break;
 	}
 }

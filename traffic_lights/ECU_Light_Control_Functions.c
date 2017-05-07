@@ -131,79 +131,62 @@ void South_Off(void)
 	South = 0;
 }
 
-void Orange_Direction(unsigned char direction)
+void Change_Lights(unsigned char direction, mode m)
 {
-	switch(direction)
+	switch(m)
 	{
-		case 'N':
-			North_Orange_On();
+		case GREEN:
+			switch(direction)
+			{
+				case 'N':
+					North_Green_On(); South_Red_On();	East_Red_On(); West_Red_On();
+					break;
+				case 'S':
+					North_Red_On();	South_Green_On(); East_Red_On(); West_Red_On();
+					break;
+				case 'E':
+					North_Red_On(); South_Red_On(); East_Green_On(); West_Red_On();
+					break;
+				case 'W':
+					North_Red_On(); South_Red_On(); East_Red_On(); West_Green_On();
+					break;
+			}
 			break;
-		case 'S':
-			South_Orange_On();
+			
+		case ORANGE:
+			switch(direction)
+			{
+				case 'N':
+					North_Orange_On();
+					break;
+				case 'S':
+					South_Orange_On();
+					break;
+				case 'E':
+					East_Orange_On();
+					break;
+				case 'W':
+					West_Orange_On();
+					break;
+			}
 			break;
-		case 'E':
-			East_Orange_On();
-			break;
-		case 'W':
-			West_Orange_On();
-			break;
-	}
-}
-
-void Orange_Except(unsigned char direction)
-{
-	switch(direction)
-	{
-		case 'N':
-			South_Orange_On();
-			East_Orange_On();
-			West_Orange_On();
-			break;
-		case 'S':
-			North_Orange_On();
-			East_Orange_On();
-			West_Orange_On();
-			break;
-		case 'E':
-			North_Orange_On();
-			South_Orange_On();
-			West_Orange_On();
-			break;
-		case 'W':
-			North_Orange_On();
-			South_Orange_On();
-			East_Orange_On();
-			break;
-	}
-}
-
-void Green_Direction(unsigned char direction)
-{
-	switch(direction)
-	{
-		case 'N':
-			North_Green_On();
-			South_Red_On();
-			East_Red_On();
-			West_Red_On();
-			break;
-		case 'S':
-			North_Red_On();
-			South_Green_On();
-			East_Red_On();
-			West_Red_On();
-			break;
-		case 'E':
-			North_Red_On();
-			South_Red_On();
-			East_Green_On();
-			West_Red_On();
-			break;
-		case 'W':
-			North_Red_On();
-			South_Red_On();
-			East_Red_On();
-			West_Green_On();
+			
+		case ORANGE_EXCEPT:
+			switch(direction)
+			{
+				case 'N':
+					North_Green_On(); South_Orange_On(); East_Orange_On();	West_Orange_On();
+					break;
+				case 'S':
+					North_Orange_On(); South_Green_On(); East_Orange_On(); West_Orange_On();
+					break;
+				case 'E':
+					North_Orange_On(); South_Orange_On(); East_Green_On(); West_Orange_On();
+					break;
+				case 'W':
+					North_Orange_On(); South_Orange_On(); East_Orange_On(); West_Green_On();
+					break;
+			}
 			break;
 	}
 }

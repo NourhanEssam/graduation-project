@@ -13,6 +13,8 @@
 #define West		(*((volatile unsigned long *)0x40005380)) // PB5, PB6, PB7
 #define East 		(*((volatile unsigned long *)0x4002401C)) // PE0, PE1, PE2
 #define South 	(*((volatile unsigned long *)0x400240E0)) // PE3, PE4, PE5
+	
+typedef enum {GREEN, ORANGE, ORANGE_EXCEPT} mode;
 
 void Lights_Init(void);
 void North_Green_On(void);
@@ -32,19 +34,6 @@ void South_Orange_On(void);
 void South_Red_On(void);
 void South_Off(void);
 
-// Orange on in this direction
-// input: unsigned char ('N', 'S', 'E', 'W')
-// output: None
-void Orange_Direction(unsigned char direction);
-
-// Orange on in all directions except this one
-// input: unsigned char ('N', 'S', 'E', 'W')
-// output: None
-void Orange_Except(unsigned char direction);
-
-// Green on in this direction, Red in all other directions
-// input: unsigned char ('N', 'S', 'E', 'W')
-// output: None
-void Green_Direction(unsigned char direction);
+void Change_Lights(unsigned char direction, mode m);
 
 #endif

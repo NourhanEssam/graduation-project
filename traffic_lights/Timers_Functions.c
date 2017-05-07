@@ -118,16 +118,7 @@ void timer3A_disable(void){
 void timer3A_delayMs(int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
-      while ((TIMER3_RIS_R & 0x1) == 0) timer3A = ttime - i;
+      while ((TIMER3_RIS_R & 0x1) == 0);
       TIMER3_ICR_R = TIMER_ICR_TATOCINT;
     }
-}
-
-void timer3A_resume()
-{
-	int i;
-	for(i = 0; i < timer3A; i++) { 
-		while ((TIMER3_RIS_R & 0x1) == 0);
-		TIMER3_ICR_R = TIMER_ICR_TATOCINT;
-	}
 }

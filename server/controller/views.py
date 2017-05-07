@@ -1,5 +1,5 @@
 from _socket import socket
-from controller.models import TrafficLight
+from gettrafficlights.models import TrafficLight, CentralNode, Intersection
 from django.http import HttpResponse
 import re
 import socket
@@ -31,6 +31,10 @@ def index(request):
             print tl
             Queryset = TrafficLight.objects.filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
             for element in Queryset:
+                CentralNodeID = Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
+                CentralNodeIP = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=CentralNodeID).first()
+                tl_ip = CentralNodeIP['CentralNode_IP']
+
                 #tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
                 #tl_ip = tl_ip_raw['TL_ID']
                 tl_port = 12348
@@ -39,11 +43,10 @@ def index(request):
                 tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 tlsocket.connect((tl_ip, tl_port))
 
-                if tlsocket.recv(20) == '1':  # TL confirms the connection
-                    if element.Direction == re.split('(\d+)', tl)[2]:
-                        tlsocket.send('1'+element.Direction)
-                    else:
-                        tlsocket.send('0'+element.Direction)
+                if element.Direction == re.split('(\d+)', tl)[2]:
+                    tlsocket.send('1'+element.Direction)
+                else:
+                    tlsocket.send('0'+element.Direction)
 
                 if EVconnection.recv(20) == '2':
                     tlsocket.send("2")  # reset TLs

@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib import admin
 
 # Register your models here.
-from .models import TrafficLight, Intersection, IntersectionsStreets, Street, Driver, EmergencyVehicle
+from .models import TrafficLight, Intersection, IntersectionsStreets, Street, Driver, EmergencyVehicle, CentralNode
 admin.site.register(TrafficLight)
 
 admin.site.register(Intersection)
@@ -19,3 +19,5 @@ admin.site.register(Street)
 admin.site.register(Driver)
 
 admin.site.register(EmergencyVehicle)
+
+admin.site.register(CentralNode)

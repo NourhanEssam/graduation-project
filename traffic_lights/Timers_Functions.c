@@ -19,7 +19,7 @@ void SysTick_Wait(unsigned long delay){
 void SysTick_delay10MS(unsigned long delay){
   unsigned long i;
   for(i=0; i<delay; i++){
-    SysTick_Wait(500000);
+    SysTick_Wait(800000);
   }
 }
 
@@ -45,7 +45,7 @@ void timer0A_delayMs(int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER0_RIS_R & 0x1) == 0);
-      TIMER0_ICR_R;
+      TIMER0_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 

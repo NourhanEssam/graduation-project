@@ -2,6 +2,13 @@
 #include "Timers_Functions.h"
 #include "GSM_Interfaces.h"
 #include "PLL.h"
+#include "UART.h"
+
+#define INTERSECTION_ID 1
+#define NORTH 'N'
+#define SOUTH 'S'
+#define EAST  'E'
+#define WEST  'W'
 
 #define goN   0
 #define waitN 1
@@ -11,27 +18,31 @@
 #define waitS 5
 #define goW   6
 #define waitW 7
-#define EN1 	8  // orange 5 seconds & turn off counter -> EN2
-#define EN2 	9 // open direction - wait for car
-#define EN3 	10 // orange 5 seconds in all directions except emergency direction - > EN4
-#define EN4 	11 // turn off counter - wait for car 
-#define EE1 	12  // orange 5 seconds & turn off counter -> EE2
-#define EE2 	13 // open direction - wait for car
-#define EE3 	14 // orange 5 seconds in all directions except emergency direction - > EE4
-#define EE4 	15 // turn off counter - wait for car
-#define ES1 	16  // orange 5 seconds & turn off counter -> ES2
-#define ES2 	17 // open direction - wait for car
-#define ES3 	18 // orange 5 seconds in all directions except emergency direction - > ES4
-#define ES4 	19 // turn off counter - wait for car 
-#define EW1 	20  // orange 5 seconds & turn off counter -> EW2
-#define EW2 	21 // open direction - wait for car
-#define EW3 	22 // orange 5 seconds in all directions except emergency direction - > EW4
-#define EW4 	23 // turn off counter - wait for car 
+#define ES1 	8  // orange 5 seconds & turn off counter -> ES2
+#define ES2 	9 // open direction - wait for car
+#define ES3 	10 // orange 5 seconds in all directions except emergency direction - > ES4
+#define ES4 	11 // turn off counter - wait for car 
 
 #define GREEN 0
 #define ORANGE 1
 #define ORANGE_EXCEPT 2
 
+// global variables
+unsigned int S, NS;  // index to the current state 
+unsigned char emergency_dir;
+unsigned int Next_State, Saved_State;
+unsigned int emergency = 0;
+unsigned char id;
+
+// basic functions defined at end of startup.s
+void DisableInterrupts(void); // Disable interrupts
+void EnableInterrupts(void);  // Enable interrupts
+void WaitForInterrupt(void);  // low power mode
+
+// UART1 interrupt handler
+void UART1_Handler(void);
+
+// Emergency FSM
 void EmergencyHandler(void);
 
 // Linked data structure
@@ -44,28 +55,26 @@ struct State {
 
 typedef const struct State STyp;
 
-unsigned int S, NS;  // index to the current state 
-
-unsigned char emergency_dir = 'N';
-unsigned int Next_State, Saved_State = goW;
-unsigned int emergency = 1;
-
 STyp FSM[8]=
 {
- {GREEN, 'N', 3000, {waitN, ES3, ES1, ES1, ES1}}, 
- {ORANGE, 'N', 500, {goE, 	goE, goE, goE, goE}},
- {GREEN, 'E', 3000, {waitE, ES1, ES3, ES1, ES1}},
- {ORANGE, 'E', 500, {goS, 	goS, goS, goS, goS}},
- {GREEN, 'S', 3000, {waitS, ES1, ES1, ES3, ES1}}, 
- {ORANGE, 'S', 500, {goW, 	goW, goW, goW, goW}},
- {GREEN, 'W', 3000, {waitW, ES1, ES1, ES1, ES3}},
- {ORANGE, 'W', 500, {goN, 	goN, goN, goN, goN}}
+ {GREEN, NORTH, 3000, {waitN, ES3, ES1, ES1, ES1}}, 
+ {ORANGE, NORTH, 500, {goE, 	goE, goE, goE, goE}},
+ {GREEN, EAST, 3000, {waitE, ES1, ES3, ES1, ES1}},
+ {ORANGE, EAST, 500, {goS, 	goS, goS, goS, goS}},
+ {GREEN, SOUTH, 3000, {waitS, ES1, ES1, ES3, ES1}}, 
+ {ORANGE, SOUTH, 500, {goW, 	goW, goW, goW, goW}},
+ {GREEN, WEST, 3000, {waitW, ES1, ES1, ES1, ES3}},
+ {ORANGE, WEST, 500, {goN, 	goN, goN, goN, goN}}
 };
 
 int main(void){
 	Lights_Init();
 	PLL_Init();
-	init_gsm_control();
+	SysTick_Init();
+	UART1_Init();
+	EnableInterrupts();
+	UART1_Interrupt_Enable();
+	
 	timer2A_init(80000000);
 	timer3A_init(80000000);
 	
@@ -86,7 +95,7 @@ int main(void){
 	}
 }
 
-void EmergencyHandler()
+void EmergencyHandler(void)
 {
 	switch(S)
 	{
@@ -110,5 +119,17 @@ void EmergencyHandler()
 			NS = ES4; // wait until a signal from Server is received
 			timer2A_delayMs(3000);
 			break;
+	}
+}
+
+// UART1 interrupt handler
+void UART1_Handler(void)
+{
+	UART1_ICR_R |= 0x00000010;
+	emergency_dir = UART1_InCharNonBlocking();
+	id = UART1_InCharNonBlocking();
+	if(id == INTERSECTION_ID && (emergency_dir == NORTH || emergency_dir == SOUTH || emergency_dir == EAST || emergency_dir == WEST))
+	{
+		// change state to an emergency state
 	}
 }

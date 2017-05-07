@@ -4,13 +4,23 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Intersection(models.Model):
-    Intersection_ID = models.CharField(max_length=10, primary_key=True)
-    MAC = models.CharField(max_length=12, default='0')
-    IP = models.CharField(max_length=8, default='0')
+class CentralNode(models.Model):
+    CentralNode_ID = models.CharField(max_length=10, primary_key=True)
+    CentralNode_IP = models.CharField(max_length=8, default='0')
 
     def __str__(self):
-        return self.Intersection_ID
+        return self.CentralNode_ID
+
+
+class Intersection(models.Model):
+    unique_together = ('Intersection_ID ', 'CentralNode_ID')
+    Intersection_ID = models.CharField(max_length=10, primary_key=True)
+    CentralNode_ID = models.ForeignKey(CentralNode, on_delete=models.CASCADE)
+    #MAC = models.CharField(max_length=12, default='0')
+    #IP = models.CharField(max_length=8, default='0')
+
+    def __str__(self):
+        return str(self.Intersection_ID) + ' - ' + str(self.CentralNode_ID)
 
 
 class TrafficLight(models.Model):

@@ -1,3 +1,4 @@
+// 	 Green, Orange, Red
 // B 2,3,4 is North 
 // B 5,6,7 is West
 // E 0,1,2 is East

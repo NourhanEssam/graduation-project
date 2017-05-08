@@ -33,6 +33,8 @@ unsigned int ES, NES; 				// emergency states
 unsigned int emergency = 0;		// emergency flag
 unsigned char id;							// TL id
 
+extern unsigned int time; 		// global variable from Timers_Functions.c
+
 // basic functions defined at end of startup.s
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -101,12 +103,12 @@ void EmergencyHandler(void)
 		case ES1:
 			Change_Lights(FSM[S].dir, ORANGE);
 			NES = ES2;
+			NS = FSM[S].Next;
 			timer2A_delayMs(5000);
 			break;
 		case ES2:
 			Change_Lights(emergency_dir, GREEN);
 			NES = ES2; // wait until a signal from Server is received
-			NS = FSM[S].Next;
 			timer2A_delayMs(3000);
 			break;
 		case ES3:
@@ -135,6 +137,7 @@ void UART1_Handler(void)
 	id = UART1_InCharNonBlocking();
 	if(id == INTERSECTION_ID)
 	{
+		time = 0;
 		if(input == NORTH || input == SOUTH || input == EAST || input == WEST)
 		{
 			emergency_dir = input;

@@ -58,14 +58,14 @@ typedef const struct State STyp;
 
 STyp FSM[8]=
 {
- {GREEN, NORTH, 30000, waitN}, 
- {ORANGE, NORTH, 5000, goE},
- {GREEN, EAST, 30000, waitE},
- {ORANGE, EAST, 5000, goS},
- {GREEN, SOUTH, 30000, waitS}, 
- {ORANGE, SOUTH, 5000, goW,},
- {GREEN, WEST, 30000, waitW},
- {ORANGE, WEST, 5000, goN}
+ {GREEN, NORTH, 10000, waitN}, 
+ {ORANGE, NORTH, 1000, goE},
+ {GREEN, EAST, 10000, waitE},
+ {ORANGE, EAST, 1000, goS},
+ {GREEN, SOUTH, 10000, waitS}, 
+ {ORANGE, SOUTH, 1000, goW,},
+ {GREEN, WEST, 10000, waitW},
+ {ORANGE, WEST, 1000, goN}
 };
 
 int main(void){
@@ -81,16 +81,19 @@ int main(void){
 	NS = goN;
 	while(1)
 	{
-			S = NS;
 			if(emergency || NES == FINISH)
 			{
 				EmergencyHandler();
 			}
 			else
 			{
+				S = NS;
 				Change_Lights(FSM[S].dir, FSM[S].m);
 				timer2A_delayMs(FSM[S].Time);
-				NS = FSM[S].Next;
+				if(emergency != 1)
+				{
+					NS = FSM[S].Next;
+				}
 			}
 	}
 }
@@ -103,8 +106,7 @@ void EmergencyHandler(void)
 		case ES1:
 			Change_Lights(FSM[S].dir, ORANGE);
 			NES = ES2;
-			NS = FSM[S].Next;
-			timer2A_delayMs(5000);
+			timer2A_delayMs(1000);
 			break;
 		case ES2:
 			Change_Lights(emergency_dir, GREEN);
@@ -114,7 +116,8 @@ void EmergencyHandler(void)
 		case ES3:
 			Change_Lights(emergency_dir, ORANGE_EXCEPT);
 			NES = ES4;
-			timer2A_delayMs(5000);
+			NS = FSM[S].Next;
+			timer2A_delayMs(1000);
 			break;
 		case ES4:
 			Change_Lights(emergency_dir, GREEN);
@@ -124,7 +127,7 @@ void EmergencyHandler(void)
 		case FINISH:
 			Change_Lights(emergency_dir, ORANGE);
 			NES = ES1;
-			timer2A_delayMs(5000);
+			timer2A_delayMs(1000);
 			break;
 	}
 }
@@ -142,8 +145,17 @@ void UART1_Handler(void)
 		{
 			emergency_dir = input;
 			emergency = 1;
+			if(S == waitN || S == waitS || S == waitE || S == waitW) // if state is orange
+			{
+				S--;
+				NS--;
+			}
 			if(emergency_dir == FSM[S].dir)
 			{
+				if(FSM[S].m == ORANGE)
+				{
+					NS = FSM[S].Next;
+				}
 				NES = ES3;
 			}
 			else

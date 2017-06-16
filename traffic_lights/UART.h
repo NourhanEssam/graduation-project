@@ -1,3 +1,6 @@
+#ifndef __UART__
+#define __UART__
+
 #include "tm4c123gh6pm.h"
 
 //------------UART1---------------------
@@ -51,3 +54,5 @@ void UART1_Interrupt_Enable(void);
 // Input: none
 // Output: none
 void UART1_Interrupt_Disable(void);
+
+#endif

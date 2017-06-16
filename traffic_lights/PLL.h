@@ -1,3 +1,6 @@
+#ifndef __PLL__
+#define __PLL__
+
 #include "tm4c123gh6pm.h"
 
 #define SYSDIV2 4
@@ -5,3 +8,5 @@
 
 // configure the system to get its clock from the PLL
 void PLL_Init(void);
+
+#endif

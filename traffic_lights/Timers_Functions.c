@@ -1,4 +1,4 @@
-#include "tm4c123gh6pm.h"
+#include "Timers_Functions.h"
 
 void SysTick_Init(void){
   NVIC_ST_CTRL_R = 0;
@@ -41,11 +41,11 @@ void timer0A_disable(void){
   SYSCTL_RCGCTIMER_R &= ~0x01;
 }
 
-void timer0A_delayMs(int ttime){
+void timer0A_delayMs(unsigned int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER0_RIS_R & 0x1) == 0);
-      TIMER0_ICR_R;
+      TIMER0_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 
@@ -69,11 +69,11 @@ void timer1A_disable(void){
   SYSCTL_RCGCTIMER_R &= ~0x02;
 }
 
-void timer1A_delayMs(int ttime){
+void timer1A_delayMs(unsigned int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER1_RIS_R & 0x1) == 0);
-      TIMER1_ICR_R;
+      TIMER1_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 
@@ -92,11 +92,14 @@ void timer2A_disable(void){
   SYSCTL_RCGCTIMER_R &= ~0x04;
 }
 
-void timer2A_delayMs(int ttime){
+unsigned int time;
+
+void timer2A_delayMs(unsigned int ttime){
     int i;
-    for(i = 0; i < ttime; i++) { 
+		time = ttime;
+    for(i = 0; i < time; i++) { 
       while ((TIMER2_RIS_R & 0x1) == 0);
-      TIMER2_ICR_R;
+      TIMER2_ICR_R = TIMER_ICR_TATOCINT;
     }
 }
 
@@ -115,10 +118,10 @@ void timer3A_disable(void){
   SYSCTL_RCGCTIMER_R &= ~0x08;
 }
 
-void timer3A_delayMs(int ttime){
+void timer3A_delayMs(unsigned int ttime){
     int i;
     for(i = 0; i < ttime; i++) { 
       while ((TIMER3_RIS_R & 0x1) == 0);
-      TIMER3_ICR_R;
+      TIMER3_ICR_R = TIMER_ICR_TATOCINT;
     }
 }

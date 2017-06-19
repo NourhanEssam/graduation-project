@@ -110,12 +110,12 @@ function calcRoute(location) {
         },
         complete: function () {
             console.log("complete calcRoute");
-            if(timer != null)
+            if(timer)
             {
-                clearTimeout(timer);
+                clearInterval(timer);
             }
             // schedule the first invocation:
-            timer = setTimeout(detectLocationPeriodically, 10000);
+            timer = setInterval(detectLocationPeriodically, 10000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -164,7 +164,6 @@ function detectLocationPeriodically() {
         // what to do when the call is complete ( you can right your clean from code here)
         complete: function () {
             console.log("complete");
-            setTimeout(detectLocationPeriodically, 10000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {

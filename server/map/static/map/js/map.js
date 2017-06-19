@@ -13,7 +13,7 @@ var timer = null;
 // initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644}, // TODO set default map center
+        center: {lat: 30.0444, lng: 31.2357}, // TODO set default map center
         zoom: 15
     });
 
@@ -79,6 +79,7 @@ function navigateToCurrentLocation() {
     }
 }
 
+// display directions on the Map and send the coordinates to the map view
 function calcRoute(location) {
     var request = {
         origin: currentPos,
@@ -126,31 +127,7 @@ function calcRoute(location) {
     });
 }
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-function handleLocationError(browserHasGeolocation) {
-    var infoWindow = new google.maps.InfoWindow({map: map});
-    infoWindow.setPosition(map.getCenter());
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-
-}
-
+// Send GPS location to the controller
 function detectLocationPeriodically() {
     console.log("called");
     $.ajax({
@@ -173,4 +150,31 @@ function detectLocationPeriodically() {
             console.log(thrownError);
         }
     });
+}
+
+// Cookies for the csrf token
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// message to be displayed if GPS is not found
+function handleLocationError(browserHasGeolocation) {
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    infoWindow.setPosition(map.getCenter());
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+
 }

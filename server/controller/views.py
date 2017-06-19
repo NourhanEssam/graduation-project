@@ -16,6 +16,8 @@ def index(request):
         print "hello data\n"
         print data
 
+        # TODO use passed_tl function
+
     if 'TrafficLights' in request.session:
         TLs_IDs = request.session['TrafficLights']
 

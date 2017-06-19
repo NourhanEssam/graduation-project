@@ -8,6 +8,9 @@ var geoCircle;
 var currentPos;
 var map;
 
+var timer = null;
+
+// initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -34.397, lng: 150.644}, // TODO set default map center
@@ -103,15 +106,22 @@ function calcRoute(location) {
             currentPosLat: currentPos.lat(),
             currentPosLng: currentPos.lng(),
             targetLat: location.lat(),
-            targetLng: location.lng()},
-        // what to do when the call is success
-        success: function (response) {
+            targetLng: location.lng()
         },
-        // what to do when the call is complete ( you can right your clean from code here)
         complete: function () {
+            console.log("complete calcRoute");
+            if(timer != null)
+            {
+                clearTimeout(timer);
+            }
+            // schedule the first invocation:
+            timer = setTimeout(detectLocationPeriodically, 10000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(thrownError);
         }
     });
 }
@@ -139,4 +149,29 @@ function handleLocationError(browserHasGeolocation) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
 
+}
+
+function detectLocationPeriodically() {
+    console.log("called");
+    $.ajax({
+        url: '/controller/',
+        type: 'POST',
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        data: {
+            currentPosLat: currentPos.lat(),
+            currentPosLng: currentPos.lng()
+        },
+        // what to do when the call is complete ( you can right your clean from code here)
+        complete: function () {
+            console.log("complete");
+            setTimeout(detectLocationPeriodically, 10000);
+        },
+        // what to do when there is an error
+        error: function (xhr, textStatus, thrownError) {
+            console.log("error");
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(thrownError);
+        }
+    });
 }

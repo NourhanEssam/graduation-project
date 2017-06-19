@@ -38,9 +38,9 @@ def index(request):
 
         request.session['directions'] = directions
         # for testing
-        print request_url, "\n\n"
-        print result_string, "\n\n"
-        print directions, "\n\n"
+        #print request_url, "\n\n"
+        #print result_string, "\n\n"
+        #print directions, "\n\n"
 
         return redirect('gettrafficlights:gettrafficlights')
 

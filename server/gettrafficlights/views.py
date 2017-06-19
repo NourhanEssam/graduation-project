@@ -28,7 +28,7 @@ def index(request):
 
         print tls
         request.session['TrafficLights'] = tls
-    return redirect('controller:controller')
+        return redirect('controller:controller')
 
     return redirect('map:map')
 

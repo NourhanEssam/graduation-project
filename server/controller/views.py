@@ -21,46 +21,31 @@ def index(request):
     if 'TrafficLights' in request.session:
         TLs_IDs = request.session['TrafficLights']
 
-    tls = []
+    #Testing
+    TLs_IDs = [1,2]
+
     for tl_id in TLs_IDs:
-        Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID','Direction')
-        for e in Queryset:
-            tls.append(e['Intersection_ID']+e['Direction'])
-    # print 'here'
-    # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    # s.bind((socket.gethostname(), 12347))
-    # s.listen(1)
-    # (EVconnection, EVaddress) = s.accept()
-    #
-    # if EVconnection.recv(20) == '1':  # EV is Ready
-    #     for tl in tls:
-    #         print tl
-    #         Queryset = TrafficLight.objects.filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
-    #         for element in Queryset:
-    #             CentralNodeID = Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
-    #             CentralNodeIP = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=CentralNodeID).first()
-    #             tl_ip = CentralNodeIP['CentralNode_IP']
-    #
-    #             #tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
-    #             #tl_ip = tl_ip_raw['TL_ID']
-    #             tl_port = 12348
-    #             #Testing
-    #             tl_ip = 'LAPTOP-S9D924P3'
-    #             tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #             tlsocket.connect((tl_ip, tl_port))
-    #
-    #             if element.Direction == re.split('(\d+)', tl)[2]:
-    #                 tlsocket.send('1'+element.Direction)
-    #             else:
-    #                 tlsocket.send('0'+element.Direction)
-    #
-    #             if EVconnection.recv(20) == '2':
-    #                 tlsocket.send("2")  # reset TLs
-    #                 tlsocket.close()
-    #
-    # if EVconnection.recv(20) == '3':  # end of route
-    #     EVconnection.close()
+        Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID','Direction').first()
+        TL_Intersection_ID = Queryset['Intersection_ID']
+        TL_Direction = Queryset['Direction']
+
+        Intersection_Number_Central_Node = Intersection.objects.values('Intersection_Number_Central_Node').filter(Intersection_ID=TL_Intersection_ID).first()['Intersection_Number_Central_Node']
+        tl_ip = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=TL_Intersection_ID)).first()['CentralNode_IP']
+        tl_port = 12348
+
+        #Testing
+        tl_ip = 'LAPTOP-S9D924P3'
+
+        #tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #tlsocket.connect((tl_ip, tl_port))
+
+        print 'Sending ', Intersection_Number_Central_Node, TL_Direction
+
+        #tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
+
+        #if EVconnection.recv(20) == '2':
+        #    tlsocket.send("2")  # reset TLs
+        #    tlsocket.close()
 
     return redirect('map:map')
 

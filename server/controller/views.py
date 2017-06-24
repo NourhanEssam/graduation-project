@@ -38,12 +38,13 @@ def index(request):
         tl_port = 12348
         #Testing
         tl_ip = 'LAPTOP-S9D924P3'
-
+        # opening a socket
         tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         tlsocket.connect((tl_ip, tl_port))
+        # Sending to central node ip
         tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
         print 'Sending ', Intersection_Number_Central_Node, TL_Direction
-
+        # check if EV passed the current TL
         while Passed == False:
             if request.method == 'POST' and request.is_ajax():
                 data = request.POST
@@ -52,10 +53,9 @@ def index(request):
                 EVlocation['lat'] = data['currentPosLat']
                 EVlocation = {key: float(value) for (key, value) in EVlocation.items()}
                 Passed = utilities.passed_tl(EVlocation, TLLocation, TL_Direction)
-            print Passed
 
         # reset TLs
-        tlsocket.send("P")
+        tlsocket.send("P" + Intersection_Number_Central_Node + TL_Direction)
         tlsocket.close()
 
     return redirect('map:map')

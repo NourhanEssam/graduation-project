@@ -34,7 +34,7 @@ class TrafficLight(models.Model):
     Intersection_ID = models.ForeignKey(Intersection, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'Traffic Light ID: ' + str(self.TL_ID) + ' - ' + 'Direction: ' + str(self.Direction) + str(self.Intersection_ID)
+        return 'Traffic Light ID: ' + str(self.TL_ID) + ' - ' + 'Direction: ' + str(self.Direction) + ' - ' + str(self.Intersection_ID)
 
 
 class Street(models.Model):

@@ -1,0 +1,30 @@
+[{"model": "gettrafficlights.centralnode", "pk": "1", "fields": {"CentralNode_IP": "0"}}, {"model": "gettrafficlights.intersection", "pk": "1", "fields": {"CentralNode_ID": "1"}}, {"model": "gettrafficlights.trafficlight", "pk": "1", "fields": {"Longitude": 44.0, "Latitude": 4.0, "Direction": "N", "Intersection_ID": "1"}}, {"model": "gettrafficlights.trafficlight", "pk": "2", "fields": {"Longitude": 12.0, "Latitude": 22.0, "Direction": "W", "Intersection_ID": "1"}}, {"model": "gettrafficlights.street", "pk": "1", "fields": {"Start_Longitude": 121.0, "Start_Latitude": 12.0, "End_Longitude": 12.0, "End_Latitude": 11.0}}, {"model": "gettrafficlights.street", "pk": "2", "fields": {"Start_Longitude": 2121.0, "Start_Latitude": 21.0, "End_Longitude": 6.0, "End_Latitude": 7.0}}, {"model": "gettrafficlights.intersectionsstreets", "pk": 1, "fields": {"Street_ID": "1", "Intersection_ID": "1"}}, {"model": "gettrafficlights.intersectionsstreets", "pk": 2, "fields": {"Street_ID": "2", "Intersection_ID": "1"}}, {"model": "gettrafficlights.emergencyvehicle", "pk": "1221", "fields": {"Priority": 1}},
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$30000$37dWlctTIXNE$W5d9Rr3JG4ceSZ/RN4xXvS3iQv4QgTiSRN5YBwJDrTc=",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "driver",
+      "password": "pbkdf2_sha256$30000$37dWlctTIXNE$W5d9Rr3JG4ceSZ/RN4xXvS3iQv4QgTiSRN5YBwJDrTc=",
+      "user_permissions": [25],
+      "is_active": true
+    }
+  },
+  {
+    "model": "gettrafficlights.driver",
+    "pk": 1,
+    "fields": {
+      "National_ID": "123412355",
+      "user": "3"
+    }
+  }]

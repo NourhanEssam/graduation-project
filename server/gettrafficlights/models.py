@@ -1,38 +1,40 @@
 from django.db import models
 from django.contrib.auth.models import User
+import database_functions
 
 # Create your models here.
 
 
 class CentralNode(models.Model):
-    CentralNode_ID = models.CharField(max_length=10, primary_key=True)
+    CentralNode_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.centralnode_number)
     CentralNode_IP = models.CharField(max_length=8, default='0')
 
     def __str__(self):
-        return self.CentralNode_ID
+        return 'Central Node ID: ' + self.CentralNode_ID
 
 
 class Intersection(models.Model):
     unique_together = ('Intersection_ID ', 'CentralNode_ID')
-    Intersection_ID = models.CharField(max_length=10, primary_key=True)
+    Intersection_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.intersection_number)
     CentralNode_ID = models.ForeignKey(CentralNode, on_delete=models.CASCADE)
+    Intersection_Number_Central_Node = models.CharField(max_length=10)
     #MAC = models.CharField(max_length=12, default='0')
     #IP = models.CharField(max_length=8, default='0')
 
     def __str__(self):
-        return str(self.Intersection_ID) + ' - ' + str(self.CentralNode_ID)
+        return str(self.CentralNode_ID) + ' - ' + 'Intersection ID: ' + str(self.Intersection_ID)
 
 
 class TrafficLight(models.Model):
     unique_together = ('TL_ID', 'Direction')
-    TL_ID = models.CharField(max_length=10, primary_key=True)
+    TL_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.trafficlights_number)
     Longitude = models.FloatField(max_length=25)
     Latitude = models.FloatField(max_length=25)
     Direction = models.CharField(max_length=2)
     Intersection_ID = models.ForeignKey(Intersection, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.TL_ID) + ' - ' + str(self.Direction) + str(self.Intersection_ID)
+        return 'Traffic Light ID: ' + str(self.TL_ID) + ' - ' + 'Direction: ' + str(self.Direction) + str(self.Intersection_ID)
 
 
 class Street(models.Model):
@@ -43,7 +45,7 @@ class Street(models.Model):
     End_Latitude = models.FloatField(max_length=25)
 
     def __str__(self):
-        return self.Street_ID
+        return 'Street ID: ' + self.Street_ID
 
 
 class IntersectionsStreets(models.Model):
@@ -73,7 +75,7 @@ class EmergencyVehicle(models.Model):
     Priority = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.Car_ID
+        return 'Car ID: ' + self.Car_ID
 
 
 class Use(models.Model):
@@ -83,5 +85,5 @@ class Use(models.Model):
     Date = models.DateTimeField
 
     def __str__(self):
-        return str(self.National_ID) + ' - ' + str(self.Car_ID)
+        return 'National ID: ' + str(self.National_ID) + ' - ' + str(self.Car_ID)
 

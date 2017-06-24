@@ -1,21 +1,45 @@
 from django.db import models
 from django.contrib.auth.models import User
-import database_functions
+
+
+def intersection_number():
+    no = int(Intersection.objects.latest('Intersection_ID').Intersection_ID)
+    if no == None:
+        return str(1)
+    else:
+        return str(no + 1)
+
+
+def trafficlights_number():
+    no = int(TrafficLight.objects.latest('TL_ID').TL_ID)
+    if no == None:
+        return str(1)
+    else:
+        return str(no + 1)
+
+
+def centralnode_number():
+    no = int(CentralNode.objects.latest('CentralNode_ID').CentralNode_ID)
+    if no == None:
+        return str(1)
+    else:
+        return str(no + 1)
+
 
 # Create your models here.
 
 
 class CentralNode(models.Model):
-    CentralNode_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.centralnode_number)
+    CentralNode_ID = models.CharField(max_length=10, primary_key=True, default=centralnode_number)
     CentralNode_IP = models.CharField(max_length=8, default='0')
 
     def __str__(self):
-        return 'Central Node ID: ' + self.CentralNode_ID
+        return 'Central Node ID: ' + str(self.CentralNode_ID)
 
 
 class Intersection(models.Model):
     unique_together = ('Intersection_ID ', 'CentralNode_ID')
-    Intersection_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.intersection_number)
+    Intersection_ID = models.CharField(max_length=10, primary_key=True, default=intersection_number)
     CentralNode_ID = models.ForeignKey(CentralNode, on_delete=models.CASCADE)
     Intersection_Number_Central_Node = models.CharField(max_length=10)
     #MAC = models.CharField(max_length=12, default='0')
@@ -27,7 +51,7 @@ class Intersection(models.Model):
 
 class TrafficLight(models.Model):
     unique_together = ('TL_ID', 'Direction')
-    TL_ID = models.CharField(max_length=10, primary_key=True, default=database_functions.trafficlights_number)
+    TL_ID = models.CharField(max_length=10, primary_key=True, default=trafficlights_number)
     Longitude = models.FloatField(max_length=25)
     Latitude = models.FloatField(max_length=25)
     Direction = models.CharField(max_length=2)

@@ -76,6 +76,7 @@ outputfile.write("[")
 
 Get_Streets(lat=Kolleya_Origin_lat,lng=Kolleya_Origin_lng)
 print 1*1000
+'''
 Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng+0.005)
 print 2*1000
 Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng)
@@ -90,7 +91,7 @@ Get_Streets(lat=Kolleya_Origin_lat-0.005,lng=Kolleya_Origin_lng+0.005)
 print 7*1000
 Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng-0.005)
 print 8*1000
-
+'''
 
 outputfile.seek(-1,os.SEEK_CUR)
 outputfile.write("\n]")

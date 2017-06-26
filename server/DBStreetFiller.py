@@ -15,7 +15,7 @@ def Write_model(StreetName,StartLng,StartLat,EndLng,EndLat):
 def Get_Streets(lat=30.064410,lng=31.278965,username="micheltls"):
 
     service_url = "http://api.geonames.org/findNearbyStreetsOSM?lat=" + str(lat) +\
-                  "&lng=" + str(lng) + "&username=" + username + "&radius=1"
+                  "&lng=" + str(lng) + "&username=" + username + "&radius=1&maxRows=20"
     print "Getting all street names ..."
     response = urllib2.urlopen(service_url)
     xml_response = response.read()

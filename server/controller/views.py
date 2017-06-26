@@ -32,33 +32,38 @@ def index(request):
             TLLocation['lon'] = TLLocation.pop('Longitude')
             TLLocation['lat'] = TLLocation.pop('Latitude')
 
-            # Get Central node Intersection number
-            Intersection_Number_Central_Node = Intersection.objects.values('Intersection_Number_Central_Node').filter(Intersection_ID=TL_Intersection_ID).first()['Intersection_Number_Central_Node']
-
-            # Get ip and port number
-            tl_ip = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=TL_Intersection_ID)).first()['CentralNode_IP']
-            tl_port = 12348
-            #Testing
-            #tl_ip = '127.0.0.1'
-            # opening a socket
-            tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            tlsocket.connect((tl_ip, tl_port))
-            # Sending to central node ip
-            tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
-            print 'Sending ', Intersection_Number_Central_Node, TL_Direction
             # check if EV passed the current TL
-
             Passed = utilities.passed_tl(EVlocation, TLLocation, TL_Direction)
 
-            if Passed:
-                # reset TLs
-                tlsocket.send("P" + Intersection_Number_Central_Node + TL_Direction)
-                request.session['TrafficLights'].pop(0)
-                request.session.modified = True
+            if request.session['Send'] or Passed:
+                # Get Central node Intersection number
+                Intersection_Number_Central_Node = Intersection.objects.values('Intersection_Number_Central_Node').filter(Intersection_ID=TL_Intersection_ID).first()['Intersection_Number_Central_Node']
 
-                print request.session['TrafficLights']
-                print "passed"
+                # Get ip and port number
+                tl_ip = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=TL_Intersection_ID)).first()['CentralNode_IP']
+                tl_port = 12348
+                #Testing
+                #tl_ip = '127.0.0.1'
+                # opening a socket
+                tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                tlsocket.connect((tl_ip, tl_port))
 
-            tlsocket.close()
+                if request.session['Send']:
+                    # Sending to central node ip
+                    tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
+                    print 'Sending ', Intersection_Number_Central_Node, TL_Direction
+                    request.session['Send'] = False
+
+                if Passed:
+                    # reset TLs
+                    tlsocket.send("P" + Intersection_Number_Central_Node + TL_Direction)
+                    request.session['Send'] = True
+                    request.session['TrafficLights'].pop(0)
+                    request.session.modified = True
+
+                    print request.session['TrafficLights']
+                    print "passed"
+
+                tlsocket.close()
 
     return redirect('map:map')

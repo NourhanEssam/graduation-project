@@ -28,6 +28,7 @@ def index(request):
 
         print tls
         request.session['TrafficLights'] = tls
+        request.session['Send'] = True
         # testing
         # request.session['TrafficLights'] = [1, 2]
         return redirect('controller:controller')

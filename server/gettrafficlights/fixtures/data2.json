@@ -1,0 +1,871 @@
+[
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ahmed Fouad Abd Al Aziz Al Sarayat Sabekaa",
+    "fields":
+    {
+      "Start_Longitude": 31.2832111,
+      "Start_Latitude": 30.0675151,
+      "End_Longitude": 31.2757637,
+      "End_Latitude": 30.0625154
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Engineering Institute",
+    "fields":
+    {
+      "Start_Longitude": 31.2785305,
+      "Start_Latitude": 30.0625154,
+      "End_Longitude": 31.2781981,
+      "End_Latitude": 30.0617761
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Street 47",
+    "fields":
+    {
+      "Start_Longitude": 31.2829091,
+      "Start_Latitude": 30.0632675,
+      "End_Longitude": 31.2768891,
+      "End_Latitude": 30.0613965
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Industrial Zone",
+    "fields":
+    {
+      "Start_Longitude": 31.2819510,
+      "Start_Latitude": 30.0620732,
+      "End_Longitude": 31.2779144,
+      "End_Latitude": 30.0591213
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ahmed Saeed",
+    "fields":
+    {
+      "Start_Longitude": 31.2801498,
+      "Start_Latitude": 30.0731939,
+      "End_Longitude": 31.2704708,
+      "End_Latitude": 30.0587292
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Sabel Al Khazndara",
+    "fields":
+    {
+      "Start_Longitude": 31.2755469,
+      "Start_Latitude": 30.0621773,
+      "End_Longitude": 31.2755462,
+      "End_Latitude": 30.0621611
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Mesaha Al Gologyah",
+    "fields":
+    {
+      "Start_Longitude": 31.2850217,
+      "Start_Latitude": 30.0646713,
+      "End_Longitude": 31.2843330,
+      "End_Latitude": 30.0623236
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Sikka Al Bidaa",
+    "fields":
+    {
+      "Start_Longitude": 31.2871017,
+      "Start_Latitude": 30.0675151,
+      "End_Longitude": 31.2832111,
+      "End_Latitude": 30.0645402
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Abaseya",
+    "fields":
+    {
+      "Start_Longitude": 31.2871017,
+      "Start_Latitude": 30.0675151,
+      "End_Longitude": 31.2832111,
+      "End_Latitude": 30.0645402
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mohammed Helmy",
+    "fields":
+    {
+      "Start_Longitude": 31.2785301,
+      "Start_Latitude": 30.0665561,
+      "End_Longitude": 31.2782908,
+      "End_Latitude": 30.0663504
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Greek Hospital St",
+    "fields":
+    {
+      "Start_Longitude": 31.2832334,
+      "Start_Latitude": 30.0664442,
+      "End_Longitude": 31.2797978,
+      "End_Latitude": 30.0598844
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Lewaa Mohammed Helmy",
+    "fields":
+    {
+      "Start_Longitude": 31.2790345,
+      "Start_Latitude": 30.0665051,
+      "End_Longitude": 31.2787702,
+      "End_Latitude": 30.0662759
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Sekat Alam",
+    "fields":
+    {
+      "Start_Longitude": 31.2786670,
+      "Start_Latitude": 30.0668088,
+      "End_Longitude": 31.2783355,
+      "End_Latitude": 30.0665296
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Afdal",
+    "fields":
+    {
+      "Start_Longitude": 31.2829216,
+      "Start_Latitude": 30.0703239,
+      "End_Longitude": 31.2801211,
+      "End_Latitude": 30.0677491
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Omaraa",
+    "fields":
+    {
+      "Start_Longitude": 31.2819721,
+      "Start_Latitude": 30.0690844,
+      "End_Longitude": 31.2816131,
+      "End_Latitude": 30.0687855
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Nakib Al Gish",
+    "fields":
+    {
+      "Start_Longitude": 31.2808458,
+      "Start_Latitude": 30.0679630,
+      "End_Longitude": 31.2805814,
+      "End_Latitude": 30.0677383
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ramses",
+    "fields":
+    {
+      "Start_Longitude": 31.2808458,
+      "Start_Latitude": 30.0679630,
+      "End_Longitude": 31.2805814,
+      "End_Latitude": 30.0677383
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Hasan Allam",
+    "fields":
+    {
+      "Start_Longitude": 31.2839502,
+      "Start_Latitude": 30.0721182,
+      "End_Longitude": 31.2837030,
+      "End_Latitude": 30.0719007
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ali Taher",
+    "fields":
+    {
+      "Start_Longitude": 31.2833592,
+      "Start_Latitude": 30.0715739,
+      "End_Longitude": 31.2830850,
+      "End_Latitude": 30.0713427
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Zaidan",
+    "fields":
+    {
+      "Start_Longitude": 31.2809396,
+      "Start_Latitude": 30.0691199,
+      "End_Longitude": 31.2807484,
+      "End_Latitude": 30.0689493
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Mostashfa Al Itali",
+    "fields":
+    {
+      "Start_Longitude": 31.2798697,
+      "Start_Latitude": 30.0680647,
+      "End_Longitude": 31.2794871,
+      "End_Latitude": 30.0677179
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Sergani",
+    "fields":
+    {
+      "Start_Longitude": 31.2798697,
+      "Start_Latitude": 30.0680647,
+      "End_Longitude": 31.2794871,
+      "End_Latitude": 30.0677179
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Danash",
+    "fields":
+    {
+      "Start_Longitude": 31.2747735,
+      "Start_Latitude": 30.0637122,
+      "End_Longitude": 31.2744125,
+      "End_Latitude": 30.0634143
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Selim Abdou",
+    "fields":
+    {
+      "Start_Longitude": 31.2762211,
+      "Start_Latitude": 30.0635108,
+      "End_Longitude": 31.2762034,
+      "End_Latitude": 30.0635053
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Fakhry Abd El-Nour",
+    "fields":
+    {
+      "Start_Longitude": 31.2873272,
+      "Start_Latitude": 30.0717956,
+      "End_Longitude": 31.2791430,
+      "End_Latitude": 30.0663097
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Afif Al Dawla",
+    "fields":
+    {
+      "Start_Longitude": 31.2842424,
+      "Start_Latitude": 30.0693409,
+      "End_Longitude": 31.2840285,
+      "End_Latitude": 30.0691288
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Masaken Al Gound",
+    "fields":
+    {
+      "Start_Longitude": 31.2837246,
+      "Start_Latitude": 30.0686935,
+      "End_Longitude": 31.2832588,
+      "End_Latitude": 30.0683215
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Bostan El-Gaish",
+    "fields":
+    {
+      "Start_Longitude": 31.2828437,
+      "Start_Latitude": 30.0690111,
+      "End_Longitude": 31.2826609,
+      "End_Latitude": 30.0688603
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Maghraby",
+    "fields":
+    {
+      "Start_Longitude": 31.2802821,
+      "Start_Latitude": 30.0697884,
+      "End_Longitude": 31.2789008,
+      "End_Latitude": 30.0684828
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Madraset Wli Al Ahd",
+    "fields":
+    {
+      "Start_Longitude": 31.2795397,
+      "Start_Latitude": 30.0691764,
+      "End_Longitude": 31.2793544,
+      "End_Latitude": 30.0690193
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Samaah",
+    "fields":
+    {
+      "Start_Longitude": 31.2790801,
+      "Start_Latitude": 30.0698765,
+      "End_Longitude": 31.2788328,
+      "End_Latitude": 30.0696588
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Nasir",
+    "fields":
+    {
+      "Start_Longitude": 31.2798800,
+      "Start_Latitude": 30.0701716,
+      "End_Longitude": 31.2796001,
+      "End_Latitude": 30.0699390
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Qarqol",
+    "fields":
+    {
+      "Start_Longitude": 31.2787008,
+      "Start_Latitude": 30.0687223,
+      "End_Longitude": 31.2785072,
+      "End_Latitude": 30.0685544
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Maher",
+    "fields":
+    {
+      "Start_Longitude": 31.2782852,
+      "Start_Latitude": 30.0688923,
+      "End_Longitude": 31.2780617,
+      "End_Latitude": 30.0686966
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abd El-Raheem El-Demerdash",
+    "fields":
+    {
+      "Start_Longitude": 31.2779552,
+      "Start_Latitude": 30.0679047,
+      "End_Longitude": 31.2776231,
+      "End_Latitude": 30.0676253
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Qobah Al Fadaweh",
+    "fields":
+    {
+      "Start_Longitude": 31.2797272,
+      "Start_Latitude": 30.0702397,
+      "End_Longitude": 31.2795084,
+      "End_Latitude": 30.0700470
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mohammed Refaat",
+    "fields":
+    {
+      "Start_Longitude": 31.2780771,
+      "Start_Latitude": 30.0696443,
+      "End_Longitude": 31.2778599,
+      "End_Latitude": 30.0694604
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ali Ibrahim Ln",
+    "fields":
+    {
+      "Start_Longitude": 31.2788046,
+      "Start_Latitude": 30.0704006,
+      "End_Longitude": 31.2785700,
+      "End_Latitude": 30.0701866
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Haret Al Saraf",
+    "fields":
+    {
+      "Start_Longitude": 31.2784880,
+      "Start_Latitude": 30.0706936,
+      "End_Longitude": 31.2782620,
+      "End_Latitude": 30.0704983
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Shaaban Ln",
+    "fields":
+    {
+      "Start_Longitude": 31.2781125,
+      "Start_Latitude": 30.0674303,
+      "End_Longitude": 31.2778389,
+      "End_Latitude": 30.0671946
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Fahmy",
+    "fields":
+    {
+      "Start_Longitude": 31.2777602,
+      "Start_Latitude": 30.0694232,
+      "End_Longitude": 31.2775882,
+      "End_Latitude": 30.0692665
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mohammed Al Fahmi",
+    "fields":
+    {
+      "Start_Longitude": 31.2799483,
+      "Start_Latitude": 30.0714780,
+      "End_Longitude": 31.2796656,
+      "End_Latitude": 30.0712380
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Atfet Al Damardash",
+    "fields":
+    {
+      "Start_Longitude": 31.2771136,
+      "Start_Latitude": 30.0687439,
+      "End_Longitude": 31.2768790,
+      "End_Latitude": 30.0685342
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Haret Wasfi",
+    "fields":
+    {
+      "Start_Longitude": 31.2779130,
+      "Start_Latitude": 30.0711104,
+      "End_Longitude": 31.2775250,
+      "End_Latitude": 30.0708693
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Wali Al Ahd",
+    "fields":
+    {
+      "Start_Longitude": 31.2783855,
+      "Start_Latitude": 30.0709406,
+      "End_Longitude": 31.2781674,
+      "End_Latitude": 30.0707698
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ahmed Naguib",
+    "fields":
+    {
+      "Start_Longitude": 31.2796347,
+      "Start_Latitude": 30.0724607,
+      "End_Longitude": 31.2734509,
+      "End_Latitude": 30.0666144
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Salah Salem St",
+    "fields":
+    {
+      "Start_Longitude": 31.2911868,
+      "Start_Latitude": 30.0685820,
+      "End_Longitude": 31.2801999,
+      "End_Latitude": 30.0557559
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Sarayat",
+    "fields":
+    {
+      "Start_Longitude": 31.2849121,
+      "Start_Latitude": 30.0671871,
+      "End_Longitude": 31.2821466,
+      "End_Latitude": 30.0648837
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Zahraa Hospital",
+    "fields":
+    {
+      "Start_Longitude": 31.2825692,
+      "Start_Latitude": 30.0668712,
+      "End_Longitude": 31.2812596,
+      "End_Latitude": 30.0640413
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Fardous Bridge",
+    "fields":
+    {
+      "Start_Longitude": 31.2818961,
+      "Start_Latitude": 30.0583044,
+      "End_Longitude": 31.2803835,
+      "End_Latitude": 30.0562823
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abd Allah Mohammed Abd Allah",
+    "fields":
+    {
+      "Start_Longitude": 31.2826365,
+      "Start_Latitude": 30.0612153,
+      "End_Longitude": 31.2769101,
+      "End_Latitude": 30.0587394
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Shaikh Abd Allah",
+    "fields":
+    {
+      "Start_Longitude": 31.2798237,
+      "Start_Latitude": 30.0601969,
+      "End_Longitude": 31.2755120,
+      "End_Latitude": 30.0559393
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Fardous",
+    "fields":
+    {
+      "Start_Longitude": 31.2795864,
+      "Start_Latitude": 30.0622023,
+      "End_Longitude": 31.2737243,
+      "End_Latitude": 30.0556747
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Agahori",
+    "fields":
+    {
+      "Start_Longitude": 31.2792393,
+      "Start_Latitude": 30.0815196,
+      "End_Longitude": 31.2761434,
+      "End_Latitude": 30.0797668
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mostashfa Al Taelba",
+    "fields":
+    {
+      "Start_Longitude": 31.2768135,
+      "Start_Latitude": 30.0584256,
+      "End_Longitude": 31.2758403,
+      "End_Latitude": 30.0532549
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Merfak Al Meah",
+    "fields":
+    {
+      "Start_Longitude": 31.2731999,
+      "Start_Latitude": 30.0597857,
+      "End_Longitude": 31.2729100,
+      "End_Latitude": 30.0594782
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abd El-Azeem",
+    "fields":
+    {
+      "Start_Longitude": 31.2749619,
+      "Start_Latitude": 30.0644034,
+      "End_Longitude": 31.2747604,
+      "End_Latitude": 30.0642959
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Dr Tawfik",
+    "fields":
+    {
+      "Start_Longitude": 31.2740982,
+      "Start_Latitude": 30.0640001,
+      "End_Longitude": 31.2738399,
+      "End_Latitude": 30.0637955
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abdo Al Hamoli",
+    "fields":
+    {
+      "Start_Longitude": 31.2739885,
+      "Start_Latitude": 30.0634307,
+      "End_Longitude": 31.2737757,
+      "End_Latitude": 30.0632150
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ahmed Mokhtar",
+    "fields":
+    {
+      "Start_Longitude": 31.2734145,
+      "Start_Latitude": 30.0663703,
+      "End_Longitude": 31.2732350,
+      "End_Latitude": 30.0662166
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Masoud",
+    "fields":
+    {
+      "Start_Longitude": 31.2748709,
+      "Start_Latitude": 30.0656634,
+      "End_Longitude": 31.2745454,
+      "End_Latitude": 30.0654523
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mahmoud Imam",
+    "fields":
+    {
+      "Start_Longitude": 31.2718256,
+      "Start_Latitude": 30.0633463,
+      "End_Longitude": 31.2716644,
+      "End_Latitude": 30.0631991
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Ganzori",
+    "fields":
+    {
+      "Start_Longitude": 31.2715954,
+      "Start_Latitude": 30.0631572,
+      "End_Longitude": 31.2714369,
+      "End_Latitude": 30.0629886
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abd Al Wahab Al Shanwani",
+    "fields":
+    {
+      "Start_Longitude": 31.2710153,
+      "Start_Latitude": 30.0626482,
+      "End_Longitude": 31.2708437,
+      "End_Latitude": 30.0624886
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mosaad Ibn Youssef",
+    "fields":
+    {
+      "Start_Longitude": 31.2706788,
+      "Start_Latitude": 30.0619326,
+      "End_Longitude": 31.2704310,
+      "End_Latitude": 30.0617264
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Saeed",
+    "fields":
+    {
+      "Start_Longitude": 31.2683869,
+      "Start_Latitude": 30.0654216,
+      "End_Longitude": 31.2631851,
+      "End_Latitude": 30.0624198
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Haridy Ln",
+    "fields":
+    {
+      "Start_Longitude": 31.2745959,
+      "Start_Latitude": 30.0687281,
+      "End_Longitude": 31.2744949,
+      "End_Latitude": 30.0686391
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Shamaa",
+    "fields":
+    {
+      "Start_Longitude": 31.2744988,
+      "Start_Latitude": 30.0688138,
+      "End_Longitude": 31.2743500,
+      "End_Latitude": 30.0686665
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Shaheed Emad",
+    "fields":
+    {
+      "Start_Longitude": 31.2744988,
+      "Start_Latitude": 30.0688138,
+      "End_Longitude": 31.2743500,
+      "End_Latitude": 30.0686665
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Behiri",
+    "fields":
+    {
+      "Start_Longitude": 31.2736270,
+      "Start_Latitude": 30.0695705,
+      "End_Longitude": 31.2733770,
+      "End_Latitude": 30.0693710
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Touny",
+    "fields":
+    {
+      "Start_Longitude": 31.2744886,
+      "Start_Latitude": 30.0697647,
+      "End_Longitude": 31.2743214,
+      "End_Latitude": 30.0696672
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Tabakh",
+    "fields":
+    {
+      "Start_Longitude": 31.2750045,
+      "Start_Latitude": 30.0700005,
+      "End_Longitude": 31.2747324,
+      "End_Latitude": 30.0698017
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Badr",
+    "fields":
+    {
+      "Start_Longitude": 31.2750204,
+      "Start_Latitude": 30.0699064,
+      "End_Longitude": 31.2749547,
+      "End_Latitude": 30.0698149
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Genenat Al Qawader",
+    "fields":
+    {
+      "Start_Longitude": 31.2757038,
+      "Start_Latitude": 30.0702124,
+      "End_Longitude": 31.2754457,
+      "End_Latitude": 30.0700156
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mounir",
+    "fields":
+    {
+      "Start_Longitude": 31.2734975,
+      "Start_Latitude": 30.0698045,
+      "End_Longitude": 31.2732954,
+      "End_Latitude": 30.0696765
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Neseem Afify",
+    "fields":
+    {
+      "Start_Longitude": 31.2731383,
+      "Start_Latitude": 30.0701916,
+      "End_Longitude": 31.2729167,
+      "End_Latitude": 30.0699628
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Sherif",
+    "fields":
+    {
+      "Start_Longitude": 31.2748629,
+      "Start_Latitude": 30.0702606,
+      "End_Longitude": 31.2746465,
+      "End_Latitude": 30.0700969
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Haret Behiri",
+    "fields":
+    {
+      "Start_Longitude": 31.2733579,
+      "Start_Latitude": 30.0690532,
+      "End_Longitude": 31.2732485,
+      "End_Latitude": 30.0689307
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Shaikh Taha",
+    "fields":
+    {
+      "Start_Longitude": 31.2730471,
+      "Start_Latitude": 30.0684056,
+      "End_Longitude": 31.2728875,
+      "End_Latitude": 30.0682587
+    }
+  }
+]

@@ -56,7 +56,7 @@ def index(request):
 
                 if Passed:
                     # reset TLs
-                    tlsocket.send("P" + Intersection_Number_Central_Node + TL_Direction)
+                    tlsocket.send("P" + Intersection_Number_Central_Node)
                     request.session['Send'] = True
                     request.session['TrafficLights'].pop(0)
                     request.session.modified = True

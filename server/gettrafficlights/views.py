@@ -1,7 +1,7 @@
 from .models import TrafficLight
 from .models import IntersectionsStreets
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 
 @login_required
@@ -28,7 +28,10 @@ def index(request):
 
         print tls
         request.session['TrafficLights'] = tls
-    return redirect('controller:controller')
+        request.session['Send'] = True
+        # testing
+        # request.session['TrafficLights'] = [1, 2]
+        return redirect('controller:controller')
 
     return redirect('map:map')
 

@@ -8,9 +8,12 @@ var geoCircle;
 var currentPos;
 var map;
 
+var timer = null;
+
+// initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644}, // TODO set default map center
+        center: {lat: 30.0444, lng: 31.2357}, // TODO set default map center
         zoom: 15
     });
 
@@ -76,6 +79,7 @@ function navigateToCurrentLocation() {
     }
 }
 
+// display directions on the Map and send the coordinates to the map view
 function calcRoute(location) {
     var request = {
         origin: currentPos,
@@ -103,19 +107,52 @@ function calcRoute(location) {
             currentPosLat: currentPos.lat(),
             currentPosLng: currentPos.lng(),
             targetLat: location.lat(),
-            targetLng: location.lng()},
-        // what to do when the call is success
-        success: function (response) {
+            targetLng: location.lng()
         },
-        // what to do when the call is complete ( you can right your clean from code here)
         complete: function () {
+            console.log("complete calcRoute");
+            if(timer)
+            {
+                clearInterval(timer);
+            }
+            // schedule the first invocation:
+            timer = setInterval(detectLocationPeriodically, 10000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(thrownError);
         }
     });
 }
 
+// Send GPS location to the controller
+function detectLocationPeriodically() {
+    console.log("called");
+    $.ajax({
+        url: '/controller/',
+        type: 'POST',
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        data: {
+            currentPosLat: currentPos.lat(),
+            currentPosLng: currentPos.lng()
+        },
+        // what to do when the call is complete ( you can right your clean from code here)
+        complete: function () {
+            console.log("complete");
+        },
+        // what to do when there is an error
+        error: function (xhr, textStatus, thrownError) {
+            console.log("error");
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(thrownError);
+        }
+    });
+}
+
+// Cookies for the csrf token
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -132,6 +169,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// message to be displayed if GPS is not found
 function handleLocationError(browserHasGeolocation) {
     var infoWindow = new google.maps.InfoWindow({map: map});
     infoWindow.setPosition(map.getCenter());

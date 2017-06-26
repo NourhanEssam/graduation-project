@@ -53,6 +53,8 @@ def Get_Streets(lat=30.064410,lng=31.278965,username="micheltls"):
                     geocode_response = urllib2.urlopen(geocode_service_url).read()
                 except urllib2.URLError:
                     print "ERR Geocoding"
+                except UnicodeEncodeError:
+                    print "ERR Geocoding"
                 print "Geocoded"
                 try:
                     bounds =  xmltodict.parse(geocode_response)['GeocodeResponse']['result']['geometry']['bounds']

@@ -1,72 +1,69 @@
-from _socket import socket
 from gettrafficlights.models import TrafficLight, CentralNode, Intersection
-from django.http import HttpResponse
-import re
+
 import socket
+import utilities
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 
 @login_required
 def index(request):
-  if request.user.is_superuser or request.user.is_staff:
-      return redirect('login:logout')
+    if request.user.is_superuser or request.user.is_staff:
+        return redirect('login:logout')
 
-  if 'TrafficLights' in request.session:
-    TLs_IDs = request.session['TrafficLights']
+    if 'TrafficLights' in request.session:
+        TLs_IDs = request.session['TrafficLights']
 
-    tls = []
-    for tl_id in TLs_IDs:
-        Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID','Direction')
-        for e in Queryset:
-            tls.append(e['Intersection_ID']+e['Direction'])
-    print 'here'
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((socket.gethostname(), 12347))
-    s.listen(1)
-    (EVconnection, EVaddress) = s.accept()
+        if request.method == 'POST' and request.is_ajax() and TLs_IDs:
+            data = request.POST
+            EVlocation = {
+                'lon': float(data['currentPosLng']),
+                'lat': float(data['currentPosLat'])
+            }
 
-    if EVconnection.recv(20) == '1':  # EV is Ready
-        for tl in tls:
-            print tl
-            Queryset = TrafficLight.objects.filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
-            for element in Queryset:
-                CentralNodeID = Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1]))
-                CentralNodeIP = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=CentralNodeID).first()
-                tl_ip = CentralNodeIP['CentralNode_IP']
+            # Get intersection and direction
+            tl_id = TLs_IDs[0]
+            Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID', 'Direction').first()
+            TL_Intersection_ID = Queryset['Intersection_ID']
+            TL_Direction = Queryset['Direction']
 
-                #tl_ip_raw = TrafficLight.objects.values('TL_ID').filter(Intersection_ID=str(re.split('(\d+)', tl)[1])).filter(Direction=str(re.split('(\d+)', tl)[2]))
-                #tl_ip = tl_ip_raw['TL_ID']
+            # Get TL location from database
+            TLLocation = TrafficLight.objects.filter(TL_ID=tl_id).values('Longitude', 'Latitude').first()
+            TLLocation['lon'] = TLLocation.pop('Longitude')
+            TLLocation['lat'] = TLLocation.pop('Latitude')
+
+            # check if EV passed the current TL
+            Passed = utilities.passed_tl(EVlocation, TLLocation, TL_Direction)
+
+            if request.session['Send'] or Passed:
+                # Get Central node Intersection number
+                Intersection_Number_Central_Node = Intersection.objects.values('Intersection_Number_Central_Node').filter(Intersection_ID=TL_Intersection_ID).first()['Intersection_Number_Central_Node']
+
+                # Get ip and port number
+                tl_ip = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=TL_Intersection_ID)).first()['CentralNode_IP']
                 tl_port = 12348
                 #Testing
-                tl_ip = 'LAPTOP-S9D924P3'
+                #tl_ip = '127.0.0.1'
+                # opening a socket
                 tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 tlsocket.connect((tl_ip, tl_port))
 
-                if element.Direction == re.split('(\d+)', tl)[2]:
-                    tlsocket.send('1'+element.Direction)
-                else:
-                    tlsocket.send('0'+element.Direction)
+                if request.session['Send']:
+                    # Sending to central node ip
+                    tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
+                    print 'Sending ', Intersection_Number_Central_Node, TL_Direction
+                    request.session['Send'] = False
 
-                if EVconnection.recv(20) == '2':
-                    tlsocket.send("2")  # reset TLs
-                    tlsocket.close()
+                if Passed:
+                    # reset TLs
+                    tlsocket.send("P" + Intersection_Number_Central_Node)
+                    request.session['Send'] = True
+                    request.session['TrafficLights'].pop(0)
+                    request.session.modified = True
 
-    if EVconnection.recv(20) == '3':  # end of route
-        EVconnection.close()
+                    print request.session['TrafficLights']
+                    print "passed"
+
+                tlsocket.close()
 
     return redirect('map:map')
-
-    return HttpResponse("<h1>Hello Controller</h1>");
-
-    ###  Protocol  ###
-    # Emergency Vehicle
-    # Send 0 --> Reconnect
-    # Send 1 --> confirm the connection
-    # Send 2 --> moved
-    # Send 3 --> End of route
-    # Traffic Light
-    # Receive 0,dir -->OFF
-    # Receive 1,dir -->ON
-    # Send 0 --> Reconnect
-    # Send 1 --> confirm the connection

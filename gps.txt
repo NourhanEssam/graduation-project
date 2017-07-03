@@ -1,0 +1,34 @@
+VCC = 3.3 v
+Baud Rate = 9600
+
+1)  *Backup:     sudo cp /boot/cmdline.txt /boot/cmdline_backup.txt
+    *Edit:       sudo nano /boot/cmdline.txt
+    *Delete console=ttyAMA0,115200.
+    *the line should look like this one:
+    dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait
+    *Leave a line and add:
+    enable-uart=1
+    *Save
+
+2)  sudo systemctl mask serial-getty@ttyAMA0.service
+    *Reboot
+
+3)  *Install gpsd:   sudo apt-get install gpsd gpsd-clients
+    *Edit:       sudo nano /etc/default/gpsd
+    make sure those lines are correct.
+    START_DAEMON="true"
+    GPSD_OPTIONS=""
+    DEVICES="/dev/ttyS0"
+    USBAUTO="true"
+    GPSD_SOCKET="/var/run/gpsd.sock"
+    *Reboot
+
+4)  *Set Baud Rate: stty -F /dev/ttyS0 9600
+    *Start gpsd service: sudo service gpsd start
+    *Configure gpsd: sudo gpsd /dev/ttyS0 -F /var/run/gpsd.sock
+    *To test: cgps -s
+
+Troubleshooting:
+gpsmon /dev/ttyS0
+gpsctl /dev/ttyS0
+cat /dev/ttyS0

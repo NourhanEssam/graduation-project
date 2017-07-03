@@ -1,8 +1,18 @@
 import urllib2,xmltodict,os
+import requests
+import json
+
+send_url = 'http://freegeoip.net/json'
+r = requests.get(send_url)
+j = json.loads(r.text)
+lat = j['latitude']
+lon = j['longitude']
+
+print lon,lat
 
 street_list = []
-Kolleya_Origin_lat=30.064410
-Kolleya_Origin_lng=31.278965
+#lat=30.064410
+#lon=31.278965
 
 def Write_model(StreetName,StartLng,StartLat,EndLng,EndLat):
     outputfile.write("\n  {\n    \"model\": \"gettrafficlights.street\",\n    \"pk\": \"")
@@ -71,25 +81,25 @@ def Get_Streets(lat=30.064410,lng=31.278965,username="micheltls"):
 
 
 
-outputfile = open("gettrafficlights/fixtures/data2.json",mode='w')
+outputfile = open("gettrafficlights/fixtures/streets.json",mode='w')
 outputfile.write("[")
 
-Get_Streets(lat=Kolleya_Origin_lat,lng=Kolleya_Origin_lng)
+Get_Streets(lat=lat,lng=lon)
 print 1*1000
 '''
-Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng+0.005)
+Get_Streets(lat=lat+0.005,lng=lon+0.005)
 print 2*1000
-Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng)
+Get_Streets(lat=lat+0.005,lng=lon)
 print 3*1000
-Get_Streets(lat=Kolleya_Origin_lat,lng=Kolleya_Origin_lng+0.005)
+Get_Streets(lat=lat,lng=lon+0.005)
 print 4*1000
-Get_Streets(lat=Kolleya_Origin_lat-0.005,lng=Kolleya_Origin_lng)
+Get_Streets(lat=lat-0.005,lng=lon)
 print 5*1000
-Get_Streets(lat=Kolleya_Origin_lat,lng=Kolleya_Origin_lng-0.005)
+Get_Streets(lat=lat,lng=lon-0.005)
 print 6*1000
-Get_Streets(lat=Kolleya_Origin_lat-0.005,lng=Kolleya_Origin_lng+0.005)
+Get_Streets(lat=lat-0.005,lng=lon+0.005)
 print 7*1000
-Get_Streets(lat=Kolleya_Origin_lat+0.005,lng=Kolleya_Origin_lng-0.005)
+Get_Streets(lat=lat+0.005,lng=lon-0.005)
 print 8*1000
 '''
 

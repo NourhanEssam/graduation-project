@@ -1,9 +1,14 @@
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 import parser
 import urllib
 
+from map.scaler import scale, rotate
+
+
+@never_cache
 @login_required
 @ensure_csrf_cookie
 def index(request):
@@ -17,17 +22,22 @@ def index(request):
         # start
         originLat = float(data.get('currentPosLat'))
         originLong = float(data.get('currentPosLng'))
-        #originLat = 30.064574
-        #originLong = 31.274313
+        originLat, originLong = 30.063444, 31.278494
 
         # destination
         destinationLat = float(data.get('targetLat'))
         destinationLong = float(data.get('targetLng'))
+        destinationLat, destinationLong = 30.063936, 31.280017
 
         # google api key (from my account)
         key = "AIzaSyCwI32R7w5UyY3nvL8Pv-sJqBvUiGCTzOc"
         # directions mode
         mode = "driving"
+
+        # scale for prototype
+        originLat, originLong = scale(originLat, originLong)
+        destinationLat, destinationLong = scale(destinationLat, destinationLong)
+
         pars = (originLat, originLong, destinationLat, destinationLong, key, mode)
         # replace the {} in the directions_url with the previous parameters
         request_url = directions_url.format(*pars)
@@ -35,6 +45,9 @@ def index(request):
         result_string = urllib.urlopen(request_url).read()
         # pass the json string to the parser which michel implemented
         directions = parser.parse_directions(result_string)
+
+        # testing prototype
+        directions = rotate(directions)
 
         request.session['directions'] = directions
         # for testing

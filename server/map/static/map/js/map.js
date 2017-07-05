@@ -107,15 +107,14 @@ function navigateToCurrentLocation() {
             if (geoMarker != null) {
                 geoMarker.setMap(null);
             }
+            // draw circle around current position
             geoCircle = new google.maps.Circle({
                 center: currentPos,
                 radius: position.coords.accuracy,
                 map: map,
                 fillColor: '#0000FF',
-                fillOpacity: 0.2,
-                strokeColor: '#0000FF',
-                strokeOpacity: 0.5,
-                strokeWeight: 0.8
+                fillOpacity: 0.1,
+                strokeWeight: 0
             });
             geoCircle.setMap(map);
             geoMarker = new google.maps.Marker({
@@ -124,7 +123,8 @@ function navigateToCurrentLocation() {
                     path: google.maps.SymbolPath.CIRCLE,
                     fillColor: '#0000FF',
                     fillOpacity: 0.5,
-                    strokeWeight: 0,
+                    strokeWeight: 2,
+                    strokeColor: '#FFFFFF',
                     scale: 8
                 },
                 map: map,

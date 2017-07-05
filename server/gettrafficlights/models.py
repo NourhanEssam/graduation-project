@@ -31,7 +31,7 @@ def centralnode_number():
 
 class CentralNode(models.Model):
     CentralNode_ID = models.CharField(max_length=10, primary_key=True, default=centralnode_number)
-    CentralNode_IP = models.CharField(max_length=8, default='0')
+    CentralNode_IP = models.CharField(max_length=15, default='0')
 
     def __str__(self):
         return 'Central Node ID: ' + str(self.CentralNode_ID)

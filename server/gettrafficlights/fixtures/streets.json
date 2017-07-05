@@ -1,0 +1,123 @@
+[
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Qaaed",
+    "fields":
+    {
+      "Start_Longitude": 31.2938261,
+      "Start_Latitude": 30.0862757,
+      "End_Longitude": 31.2840644,
+      "End_Latitude": 30.0767442
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "El-Khalifa El-Maamoun",
+    "fields":
+    {
+      "Start_Longitude": 31.2958008,
+      "Start_Latitude": 30.0842508,
+      "End_Longitude": 31.2847804,
+      "End_Latitude": 30.0736549
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Kobri Sraya Al Koba",
+    "fields":
+    {
+      "Start_Longitude": 31.2983259,
+      "Start_Latitude": 30.0863670,
+      "End_Longitude": 31.2932681,
+      "End_Latitude": 30.0824968
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Abasseya Bridge",
+    "fields":
+    {
+      "Start_Longitude": 31.2856133,
+      "Start_Latitude": 30.0752465,
+      "End_Longitude": 31.2838132,
+      "End_Latitude": 30.0729674
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ramses",
+    "fields":
+    {
+      "Start_Longitude": 31.2856133,
+      "Start_Latitude": 30.0752465,
+      "End_Longitude": 31.2838132,
+      "End_Latitude": 30.0729674
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Organization of African Unity St",
+    "fields":
+    {
+      "Start_Longitude": 31.2973567,
+      "Start_Latitude": 30.0784046,
+      "End_Longitude": 31.2899333,
+      "End_Latitude": 30.0722861
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "of October Bridge",
+    "fields":
+    {
+      "Start_Longitude": 31.3027476,
+      "Start_Latitude": 30.0690009,
+      "End_Longitude": 31.2919733,
+      "End_Latitude": 30.0587877
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Mahmoud Shokry",
+    "fields":
+    {
+      "Start_Longitude": 31.2951013,
+      "Start_Latitude": 30.0848946,
+      "End_Longitude": 31.2860610,
+      "End_Latitude": 30.0795754
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Ibn Bateeh",
+    "fields":
+    {
+      "Start_Longitude": 31.2879712,
+      "Start_Latitude": 30.0806598,
+      "End_Longitude": 31.2877607,
+      "End_Latitude": 30.0805134
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Al Adel",
+    "fields":
+    {
+      "Start_Longitude": 31.2861447,
+      "Start_Latitude": 30.0798809,
+      "End_Longitude": 31.2859851,
+      "End_Latitude": 30.0797548
+    }
+  },
+  {
+    "model": "gettrafficlights.street",
+    "pk": "Lotfy El-Sayed",
+    "fields":
+    {
+      "Start_Longitude": 31.2838132,
+      "Start_Latitude": 30.0774864,
+      "End_Longitude": 31.2730385,
+      "End_Latitude": 30.0746843
+    }
+  }
+]

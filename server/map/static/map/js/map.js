@@ -6,6 +6,7 @@ var directionsService;
 var geoMarker;
 var geoCircle;
 var currentPos;
+var Location = null;
 var map;
 
 var searchMarker;
@@ -86,7 +87,8 @@ function initMap() {
     // map onclick event handler
     map.addListener("click", function (event) {
         searchMarker.setVisible(false);
-        calcRoute(event.latLng);
+        Location = event.latLng;
+        calcRoute();
     });
 }
 
@@ -117,10 +119,10 @@ function navigateToCurrentLocation() {
 }
 
 // display directions on the Map and send the coordinates to the map view
-function calcRoute(location) {
+function calcRoute() {
     var request = {
         origin: currentPos,
-        destination: location,
+        destination: Location,
         travelMode: 'DRIVING'
     };
     directionsService.route(request, function (result, status) {
@@ -143,8 +145,8 @@ function calcRoute(location) {
         data: {
             currentPosLat: currentPos.lat(),
             currentPosLng: currentPos.lng(),
-            targetLat: location.lat(),
-            targetLng: location.lng()
+            targetLat: Location.lat(),
+            targetLng: Location.lng()
         },
         complete: function () {
             console.log("complete calcRoute");
@@ -174,9 +176,12 @@ function handleMissingGeolocation() {
         success: function (response) {
             var context = JSON.parse(response);
             console.log('lon: ' + context.lon + ' lat: ' + context.lat + ' error: ' + context.err + 'm');
-            drawLocationCenter(context.lat, context.lon, context.err);
+            drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
             map.setCenter(new google.maps.LatLng(context.lat, context.lon));
-            timer = setInterval(getLocationPeriodically, 500);
+            if (timerNoGeo) {
+                clearInterval(timerNoGeo);
+            }
+            timerNoGeo = setInterval(getLocationPeriodically, 500);
         },
         error: function (xhr, textStatus, thrownError) {
             handleLocationError();
@@ -220,8 +225,9 @@ function drawLocationCenter(lat, lon, accuracy) {
     });
     geoMarker.setMap(map);
     console.log('Source: ' + lat + ', ' + lon);
-
+    
     directionsDisplay.setMap(map);
+
 }
 
 // ---------------------- periodic functions ----------------------------
@@ -258,7 +264,7 @@ function getLocationPeriodically() {
         success: function (response) {
             var context = JSON.parse(response);
             console.log('lon: ' + context.lon + ' lat: ' + context.lat + ' error: ' + context.err + 'm');
-            drawLocationCenter(context.lat, context.lon, context.err);
+            drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
             currentPos = new google.maps.LatLng(context.lat, context.lon);
         },
         error: function (xhr, textStatus, thrownError) {

@@ -11,6 +11,7 @@ var map;
 var searchMarker;
 
 var timer = null;
+var timerNoGeo = null;
 
 // initial function called by the google maps api
 function initMap() {
@@ -96,51 +97,22 @@ function navigateToCurrentLocation() {
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            map.setCenter(position);
+        });
         navigator.geolocation.watchPosition(function (position) {
             currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            map.setCenter(currentPos);
 
-            if (geoCircle != null)
-            {
-                geoCircle.setMap(null);
-            }
-            if (geoMarker != null) {
-                geoMarker.setMap(null);
-            }
-            // draw circle around current position
-            geoCircle = new google.maps.Circle({
-                center: currentPos,
-                radius: position.coords.accuracy,
-                map: map,
-                fillColor: '#0000FF',
-                fillOpacity: 0.1,
-                strokeWeight: 0
-            });
-            geoCircle.setMap(map);
-            geoMarker = new google.maps.Marker({
-                position: currentPos,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: '#0000FF',
-                    fillOpacity: 0.5,
-                    strokeWeight: 2,
-                    strokeColor: '#FFFFFF',
-                    scale: 8
-                },
-                map: map,
-                title: 'Current Location'
-            });
-            geoMarker.setMap(map);
-            console.log('Source: ' + currentPos.lat() + ', ' + currentPos.lng());
-
-            directionsDisplay.setMap(map);
+            drawLocationCenter(currentPos.lat(), currentPos.lng(), currentPos.accuracy)
 
         }, function () {
-            handleLocationError(true);
+            // handleLocationError(true);
+            handleMissingGeolocation();
         });
     } else {
         // Browser doesn't support Geolocation
-        handleLocationError(false);
+        // handleLocationError(false);
+        handleMissingGeolocation();
     }
 }
 
@@ -185,12 +157,74 @@ function calcRoute(location) {
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
-            console.log(xhr);
             console.log(textStatus);
             console.log(thrownError);
         }
     });
 }
+
+// --------------------- no GeoLocation Service --------------------
+
+function handleMissingGeolocation() {
+    $.ajax({
+        url: "/location/?key=driver",
+        type: "GET",
+        dataType: "text",
+        crossDomain: true,
+        success: function (response) {
+            var context = JSON.parse(response);
+            console.log('lon: ' + context.lon + ' lat: ' + context.lat + ' error: ' + context.err + 'm');
+            drawLocationCenter(context.lat, context.lon, context.err);
+            map.setCenter(new google.maps.LatLng(context.lat, context.lon));
+            timer = setInterval(getLocationPeriodically, 500);
+        },
+        error: function (xhr, textStatus, thrownError) {
+            handleLocationError();
+            console.log(textStatus);
+            console.log(thrownError);
+        }
+    });
+}
+
+function drawLocationCenter(lat, lon, accuracy) {
+    currentPos = new google.maps.LatLng(lat, lon);
+
+    if (geoCircle != null) {
+        geoCircle.setMap(null);
+    }
+    if (geoMarker != null) {
+        geoMarker.setMap(null);
+    }
+    // draw circle around current position
+    geoCircle = new google.maps.Circle({
+        center: currentPos,
+        radius: accuracy,
+        map: map,
+        fillColor: '#0000FF',
+        fillOpacity: 0.1,
+        strokeWeight: 0
+    });
+    geoCircle.setMap(map);
+    geoMarker = new google.maps.Marker({
+        position: currentPos,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: '#0000FF',
+            fillOpacity: 0.5,
+            strokeWeight: 2,
+            strokeColor: '#FFFFFF',
+            scale: 8
+        },
+        map: map,
+        title: 'Current Location'
+    });
+    geoMarker.setMap(map);
+    console.log('Source: ' + lat + ', ' + lon);
+
+    directionsDisplay.setMap(map);
+}
+
+// ---------------------- periodic functions ----------------------------
 
 // Send GPS location to the controller
 function detectLocationPeriodically() {
@@ -209,12 +243,39 @@ function detectLocationPeriodically() {
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
-            console.log("error");
-            console.log(xhr);
             console.log(textStatus);
             console.log(thrownError);
         }
     });
+}
+
+function getLocationPeriodically() {
+    $.ajax({
+        url: "/location/?key=driver",
+        type: "GET",
+        dataType: "text",
+        crossDomain: true,
+        success: function (response) {
+            var context = JSON.parse(response);
+            console.log('lon: ' + context.lon + ' lat: ' + context.lat + ' error: ' + context.err + 'm');
+            drawLocationCenter(context.lat, context.lon, context.err);
+            currentPos = new google.maps.LatLng(context.lat, context.lon);
+        },
+        error: function (xhr, textStatus, thrownError) {
+            handleLocationError();
+            console.log(textStatus);
+            console.log(thrownError);
+        }
+    });
+}
+
+// -------------------------- utilities ------------------------------
+
+// message to be displayed if GPS is not found
+function handleLocationError() {
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    infoWindow.setPosition(map.getCenter());
+    infoWindow.setContent('Error: The Geolocation service failed.');
 }
 
 // Cookies for the csrf token
@@ -232,14 +293,4 @@ function getCookie(name) {
         }
     }
     return cookieValue;
-}
-
-// message to be displayed if GPS is not found
-function handleLocationError(browserHasGeolocation) {
-    var infoWindow = new google.maps.InfoWindow({map: map});
-    infoWindow.setPosition(map.getCenter());
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-
 }

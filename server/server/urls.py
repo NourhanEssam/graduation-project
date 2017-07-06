@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^controller/', include('controller.urls')),
     url(r'^map/', include('map.urls')),
     url(r'^gettrafficlights/', include('gettrafficlights.urls')),
+    url(r'^location/', include('location.urls')),
 ]

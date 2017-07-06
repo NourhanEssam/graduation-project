@@ -1,0 +1,11 @@
+[
+  {
+    "model": "location.Location",
+    "fields" : {
+      "Key": "driver",
+      "lon": "30.11",
+      "lat": "40",
+      "err": "3"
+    }
+  }
+]

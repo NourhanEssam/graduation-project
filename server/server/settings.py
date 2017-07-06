@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'map',
     'gettrafficlights',
     'login',
-    'controller'
+    'controller',
+    'location',
 ]
 
 MIDDLEWARE = [

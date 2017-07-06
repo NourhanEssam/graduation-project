@@ -22,12 +22,12 @@ def index(request):
         # start
         originLat = float(data.get('currentPosLat'))
         originLong = float(data.get('currentPosLng'))
-        #originLat, originLong = 30.063444, 31.278494
+        # originLat, originLong = 30.063856, 31.278600
 
         # destination
         destinationLat = float(data.get('targetLat'))
         destinationLong = float(data.get('targetLng'))
-        #destinationLat, destinationLong = 30.063936, 31.280017
+        # destinationLat, destinationLong = 30.063241, 31.278933
 
         # google api key (from my account)
         key = "AIzaSyCwI32R7w5UyY3nvL8Pv-sJqBvUiGCTzOc"

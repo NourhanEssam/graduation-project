@@ -4,6 +4,7 @@ import socket
 import utilities
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.http import HttpResponse
 
 
 @login_required
@@ -50,8 +51,8 @@ def index(request):
 
                 if request.session['Send']:
                     # Sending to central node ip
-                    tlsocket.send(Intersection_Number_Central_Node + TL_Direction)
-                    print 'Sending ', Intersection_Number_Central_Node, TL_Direction
+                    tlsocket.send(TL_Direction + Intersection_Number_Central_Node)
+                    print 'Sending ', TL_Direction, Intersection_Number_Central_Node
                     request.session['Send'] = False
 
                 if Passed:
@@ -66,4 +67,4 @@ def index(request):
 
                 tlsocket.close()
 
-    return redirect('map:map')
+    return HttpResponse()

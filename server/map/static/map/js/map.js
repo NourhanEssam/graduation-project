@@ -13,12 +13,19 @@ var searchMarker;
 
 var timer = null;
 var timerNoGeo = null;
+var TestMode = true;
+
+var TestTimer1 = null;
+var TestTimer2 = null;
+var TestTimer3 = null;
+
+var time = 5000;
 
 // initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.0444, lng: 31.2357}, // TODO set default map center
-        zoom: 15
+        zoom: 18
     });
 
     navigateToCurrentLocation();
@@ -29,14 +36,6 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
-
-    // Bind the map's bounds (viewport) property to the autocomplete object,
-    // so that the autocomplete requests use the current map bounds for the
-    // bounds option in the request.
-    autocomplete.bindTo('bounds', map);
-
-    // Autocomplete types
-    autocomplete.setTypes([]);
 
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
@@ -64,7 +63,7 @@ function initMap() {
             map.fitBounds(place.geometry.viewport);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(15);
+            map.setZoom(17);
         }
         searchMarker.setPosition(place.geometry.location);
         searchMarker.setVisible(true);
@@ -84,12 +83,6 @@ function initMap() {
         infowindow.open(map, searchMarker);
     });
 
-    // map onclick event handler
-    map.addListener("click", function (event) {
-        searchMarker.setVisible(false);
-        Location = event.latLng;
-        calcRoute();
-    });
 }
 
 // center the map at the current location
@@ -97,24 +90,33 @@ function navigateToCurrentLocation() {
     directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            map.setCenter(position);
+    if (TestMode) {
+        testSystem();
+    }
+    else {
+        // map onclick event handler
+        map.addListener("click", function (event) {
+            searchMarker.setVisible(false);
+            Location = event.latLng;
+            calcRoute();
         });
-        navigator.geolocation.watchPosition(function (position) {
-            currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-            drawLocationCenter(currentPos.lat(), currentPos.lng(), currentPos.accuracy)
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                map.setCenter(position);
+            });
+            navigator.geolocation.watchPosition(function (position) {
+                currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                drawLocationCenter(currentPos.lat(), currentPos.lng(), currentPos.accuracy);
 
-        }, function () {
-            // handleLocationError(true);
+            }, function () {
+                handleMissingGeolocation();
+            });
+        } else {
+            // Browser doesn't support Geolocation
             handleMissingGeolocation();
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        // handleLocationError(false);
-        handleMissingGeolocation();
+        }
     }
 }
 
@@ -148,10 +150,9 @@ function calcRoute() {
             targetLat: Location.lat(),
             targetLng: Location.lng()
         },
-        complete: function () {
-            console.log("complete calcRoute");
-            if(timer)
-            {
+        success: function () {
+            console.log("success calcRoute");
+            if (timer) {
                 clearInterval(timer);
             }
             // schedule the first invocation:
@@ -163,6 +164,7 @@ function calcRoute() {
             console.log(thrownError);
         }
     });
+
 }
 
 // --------------------- no GeoLocation Service --------------------
@@ -225,9 +227,97 @@ function drawLocationCenter(lat, lon, accuracy) {
     });
     geoMarker.setMap(map);
     console.log('Source: ' + lat + ', ' + lon);
-    
     directionsDisplay.setMap(map);
+}
 
+// ---------------------- Testing Methods ---------------------------
+function testSystem() {
+    currentPos = new google.maps.LatLng(0.0, 0.0);
+    console.log("in testsystem");
+    if(TestTimer1 == null)
+    {
+        TestTimer1 = setInterval(waitForSource, time);
+    }
+}
+
+function waitForSource() {
+    if (TestTimer2 == null) {
+        $.ajax({
+            url: "/location/?key=driver",
+            type: "GET",
+            dataType: "text",
+            cache: false,
+            // what to do when the call is complete ( you can right your clean from code here)
+            success: function (response) {
+                var context = JSON.parse(response);
+                if (context.lon != 0.0 && context.lat != 0.0) {
+                    console.log("Source: " + context.lat + ", " + context.lon);
+                    currentPos = new google.maps.LatLng(context.lat, context.lon);
+                    map.setCenter(currentPos);
+                    clearInterval(TestTimer1);
+                    drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
+                    TestTimer2 = setInterval(waitForDestination, time);
+                }
+            },
+            // what to do when there is an error
+            error: function (xhr, textStatus, thrownError) {
+                console.log(textStatus);
+                console.log(thrownError);
+            }
+        });
+    }
+}
+
+function waitForDestination() {
+    if(TestTimer3 == null) {
+        $.ajax({
+            url: "/location/?key=driver",
+            type: "GET",
+            dataType: "text",
+            cache: false,
+            // what to do when the call is complete ( you can right your clean from code here)
+            success: function (response) {
+                var context = JSON.parse(response);
+                Location = new google.maps.LatLng(context.lat, context.lon);
+                if (Location.lng() != currentPos.lng() && Location.lat() != currentPos.lat()) {
+                    console.log("Destination: " + context.lat + ", " + context.lon);
+                    clearInterval(TestTimer2);
+                    calcRoute();
+                    TestTimer3 = setInterval(waitForSteps, 10000);
+                }
+            },
+            // what to do when there is an error
+            error: function (xhr, textStatus, thrownError) {
+                console.log(textStatus);
+                console.log(thrownError);
+            }
+        });
+    }
+}
+
+function waitForSteps() {
+    $.ajax({
+        url: "/location/?key=driver",
+        type: "GET",
+        dataType: "text",
+        cache: false,
+        // what to do when the call is complete ( you can right your clean from code here)
+        success: function (response) {
+            var context = JSON.parse(response);
+            var pos = new google.maps.LatLng(context.lat, context.lon);
+            if (pos.lng() != currentPos.lng() && pos.lat() != currentPos.lat()) {
+                console.log("Step: " + context.lat + ", " + context.lon);
+                pos = new google.maps.LatLng(context.lat, context.lon);
+                currentPos = pos;
+                drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
+            }
+        },
+        // what to do when there is an error
+        error: function (xhr, textStatus, thrownError) {
+            console.log(textStatus);
+            console.log(thrownError);
+        }
+    });
 }
 
 // ---------------------- periodic functions ----------------------------
@@ -239,13 +329,14 @@ function detectLocationPeriodically() {
         url: '/controller/',
         type: 'POST',
         headers: {'X-CSRFToken': getCookie('csrftoken')},
+        cache: false,
         data: {
             currentPosLat: currentPos.lat(),
             currentPosLng: currentPos.lng()
         },
         // what to do when the call is complete ( you can right your clean from code here)
-        complete: function () {
-            console.log("complete");
+        success: function () {
+            console.log("send to controller");
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -261,6 +352,7 @@ function getLocationPeriodically() {
         type: "GET",
         dataType: "text",
         crossDomain: true,
+        cache: false,
         success: function (response) {
             var context = JSON.parse(response);
             console.log('lon: ' + context.lon + ' lat: ' + context.lat + ' error: ' + context.err + 'm');

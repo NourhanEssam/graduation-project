@@ -2,6 +2,7 @@ from .models import TrafficLight
 from .models import IntersectionsStreets
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.http import HttpResponse
 
 
 @login_required
@@ -33,6 +34,6 @@ def index(request):
         # request.session['TrafficLights'] = [1, 2]
         return redirect('controller:controller')
 
-    return redirect('map:map')
+    return HttpResponse()
 
 

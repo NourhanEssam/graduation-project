@@ -18,7 +18,7 @@ def index(request):
         data = request.POST
 
         # this url displays the directions between the origin and destination as a json string
-        directions_url = 'https://maps.googleapis.com/maps/api/directions/json?sensor=false&origin={},{}&destination={},{}&key={}&mode={}'
+        directions_url = 'https://maps.googleapis.com/maps/api/directions/json?sensor=false&avoid=tolls|ferries&origin={},{}&destination={},{}&key={}&mode={}'
         # start
         originLat = float(data.get('currentPosLat'))
         originLong = float(data.get('currentPosLng'))
@@ -32,7 +32,7 @@ def index(request):
         # google api key (from my account)
         key = "AIzaSyCwI32R7w5UyY3nvL8Pv-sJqBvUiGCTzOc"
         # directions mode
-        mode = "driving"
+        mode = "walking"
 
         # scale for prototype
         originLat, originLong = scale(originLat, originLong)
@@ -47,6 +47,7 @@ def index(request):
         directions = parser.parse_directions(result_string)
 
         # testing prototype
+        print directions, "\n\n"
         directions = rotate(directions)
 
         request.session['directions'] = directions

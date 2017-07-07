@@ -5,7 +5,7 @@ import math
 R = 6371000.0
 
 # tolerance
-tol = 10
+tol = 3
 
 
 def get_distance(lat1, lon1, lat2, lon2):

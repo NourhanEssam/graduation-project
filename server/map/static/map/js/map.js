@@ -13,6 +13,7 @@ var searchMarker;
 
 var timer = null;
 var timerNoGeo = null;
+
 var TestMode = true;
 
 var TestTimer1 = null;
@@ -24,7 +25,7 @@ var time = 5000;
 // initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.0444, lng: 31.2357}, // TODO set default map center
+        center: {lat: 30.0444, lng: 31.2357},
         zoom: 18
     });
 
@@ -104,7 +105,11 @@ function navigateToCurrentLocation() {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                map.setCenter(position);
+                var pos = {
+                    'lat': position.coords.latitude,
+                    'lng': position.coords.longitude
+                };
+                map.setCenter(pos);
             });
             navigator.geolocation.watchPosition(function (position) {
                 currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

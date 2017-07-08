@@ -13,19 +13,18 @@ var searchMarker;
 
 var timer = null;
 var timerNoGeo = null;
-
-var TestMode = false;
+var TestMode = true;
 
 var TestTimer1 = null;
 var TestTimer2 = null;
 var TestTimer3 = null;
 
-var time = 2000;
+var time = 5000;
 
 // initial function called by the google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.0444, lng: 31.2357},
+        center: {lat: 30.0444, lng: 31.2357}, // TODO set default map center
         zoom: 18
     });
 
@@ -105,11 +104,7 @@ function navigateToCurrentLocation() {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.setCenter(pos);
+                map.setCenter(position);
             });
             navigator.geolocation.watchPosition(function (position) {
                 currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -161,7 +156,7 @@ function calcRoute() {
                 clearInterval(timer);
             }
             // schedule the first invocation:
-            timer = setInterval(detectLocationPeriodically, time);
+            timer = setInterval(detectLocationPeriodically, 10000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -188,7 +183,7 @@ function handleMissingGeolocation() {
             if (timerNoGeo) {
                 clearInterval(timerNoGeo);
             }
-            timerNoGeo = setInterval(getLocationPeriodically, time);
+            timerNoGeo = setInterval(getLocationPeriodically, 500);
         },
         error: function (xhr, textStatus, thrownError) {
             handleLocationError();
@@ -251,9 +246,6 @@ function waitForSource() {
             url: "/location/?key=driver",
             type: "GET",
             dataType: "text",
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            },
             cache: false,
             // what to do when the call is complete ( you can right your clean from code here)
             success: function (response) {
@@ -282,9 +274,6 @@ function waitForDestination() {
             url: "/location/?key=driver",
             type: "GET",
             dataType: "text",
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            },
             cache: false,
             // what to do when the call is complete ( you can right your clean from code here)
             success: function (response) {
@@ -294,7 +283,7 @@ function waitForDestination() {
                     console.log("Destination: " + context.lat + ", " + context.lon);
                     clearInterval(TestTimer2);
                     calcRoute();
-                    TestTimer3 = setInterval(waitForSteps, time);
+                    TestTimer3 = setInterval(waitForSteps, 10000);
                 }
             },
             // what to do when there is an error
@@ -311,10 +300,8 @@ function waitForSteps() {
         url: "/location/?key=driver",
         type: "GET",
         dataType: "text",
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        },
         cache: false,
+        // what to do when the call is complete ( you can right your clean from code here)
         success: function (response) {
             var context = JSON.parse(response);
             var pos = new google.maps.LatLng(context.lat, context.lon);
@@ -324,9 +311,6 @@ function waitForSteps() {
                 currentPos = pos;
                 drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
             }
-        },
-        complete: function (arg1, arg2) {
-            console.log(arg2);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -363,7 +347,6 @@ function detectLocationPeriodically() {
 }
 
 function getLocationPeriodically() {
-    console.log("called");
     $.ajax({
         url: "/location/?key=driver",
         type: "GET",

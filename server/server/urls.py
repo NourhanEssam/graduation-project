@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^', include('login.urls')),
@@ -24,3 +25,5 @@ urlpatterns = [
     url(r'^gettrafficlights/', include('gettrafficlights.urls')),
     url(r'^location/', include('location.urls')),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

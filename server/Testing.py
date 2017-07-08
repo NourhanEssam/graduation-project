@@ -29,7 +29,7 @@ if len(sys.argv) == 4:
         payload['lat'], payload['lon'] = sequence_lat[0], sequence_lon[0]
         print 'Initial Position: latitude = ' + str(payload['lat']) + ', longitude = ' + str(payload['lon'])
         requests.post(url, data=payload)
-        time.sleep(10)
+        time.sleep(2)
 
         # send destination
         payload['lat'], payload['lon'] = sequence_lat[len(sequence_lat) - 1], sequence_lon[len(sequence_lat) - 1]
@@ -38,7 +38,7 @@ if len(sys.argv) == 4:
 
         # send sequence
         for i in range(1, len(sequence_lat)):
-            time.sleep(10)
+            time.sleep(2)
             payload['lat'], payload['lon'] = sequence_lat[i], sequence_lon[i]
             print 'Step ' + str(i) + ': latitude = ' + str(payload['lat']) + ', longitude = ' + str(payload['lon'])
             requests.post(url, data=payload)

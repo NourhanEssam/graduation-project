@@ -5,6 +5,7 @@ import utilities
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from map.scaler import scale
 
 
 @login_required
@@ -18,10 +19,10 @@ def index(request):
         if request.method == 'POST' and request.is_ajax() and TLs_IDs:
             data = request.POST
             EVlocation = {
-                'lon': float(data['currentPosLng']),
-                'lat': float(data['currentPosLat'])
+                'lon': 0.0,
+                'lat': 0.0
             }
-
+            EVlocation['lat'], EVlocation['lon'] = scale(float(data['currentPosLat']), float(data['currentPosLng']))
             # Get intersection and direction
             tl_id = TLs_IDs[0]
             Queryset = TrafficLight.objects.filter(TL_ID=tl_id).values('Intersection_ID', 'Direction').first()
@@ -44,7 +45,7 @@ def index(request):
                 tl_ip = CentralNode.objects.values('CentralNode_IP').filter(CentralNode_ID__in=Intersection.objects.values('CentralNode_ID').filter(Intersection_ID=TL_Intersection_ID)).first()['CentralNode_IP']
                 tl_port = 12348
                 #Testing
-                #tl_ip = '127.0.0.1'
+                #tl_ip = '192.168.1.88:8000'
                 # opening a socket
                 tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 tlsocket.connect((tl_ip, tl_port))

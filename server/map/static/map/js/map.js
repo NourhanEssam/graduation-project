@@ -156,7 +156,7 @@ function calcRoute() {
                 clearInterval(timer);
             }
             // schedule the first invocation:
-            timer = setInterval(detectLocationPeriodically, 10000);
+            timer = setInterval(detectLocationPeriodically, 8000);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -171,7 +171,7 @@ function calcRoute() {
 
 function handleMissingGeolocation() {
     $.ajax({
-        url: "/location/?key=driver",
+        url: "http://192.168.1.88:8000/location/?key=driver",
         type: "GET",
         dataType: "text",
         crossDomain: true,
@@ -183,7 +183,7 @@ function handleMissingGeolocation() {
             if (timerNoGeo) {
                 clearInterval(timerNoGeo);
             }
-            timerNoGeo = setInterval(getLocationPeriodically, 500);
+            timerNoGeo = setInterval(getLocationPeriodically, 3000);
         },
         error: function (xhr, textStatus, thrownError) {
             handleLocationError();
@@ -246,6 +246,9 @@ function waitForSource() {
             url: "/location/?key=driver",
             type: "GET",
             dataType: "text",
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
             cache: false,
             // what to do when the call is complete ( you can right your clean from code here)
             success: function (response) {
@@ -274,6 +277,9 @@ function waitForDestination() {
             url: "/location/?key=driver",
             type: "GET",
             dataType: "text",
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
             cache: false,
             // what to do when the call is complete ( you can right your clean from code here)
             success: function (response) {
@@ -300,8 +306,10 @@ function waitForSteps() {
         url: "/location/?key=driver",
         type: "GET",
         dataType: "text",
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
         cache: false,
-        // what to do when the call is complete ( you can right your clean from code here)
         success: function (response) {
             var context = JSON.parse(response);
             var pos = new google.maps.LatLng(context.lat, context.lon);
@@ -311,6 +319,9 @@ function waitForSteps() {
                 currentPos = pos;
                 drawLocationCenter(context.lat, context.lon, parseFloat(context.err));
             }
+        },
+        complete: function (arg1, arg2) {
+            console.log(arg2);
         },
         // what to do when there is an error
         error: function (xhr, textStatus, thrownError) {
@@ -347,6 +358,7 @@ function detectLocationPeriodically() {
 }
 
 function getLocationPeriodically() {
+    console.log("called");
     $.ajax({
         url: "/location/?key=driver",
         type: "GET",

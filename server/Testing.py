@@ -4,7 +4,7 @@ import sys
 
 print len(sys.argv)
 if len(sys.argv) == 4:
-    url = "http://" + sys.argv[1] + "/location/"
+    url = "http://" + sys.argv[1] + ":8000/location/"
     sequence = int(sys.argv[2])
     payload = {'key': sys.argv[3], 'err': 5}
 

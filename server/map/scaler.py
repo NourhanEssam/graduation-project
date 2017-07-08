@@ -83,6 +83,7 @@ def scale(lat, lon):
 
     return new_lat, new_lon
 
+
 def rotate(directions):
     for i in range(len(directions)):
         if directions[i] == 'NE':

@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from location.models import Location
 import json
 
+
 @csrf_exempt
 def location(request):
     if request.method == 'POST':

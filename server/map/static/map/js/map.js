@@ -14,7 +14,7 @@ var searchMarker;
 var timer = null;
 var timerNoGeo = null;
 
-var TestMode = false;
+var TestMode =true;
 
 var TestTimer1 = null;
 var TestTimer2 = null;

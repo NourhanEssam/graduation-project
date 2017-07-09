@@ -47,18 +47,18 @@ def index(request):
                 #Testing
                 #tl_ip = '192.168.1.88:8000'
                 # opening a socket
-                #tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                #tlsocket.connect((tl_ip, tl_port))
+                tlsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                tlsocket.connect((tl_ip, tl_port))
 
                 if request.session['Send']:
                     # Sending to central node ip
-                    #tlsocket.send(TL_Direction + Intersection_Number_Central_Node)
+                    tlsocket.send(TL_Direction + Intersection_Number_Central_Node)
                     print 'Sending ', TL_Direction, Intersection_Number_Central_Node
                     request.session['Send'] = False
 
                 if Passed:
                     # reset TLs
-                    #tlsocket.send("P" + Intersection_Number_Central_Node)
+                    tlsocket.send("P" + Intersection_Number_Central_Node)
                     request.session['Send'] = True
                     request.session['TrafficLights'].pop(0)
                     request.session.modified = True
@@ -66,6 +66,6 @@ def index(request):
                     print request.session['TrafficLights']
                     print "passed"
 
-                #tlsocket.close()
+                tlsocket.close()
 
     return HttpResponse()

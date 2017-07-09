@@ -100,20 +100,20 @@ void West_Green_On(void)
 
 void West_Orange_On(void)
 {
-	GPIO_PORTD_DATA_R &= ~0xA0;
-	GPIO_PORTD_DATA_R |= 0x40;
+	GPIO_PORTC_DATA_R &= ~0xA0;
+	GPIO_PORTC_DATA_R |= 0x40;
 }
 
 void West_Red_On(void)
 {
-	GPIO_PORTD_DATA_R &= ~0xC0;
-	GPIO_PORTD_DATA_R |= 0x20;
+	GPIO_PORTC_DATA_R &= ~0xC0;
+	GPIO_PORTC_DATA_R |= 0x20;
 }
 
 void West_Off(void)
 {
 	// Pins PD0, PD1, PD2 = 0 (off)
-	GPIO_PORTD_DATA_R &= ~0xE0;
+	GPIO_PORTC_DATA_R &= ~0xE0;
 }
 
 void East_Green_On(void)

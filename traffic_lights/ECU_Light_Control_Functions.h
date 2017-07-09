@@ -9,11 +9,6 @@
 #define __ECU_LIGHT_CONTROL_FUNCTIONS__
 
 #include "tm4c123gh6pm.h"
-
-#define North 	(*((volatile unsigned long *)0x40005070)) // PB2, PB3, PB4
-#define West		(*((volatile unsigned long *)0x40005380)) // PB5, PB6, PB7
-#define East 		(*((volatile unsigned long *)0x4002401C)) // PE0, PE1, PE2
-#define South 	(*((volatile unsigned long *)0x400240E0)) // PE3, PE4, PE5
 	
 typedef enum {GREEN, ORANGE, ORANGE_EXCEPT} mode;
 

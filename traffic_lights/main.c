@@ -4,7 +4,7 @@
 #include "PLL.h"
 #include "UART.h"
 
-#define INTERSECTION_ID '1'
+#define INTERSECTION_ID '3'
 #define NORTH 'N'
 #define SOUTH 'S'
 #define EAST  'E'
@@ -58,13 +58,13 @@ typedef const struct State STyp;
 
 STyp FSM[8]=
 {
- {GREEN, NORTH, 10000, waitN}, 
+ {GREEN, NORTH, 5000, waitN}, 
  {ORANGE, NORTH, 1000, goE},
- {GREEN, EAST, 10000, waitE},
+ {GREEN, EAST, 5000, waitE},
  {ORANGE, EAST, 1000, goS},
- {GREEN, SOUTH, 10000, waitS}, 
+ {GREEN, SOUTH, 5000, waitS}, 
  {ORANGE, SOUTH, 1000, goW,},
- {GREEN, WEST, 10000, waitW},
+ {GREEN, WEST, 5000, waitW},
  {ORANGE, WEST, 1000, goN}
 };
 
@@ -137,8 +137,7 @@ void UART1_Handler(void)
 {
 	UART1_ICR_R |= 0x00000010;
 	input = UART1_InCharNonBlocking();
-	id = UART1_InCharNonBlocking();
-	if(id == INTERSECTION_ID)
+	id = UART1_InCharNonBlocking();	if(id == INTERSECTION_ID)
 	{
 		time = 0;
 		if(input == NORTH || input == SOUTH || input == EAST || input == WEST)

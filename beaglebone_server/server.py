@@ -22,7 +22,7 @@ UART.setup("UART5")
 serials.append(serial.Serial(port = "/dev/ttyO5", baudrate=115200))
 
 # TCP Server Socket
-TCP_PORT = 7007
+TCP_PORT = 12348
 BUFFER_SIZE = 1024
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

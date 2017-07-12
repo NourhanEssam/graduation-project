@@ -25,6 +25,5 @@ while True:
             err = (epx + epy) / 4
             print 'error       ' , err
             payload = {'key': 'driver', 'lon': lon, 'lat': lat, 'err': err}
-            response = requests.post("http://192.168.1.88/location/", data=payload)
-            #print response.text
-      time.sleep(0.5)
+            response = requests.post("http://192.168.1.88:8000/location/", data=payload)
+      time.sleep(2)

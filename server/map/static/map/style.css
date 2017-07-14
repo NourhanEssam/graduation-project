@@ -1,0 +1,56 @@
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#pac-card {
+    margin: 10px 10px 10px 10px;
+}
+
+#map {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#infowindow-content .title {
+    font-weight: bold;
+}
+
+#infowindow-content {
+    display: none;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+#pac-input {
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 10px 10px 10px 10px;
+    text-overflow: ellipsis;
+    width: 400px;
+    -moz-box-shadow: inset 2px 2px 5px #888;
+    box-shadow: inset 2px 2px 5px #888;
+    border: 1px solid #b8b8b8;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#header #branding h1 a {
+    color: #eaeaea;
+}

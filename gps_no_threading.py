@@ -26,4 +26,5 @@ while True:
             print 'error       ' , err
             payload = {'key': 'driver', 'lon': lon, 'lat': lat, 'err': err}
             response = requests.post("http://192.168.1.88:8000/location/", data=payload)
+            #print response.text
       time.sleep(2)
